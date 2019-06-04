@@ -11,6 +11,7 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using KeepFitStore.Data;
+    using KeepFitStore.Data.Seeders;
 
     public class Startup
     {
@@ -55,6 +56,11 @@
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+
+            using (IServiceScope scope = app.ApplicationServices.CreateScope())
+            {
+                ApplicationRoleSeeder.Seed(scope.ServiceProvider);
             }
 
             app.UseHttpsRedirection();
