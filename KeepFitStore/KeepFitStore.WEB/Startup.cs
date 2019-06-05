@@ -12,6 +12,7 @@
 
     using KeepFitStore.Data;
     using KeepFitStore.Data.Seeders;
+    using KeepFitStore.Models;
 
     public class Startup
     {
@@ -35,6 +36,18 @@
             services.AddDbContext<KeepFitDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<KeepFitUser, IdentityRole>(identityOptions =>
+            {
+                identityOptions.Password.RequireDigit = false;
+                identityOptions.Password.RequireUppercase = false;
+                identityOptions.Password.RequiredUniqueChars = 0;
+                identityOptions.Password.RequireNonAlphanumeric = false;
+                identityOptions.Password.RequireLowercase = false;
+            })
+              .AddEntityFrameworkStores<KeepFitDbContext>()
+              .AddDefaultUI(UIFramework.Bootstrap4)
+              .AddDefaultTokenProviders();
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
