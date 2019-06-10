@@ -13,6 +13,10 @@
     using KeepFitStore.Data;
     using KeepFitStore.Data.Seeders;
     using KeepFitStore.Models;
+    using System;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using KeepFitStore.Services;
+    using Microsoft.AspNetCore.Identity.UI.Services;
 
     public class Startup
     {
@@ -37,6 +41,7 @@
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+
             services.AddIdentity<KeepFitUser, IdentityRole>(identityOptions =>
             {
                 identityOptions.Password.RequireDigit = false;
@@ -44,14 +49,29 @@
                 identityOptions.Password.RequiredUniqueChars = 0;
                 identityOptions.Password.RequireNonAlphanumeric = false;
                 identityOptions.Password.RequireLowercase = false;
+
+                identityOptions.SignIn.RequireConfirmedEmail = true; 
             })
               .AddEntityFrameworkStores<KeepFitDbContext>()
               .AddDefaultUI(UIFramework.Bootstrap4)
               .AddDefaultTokenProviders();
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<KeepFitDbContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+            // requires
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            // using WebPWrecover.Services;
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

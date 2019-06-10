@@ -4,14 +4,16 @@ using KeepFitStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KeepFitStore.Data.Migrations
 {
     [DbContext(typeof(KeepFitDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190609181017_FkChange")]
+    partial class FkChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +50,13 @@ namespace KeepFitStore.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("KeepFitUserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("KeepFitUserId")
+                        .IsUnique()
+                        .HasFilter("[KeepFitUserId] IS NOT NULL");
 
                     b.ToTable("Baskets");
                 });
@@ -130,9 +138,6 @@ namespace KeepFitStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("BasketId")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -400,6 +405,13 @@ namespace KeepFitStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KeepFitStore.Models.Basket", b =>
+                {
+                    b.HasOne("KeepFitStore.Models.KeepFitUser", "KeepFitUser")
+                        .WithOne("Basket")
+                        .HasForeignKey("KeepFitStore.Models.Basket", "KeepFitUserId");
+                });
+
             modelBuilder.Entity("KeepFitStore.Models.BasketItem", b =>
                 {
                     b.HasOne("KeepFitStore.Models.Basket", "Basket")
@@ -418,11 +430,6 @@ namespace KeepFitStore.Data.Migrations
                     b.HasOne("KeepFitStore.Models.Address", "Address")
                         .WithMany("KeepFitUsers")
                         .HasForeignKey("AddressId");
-
-                    b.HasOne("KeepFitStore.Models.Basket", "Basket")
-                        .WithOne("KeepFitUser")
-                        .HasForeignKey("KeepFitStore.Models.KeepFitUser", "BasketId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KeepFitStore.Models.Order", b =>

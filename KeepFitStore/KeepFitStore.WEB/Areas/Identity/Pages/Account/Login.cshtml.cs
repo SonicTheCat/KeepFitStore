@@ -16,6 +16,9 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private const string ConfirmEmailMessage = "You have to confirm your email before login";
+        private const string InputEmailPropAsString = "Input.Email";
+
         private readonly SignInManager<KeepFitUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
@@ -91,8 +94,18 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+                    if (user != null && user.EmailConfirmed == false)
+                    {
+                        ModelState.AddModelError(InputEmailPropAsString, ConfirmEmailMessage);
+                        return Page();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return Page();
+                    }
                 }
             }
 

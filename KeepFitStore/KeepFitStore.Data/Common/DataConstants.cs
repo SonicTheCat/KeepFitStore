@@ -9,5 +9,7 @@
         public const string UserEmailString = "UserEmail"; 
 
         public const string UserPasswordString = "UserPassword"; 
+
+        public const string FullNameString = "FullName"; 
     }
 }

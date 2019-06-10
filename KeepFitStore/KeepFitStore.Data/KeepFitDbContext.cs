@@ -43,6 +43,7 @@
             builder.ApplyConfiguration(new AddressConfig());
             builder.ApplyConfiguration(new BasketItemConfig());
             builder.ApplyConfiguration(new ProductOrderConfig());
+            builder.ApplyConfiguration(new KeepFitUserConfig());
 
             base.OnModelCreating(builder);
         }

@@ -39,23 +39,25 @@
             if (!roleExists)
             {
                 await roleManager.CreateAsync(new IdentityRole(role));
-            }          
+            }
         }
 
         private static async Task CreatePowerUser(IConfiguration configuration, UserManager<KeepFitUser> userManager)
         {
-            var powerUser = new KeepFitUser
-            {
-                UserName = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UsernameString],
-                Email = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UserEmailString]
-            };
-
-            string userPassword = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UserPasswordString];
-
             var user = await userManager.FindByEmailAsync(configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UserEmailString]);
 
             if (user == null)
             {
+                var powerUser = new KeepFitUser
+                {
+                    UserName = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UsernameString],
+                    Email = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UserEmailString],
+                    FullName = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.FullNameString],
+                    Basket = new Basket() 
+                };
+
+                string userPassword = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UserPasswordString];
+
                 var createPowerUser = await userManager.CreateAsync(powerUser, userPassword);
                 if (createPowerUser.Succeeded)
                 {

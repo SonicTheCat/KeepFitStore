@@ -45,12 +45,11 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
+
+.layoutColors{
+   background-color:greenyellow !important;
+}
+
+main h1 .h1Title{
+    background-color:greenyellow !important; 
 }

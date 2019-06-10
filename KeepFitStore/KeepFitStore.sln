@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Data", "KeepFi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Models", "KeepFitStore.Models\KeepFitStore.Models.csproj", "{4936C21A-B9A4-4563-9736-A7D1C796147F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepFitStore.Common", "KeepFitStore.Common\KeepFitStore.Common.csproj", "{8A6C511B-5843-474F-A27F-CF5794E51CF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Common", "KeepFitStore.Common\KeepFitStore.Common.csproj", "{8A6C511B-5843-474F-A27F-CF5794E51CF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepFitStore.Services", "KeepFitStore.Services\KeepFitStore.Services.csproj", "{88BC1D15-990F-472F-A2FD-B9782C81D842}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8A6C511B-5843-474F-A27F-CF5794E51CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A6C511B-5843-474F-A27F-CF5794E51CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A6C511B-5843-474F-A27F-CF5794E51CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88BC1D15-990F-472F-A2FD-B9782C81D842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88BC1D15-990F-472F-A2FD-B9782C81D842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88BC1D15-990F-472F-A2FD-B9782C81D842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88BC1D15-990F-472F-A2FD-B9782C81D842}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
