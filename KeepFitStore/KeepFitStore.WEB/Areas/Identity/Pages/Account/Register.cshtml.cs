@@ -104,8 +104,8 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                   //Prevent automatic login when user register! Need to confirm email first
-                   //await _signInManager.SignInAsync(user, isPersistent: false);
+                   //Comment the line below to prevent automatic login when user register! Need to confirm email first
+                   await _signInManager.SignInAsync(user, isPersistent: false);
 
                     return LocalRedirect(returnUrl);
                 }
