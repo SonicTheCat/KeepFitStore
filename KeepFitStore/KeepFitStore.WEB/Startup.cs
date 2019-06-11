@@ -50,7 +50,7 @@
                 identityOptions.Password.RequireNonAlphanumeric = false;
                 identityOptions.Password.RequireLowercase = false;
 
-                identityOptions.SignIn.RequireConfirmedEmail = true; 
+                identityOptions.SignIn.RequireConfirmedEmail = true;
             })
               .AddEntityFrameworkStores<KeepFitDbContext>()
               .AddDefaultUI(UIFramework.Bootstrap4)
@@ -108,8 +108,14 @@
 
             app.UseAuthentication();
 
+       
+
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "MyArea",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

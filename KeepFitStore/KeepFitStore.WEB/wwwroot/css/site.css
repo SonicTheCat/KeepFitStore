@@ -46,10 +46,10 @@ body {
   margin-bottom: 60px;
 }
 
-.layoutColors{
-   background-color:greenyellow !important;
+.layoutColors {
+    background-color: #007bff !important;
 }
 
-main h1 .h1Title{
-    background-color:greenyellow !important; 
+ul {
+    list-style-type: none;
 }
