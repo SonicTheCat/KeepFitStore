@@ -1,14 +1,17 @@
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using KeepFitStore.Models
 
 @inject SignInManager<KeepFitUser> SignInManager
 @inject UserManager<KeepFitUser> UserManager
 
-<ul class="nav justify-content-end pr-4">
+<ul class="nav justify-content-start pr-4">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Admin Panel</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using KeepFitStore.WEB.Models;
-
-namespace KeepFitStore.WEB.Controllers
+﻿namespace KeepFitStore.WEB.Controllers
 {
-    public class HomeController : Controller
+    using System.Diagnostics;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    using ViewModels;
+
+    public class HomeController : BaseController
     {
         public IActionResult Index()
         {

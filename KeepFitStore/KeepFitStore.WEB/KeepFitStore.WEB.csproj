@@ -29,9 +29,4 @@
     </Content>
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Areas\Administrator\" />
-  </ItemGroup>
-
 </Project>

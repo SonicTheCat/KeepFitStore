@@ -96,6 +96,8 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
                 {
                     var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
 
+                    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
                   //  User can not login before confirm email!
                     if (user != null && user.EmailConfirmed == false)
                     {

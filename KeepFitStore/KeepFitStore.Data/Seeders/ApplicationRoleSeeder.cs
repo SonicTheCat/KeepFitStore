@@ -58,6 +58,8 @@
 
                 string userPassword = configuration.GetSection(DataConstants.UserSettingsString)[DataConstants.UserPasswordString];
 
+                powerUser.EmailConfirmed = true;
+
                 var createPowerUser = await userManager.CreateAsync(powerUser, userPassword);
                 if (createPowerUser.Succeeded)
                 {

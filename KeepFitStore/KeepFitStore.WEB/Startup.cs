@@ -107,13 +107,11 @@
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
-       
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "MyArea",
+                    name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(

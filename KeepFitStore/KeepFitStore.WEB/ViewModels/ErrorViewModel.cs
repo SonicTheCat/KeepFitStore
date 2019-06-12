@@ -1,6 +1,4 @@
-using System;
-
-namespace KeepFitStore.WEB.Models
+namespace KeepFitStore.WEB.ViewModels
 {
     public class ErrorViewModel
     {
