@@ -17,6 +17,9 @@
     using Microsoft.AspNetCore.Authentication.Cookies;
     using KeepFitStore.Services;
     using Microsoft.AspNetCore.Identity.UI.Services;
+    using KeepFitStore.Services.MessageSender;
+    using AutoMapper;
+    using KeepFitStore.WEB.MappingConfiguration;
 
     public class Startup
     {
@@ -40,7 +43,6 @@
             services.AddDbContext<KeepFitDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-
 
             services.AddIdentity<KeepFitUser, IdentityRole>(identityOptions =>
             {
@@ -78,6 +80,15 @@
             // using WebPWrecover.Services;
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new KeepFitProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
