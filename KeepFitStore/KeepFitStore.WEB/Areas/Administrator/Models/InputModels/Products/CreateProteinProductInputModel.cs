@@ -20,7 +20,9 @@
         private const string PriceMaxValue = "79228162514264337593543950335";
         
         private const string PriceErrorMessage = "Price is not in the allowed range!";
-        
+
+        private const string SuatableForVegansName = "Suatable for vegans?";
+
         [Required]
         [Display(Name = ProteinBrandName)]
         public string Name { get; set; }
@@ -54,5 +56,8 @@
 
         [Required]
         public double Fat { get; set; }
+
+        [Display(Name = SuatableForVegansName)]
+        public bool IsSuatableForVegans { get; set; }
     }
 }
