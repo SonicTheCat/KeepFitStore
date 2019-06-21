@@ -11,7 +11,6 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using KeepFitStore.Data;
-    using KeepFitStore.Data.Seeders;
     using KeepFitStore.Models;
     using System;
     using Microsoft.AspNetCore.Authentication.Cookies;
@@ -21,6 +20,7 @@
     using AutoMapper;
     using KeepFitStore.WEB.MappingConfiguration;
     using KeepFitStore.Services.Contracts;
+    using KeepFitStore.WEB.Middlewares;
 
     public class Startup
     {
@@ -112,16 +112,14 @@
                 app.UseHsts();
             }
 
-            using (IServiceScope scope = app.ApplicationServices.CreateScope())
-            {
-                ApplicationRoleSeeder.Seed(scope.ServiceProvider);
-            }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseSeedRolesMiddleware();
+            app.UseSeedPowerUserMiddleware();
             
             app.UseMvc(routes =>
             {
