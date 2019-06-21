@@ -4,9 +4,10 @@
     using Microsoft.AspNetCore.Mvc;
 
     using KeepFitStore.WEB.Controllers;
-    
-    [Area("Administrator")]
-    [Authorize(Roles = "Administrator")]
+    using KeepFitStore.Common;
+
+    [Area(GlobalConstants.AdministratorRoleName)]
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     public class AdministratorController : BaseController
     {
     }

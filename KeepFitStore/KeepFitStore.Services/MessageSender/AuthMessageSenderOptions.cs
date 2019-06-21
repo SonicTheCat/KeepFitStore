@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KeepFitStore.Services
+﻿namespace KeepFitStore.Services.MessageSender
 {
     public class AuthMessageSenderOptions
     {

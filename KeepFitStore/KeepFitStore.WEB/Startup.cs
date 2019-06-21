@@ -20,6 +20,7 @@
     using KeepFitStore.Services.MessageSender;
     using AutoMapper;
     using KeepFitStore.WEB.MappingConfiguration;
+    using KeepFitStore.Services.Contracts;
 
     public class Startup
     {
@@ -69,6 +70,7 @@
                 options.SlidingExpiration = true;
             });
 
+            //Facebook authentication 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
@@ -80,6 +82,8 @@
             // using WebPWrecover.Services;
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.AddTransient<IProductsService, ProductsService>();
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>

@@ -54,6 +54,8 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //TODO: Check if user is already logged in 
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -70,7 +72,8 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
+        { 
+            
             returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)
@@ -98,17 +101,17 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
 
                     ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-                  //  User can not login before confirm email!
+                    // User can not login before confirm email!
                     if (user != null && user.EmailConfirmed == false)
                     {
                         ModelState.AddModelError(InputEmailPropAsString, ConfirmEmailMessage);
-                        return Page();
                     }
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                        return Page();
                     }
+
+                    return Page();
                 }
             }
 

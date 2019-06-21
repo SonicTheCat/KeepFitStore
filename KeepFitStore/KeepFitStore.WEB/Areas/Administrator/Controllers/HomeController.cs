@@ -7,12 +7,16 @@
 
     [Area(GlobalConstants.AdministratorRoleName)]
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-    public class HomeController : Controller
+    public class HomeController : AdministratorController
     {
         public IActionResult Index()
         {
             return View();
         }
 
+        public IActionResult Settings()
+        {
+            return this.View(); 
+        }
     }
 }

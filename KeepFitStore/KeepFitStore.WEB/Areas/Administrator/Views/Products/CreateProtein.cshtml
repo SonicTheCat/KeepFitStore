@@ -1,0 +1,74 @@
+﻿@using KeepFitStore.WEB.Areas.Administrator.Models.InputModels.Products
+@using KeepFitStore.Models.Enums
+
+@model CreateProteinProductInputModel
+@{
+    ViewData["Title"] = "Admin Panel - Create Protein";
+    //var proteinTypeEnumValues = Enum.GetValues(typeof(ProteinType));
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <section>
+            <form class="shadow p-3 m-4" asp-area="Administrator" asp-controller="Products" asp-action="CreateProtein">
+                <div class="d-flex justify-content-center mb-4">
+                    <h4 class="m-2">Create Protein</h4>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Name...">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Price"></label>
+                        <input type="number" asp-for="Price" min="0.0" step="0.01" class="form-control" placeholder="Price...">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Description..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Directions"></label>
+                    <textarea asp-for="Directions" class="form-control" rows="3" placeholder="Directions..."></textarea>
+                    <span asp-validation-for="Directions" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Type"></label>
+                    <select asp-for="Type" asp-items="Html.GetEnumSelectList<ProteinType>()" class="form-control">
+                        <option selected disabled>Select Protein Type</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+                <div class="form-row d-flex justify-content-between">
+                    <div class="form-group col-md-2">
+                        <label asp-for="EnergyPerServing"></label>
+                        <input asp-for="EnergyPerServing" type="number" min="0.0" step="0.1" class="form-control">
+                        <span asp-validation-for="EnergyPerServing" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label asp-for="ProteinPerServing"></label>
+                        <input asp-for="ProteinPerServing" type="number" min="0.0" step="0.1" class="form-control">
+                        <span asp-validation-for="ProteinPerServing" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label asp-for="Carbohydrate"></label>
+                        <input asp-for="Carbohydrate" type="number" min="0.0" step="0.1" class="form-control">
+                        <span asp-validation-for="Carbohydrate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label asp-for="Fat"></label>
+                        <input asp-for="Fat" type="number" min="0.0" step="0.1" class="form-control">
+                        <span asp-validation-for="Fat" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center m-4">
+                    <button type="submit" class="btn btn-primary">Create Protein</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

@@ -11,7 +11,7 @@
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Admin Panel</a>
+            <a class="nav-link" asp-area="Administrator" asp-controller="Home" asp-action="Settings">Settings</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
@@ -24,7 +24,6 @@
     }
     else
     {
-
         <li class="nav-item">
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
                 <div class="d-flex justify-content-center"><i class="fas fa-user"></i></div>
