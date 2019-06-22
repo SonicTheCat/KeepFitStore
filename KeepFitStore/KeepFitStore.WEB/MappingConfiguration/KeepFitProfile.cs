@@ -9,7 +9,9 @@
     {
         public KeepFitProfile()
         {
+            //Products
             this.CreateMap<CreateProteinProductInputModel, Protein>();
+            this.CreateMap<CreateCreatineProductInputModel, Creatine>();
         }
     }
 }

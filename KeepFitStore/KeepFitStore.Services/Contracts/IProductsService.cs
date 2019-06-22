@@ -4,6 +4,8 @@
 
     public interface IProductsService
     {
-        void CreateProtein(Protein protein); 
+        void CreateProduct<TEntityType, TSourceType>(TSourceType sourceType)
+            where TSourceType : class
+            where TEntityType : class;
     }
 }

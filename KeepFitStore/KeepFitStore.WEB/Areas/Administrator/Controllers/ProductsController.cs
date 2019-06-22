@@ -2,25 +2,22 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
-    using AutoMapper;
-
+    
     using KeepFitStore.Common;
     using KeepFitStore.Services.Contracts;
     using Areas.Administrator.Models.InputModels.Products;
     using KeepFitStore.Models.Products;
+    using KeepFitStore.WEB.Common;
 
     [Area(GlobalConstants.AdministratorRoleName)]
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     public class ProductsController : AdministratorController
     {
         private readonly IProductsService productsService;
-        private readonly IMapper mapper;
 
-        public ProductsController(IProductsService productsService, IMapper mapper)
+        public ProductsController(IProductsService productsService)
         {
             this.productsService = productsService;
-            this.mapper = mapper;
         }
 
         public IActionResult Create()
@@ -36,10 +33,32 @@
         [HttpPost]
         public IActionResult CreateProtein(CreateProteinProductInputModel model)
         {
-            var protein = this.mapper.Map<Protein>(model);
-            this.productsService.CreateProtein(protein);
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(); 
+            }
 
-            return this.Redirect("/"); 
+            this.productsService.CreateProduct<Protein, CreateProteinProductInputModel>(model);
+
+            return this.Redirect(WebConstants.HomePagePath); 
+        }
+
+        public IActionResult CreateCreatine()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateCreatine(CreateCreatineProductInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+            this.productsService.CreateProduct<Creatine, CreateCreatineProductInputModel>(model);
+
+            return this.Redirect(WebConstants.HomePagePath);
         }
     }
 }
