@@ -12,6 +12,8 @@
             //Products
             this.CreateMap<CreateProteinProductInputModel, Protein>();
             this.CreateMap<CreateCreatineProductInputModel, Creatine>();
+            this.CreateMap<CreateVitaminProductInputModel, Vitamin>();
+            this.CreateMap<CreateAminoAcidProducInputModel, AminoAcid>();
         }
     }
 }

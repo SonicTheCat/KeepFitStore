@@ -5,9 +5,9 @@
     using KeepFitStore.Models.Enums;
     using KeepFitStore.WEB.Areas.Administrator.Models.Common;
 
-    public class CreateProteinProductInputModel
+    public class CreateAminoAcidProducInputModel
     {
-        private const string ProteinTypeName = "Protein type";
+        private const string AminoAcidTypeName = "Amino Acid Type";
 
         [Required]
         [Display(Name = ModelsConstants.ProductBrandName)]
@@ -25,25 +25,21 @@
         [StringLength(ModelsConstants.MaximumTextLenght)]
         public string Directions { get; set; }
 
+        [Display(Name = ModelsConstants.SuatableForVegansName)]
+        public bool IsSuatableForVegans { get; set; }
+
         [Required]
-        [Display(Name = ProteinTypeName)]
-        public ProteinType Type { get; set; }
+        [Display(Name = AminoAcidTypeName)]
+        public AminoAcidType Type { get; set; }
 
         [Required]
         [Display(Name = ModelsConstants.EnergyPerServingName)]
         public double EnergyPerServing { get; set; }
 
         [Required]
-        [Display(Name = ModelsConstants.ProteinPerServingName)]
-        public double ProteinPerServing { get; set; }
-
-        [Required]
         public double Carbohydrate { get; set; }
 
         [Required]
         public double Fat { get; set; }
-
-        [Display(Name = ModelsConstants.SuatableForVegansName)]
-        public bool IsSuatableForVegans { get; set; }
     }
 }

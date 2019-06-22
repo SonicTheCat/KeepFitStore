@@ -1,5 +1,66 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<form>
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Example select</label>
+        <select class="form-control" id="tester">
+            <option>Protein</option>
+            <option>Creatine</option>
+            <option>Amino</option>
+            <option>Vitamine</option>
+        </select>
+    </div>
+</form>
+<script>
+
+    //(function () {
+    //    $('select').change(function () {
+    //        alert("Holla");
+    //    });
+    //})();
+
+    (function () {
+        var item = document.querySelector("select");
+        item.addEventListener("change", function (event) {
+            document.querySelectorAll("form").style.display = 'none'; 
+
+            var value = this.value; 
+
+            if (value === 'Protein') {
+                document.getElementById("proteinForm").style.display = "inline";
+                document.getElementById("creatineForm").style.display = "none";
+            } else if (value === "Creatine") {
+                document.getElementById("creatineForm").style.display = "inline";
+                document.getElementById("proteinForm").style.display = "none";
+            }
+        }, false);
+    })();
+
+    //var selectedValue = $("#tester").val(); 
+
+    //if (selectedValue == "Protein") {
+    //    console.log("protein")
+    //} else if (selectedValue == "Creatine") {
+    //    console.log("Creatine")
+    //} else if (selectedValue == "Vitamine") {
+    //    console.log("Vitamine")
+    //} else if (selectedValue == "Amino") {
+    //    console.log("Amino")
+    //}
+</script>
+<form style="display: none" id="proteinForm">
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="First name">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Last name">
+        </div>
+    </div>
+</form>
+
+<form style="display: none" id="creatineForm">
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Creatine name">
+        </div>
+    </div>
+</form>

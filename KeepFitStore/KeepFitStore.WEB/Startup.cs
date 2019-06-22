@@ -123,6 +123,10 @@
             
             app.UseMvc(routes =>
             {
+                //routes.MapRoute(
+                //   name: "productRoute",
+                //   template: "{area:exists}/{controller=Home}/Create/{action=Index}/");
+
                 routes.MapRoute(
                     name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

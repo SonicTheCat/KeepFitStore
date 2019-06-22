@@ -4,11 +4,11 @@
     using Microsoft.AspNetCore.Mvc;
 
     using KeepFitStore.Common;
-    using KeepFitStore.Services.Contracts;
-    using Areas.Administrator.Models.InputModels.Products;
+    using KeepFitStore.Services.Contracts;   
     using KeepFitStore.Models.Products;
     using KeepFitStore.WEB.Common;
     using KeepFitStore.WEB.Filters;
+    using Areas.Administrator.Models.InputModels.Products;
 
     [Area(GlobalConstants.AdministratorRoleName)]
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -50,6 +50,34 @@
         public IActionResult CreateCreatine(CreateCreatineProductInputModel model)
         {
             this.productsService.CreateProduct<Creatine, CreateCreatineProductInputModel>(model);
+
+            return this.Redirect(WebConstants.HomePagePath);
+        }
+
+        public IActionResult CreateVitamin()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [ValidateModelStateFilter(nameof(CreateVitamin))]
+        public IActionResult CreateVitamin(CreateVitaminProductInputModel model)
+        {
+            this.productsService.CreateProduct<Vitamin, CreateVitaminProductInputModel>(model);
+
+            return this.Redirect(WebConstants.HomePagePath);
+        }
+
+        public IActionResult CreateAminoAcid()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [ValidateModelStateFilter(nameof(CreateAminoAcid))]
+        public IActionResult CreateAminoAcid(CreateAminoAcidProducInputModel model)
+        {
+            this.productsService.CreateProduct<AminoAcid, CreateAminoAcidProducInputModel>(model);
 
             return this.Redirect(WebConstants.HomePagePath);
         }
