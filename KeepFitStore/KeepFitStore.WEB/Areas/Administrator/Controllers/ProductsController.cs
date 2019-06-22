@@ -2,12 +2,13 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    
+
     using KeepFitStore.Common;
     using KeepFitStore.Services.Contracts;
     using Areas.Administrator.Models.InputModels.Products;
     using KeepFitStore.Models.Products;
     using KeepFitStore.WEB.Common;
+    using KeepFitStore.WEB.Filters;
 
     [Area(GlobalConstants.AdministratorRoleName)]
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -22,25 +23,21 @@
 
         public IActionResult Create()
         {
-            return this.View(); 
+            return this.View();
         }
 
         public IActionResult CreateProtein()
         {
-            return this.View(); 
+            return this.View();
         }
 
         [HttpPost]
+        [ValidateModelStateFilter(nameof(CreateProtein))]
         public IActionResult CreateProtein(CreateProteinProductInputModel model)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(); 
-            }
-
             this.productsService.CreateProduct<Protein, CreateProteinProductInputModel>(model);
 
-            return this.Redirect(WebConstants.HomePagePath); 
+            return this.Redirect(WebConstants.HomePagePath);
         }
 
         public IActionResult CreateCreatine()
@@ -49,13 +46,9 @@
         }
 
         [HttpPost]
+        [ValidateModelStateFilter(nameof(CreateCreatine))]
         public IActionResult CreateCreatine(CreateCreatineProductInputModel model)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View();
-            }
-
             this.productsService.CreateProduct<Creatine, CreateCreatineProductInputModel>(model);
 
             return this.Redirect(WebConstants.HomePagePath);

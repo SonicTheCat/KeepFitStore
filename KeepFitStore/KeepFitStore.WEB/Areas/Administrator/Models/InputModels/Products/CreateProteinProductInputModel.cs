@@ -7,13 +7,13 @@
     {
         private const string ProteinTypeName = "Protein type";
 
-        private const string ProteinBrandName = "Brand";
-
         private const string EnergyPerServingName = "Energy per serving";
 
         private const string ProteinPerServingName = "Protein per serving";
 
         private const int MaximumTextLenght = 500;
+
+        private const string ProductBrandName = "Brand";
 
         private const string PriceMinValue = "0.01";
 
@@ -24,7 +24,7 @@
         private const string SuatableForVegansName = "Suatable for vegans?";
 
         [Required]
-        [Display(Name = ProteinBrandName)]
+        [Display(Name = ProductBrandName)]
         public string Name { get; set; }
 
         [Required]
