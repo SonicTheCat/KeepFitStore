@@ -9,6 +9,8 @@
     using KeepFitStore.WEB.Common;
     using KeepFitStore.WEB.Filters;
     using Areas.Administrator.Models.InputModels.Products;
+    using Microsoft.AspNetCore.Http;
+    using System.Collections.Generic;
 
     [Area(GlobalConstants.AdministratorRoleName)]
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -35,7 +37,7 @@
         [ValidateModelStateFilter(nameof(CreateProtein))]
         public IActionResult CreateProtein(CreateProteinProductInputModel model)
         {
-            this.productsService.CreateProduct<Protein, CreateProteinProductInputModel>(model);
+            this.productsService.CreateProduct<Protein, CreateProteinProductInputModel>(model, model.Image);
 
             return this.Redirect(WebConstants.HomePagePath);
         }
@@ -49,7 +51,7 @@
         [ValidateModelStateFilter(nameof(CreateCreatine))]
         public IActionResult CreateCreatine(CreateCreatineProductInputModel model)
         {
-            this.productsService.CreateProduct<Creatine, CreateCreatineProductInputModel>(model);
+            this.productsService.CreateProduct<Creatine, CreateCreatineProductInputModel>(model, model.Image);
 
             return this.Redirect(WebConstants.HomePagePath);
         }
@@ -63,7 +65,7 @@
         [ValidateModelStateFilter(nameof(CreateVitamin))]
         public IActionResult CreateVitamin(CreateVitaminProductInputModel model)
         {
-            this.productsService.CreateProduct<Vitamin, CreateVitaminProductInputModel>(model);
+            this.productsService.CreateProduct<Vitamin, CreateVitaminProductInputModel>(model, model.Image);
 
             return this.Redirect(WebConstants.HomePagePath);
         }
@@ -77,7 +79,7 @@
         [ValidateModelStateFilter(nameof(CreateAminoAcid))]
         public IActionResult CreateAminoAcid(CreateAminoAcidProducInputModel model)
         {
-            this.productsService.CreateProduct<AminoAcid, CreateAminoAcidProducInputModel>(model);
+            this.productsService.CreateProduct<AminoAcid, CreateAminoAcidProducInputModel>(model, model.Image);
 
             return this.Redirect(WebConstants.HomePagePath);
         }

@@ -20,6 +20,8 @@
 
         public string Description { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public ICollection<ProductOrder> Orders { get; set; }
     }
 }

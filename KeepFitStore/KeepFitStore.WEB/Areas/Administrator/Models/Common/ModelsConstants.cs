@@ -17,5 +17,7 @@
         public const string EnergyPerServingName = "Energy per serving";
 
         public const string ProteinPerServingName = "Protein per serving";
+
+        public const string UploadProducImageName = "Upload image for this product";
     }
 }

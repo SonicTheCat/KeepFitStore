@@ -1,11 +1,13 @@
 ﻿namespace KeepFitStore.Services.Contracts
 {
-    using KeepFitStore.Models.Products;
+    using Microsoft.AspNetCore.Http;
 
+    using KeepFitStore.Models.Products;
+    
     public interface IProductsService
     {
-        void CreateProduct<TEntityType, TSourceType>(TSourceType sourceType)
+        void CreateProduct<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
             where TSourceType : class
-            where TEntityType : class;
+            where TEntityType : Product;
     }
 }

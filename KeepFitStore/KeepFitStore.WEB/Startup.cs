@@ -1,5 +1,7 @@
 ﻿namespace KeepFitStore.WEB
 {
+    using System;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI;
@@ -9,18 +11,21 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-
-    using KeepFitStore.Data;
-    using KeepFitStore.Models;
-    using System;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using KeepFitStore.Services;
     using Microsoft.AspNetCore.Identity.UI.Services;
+
+    using KeepFitStore.Services;
     using KeepFitStore.Services.MessageSender;
-    using AutoMapper;
+    using KeepFitStore.Data;
     using KeepFitStore.WEB.MappingConfiguration;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Middlewares;
+    using KeepFitStore.Helpers;
+    using KeepFitStore.Models;
+    
+    using Microsoft.AspNetCore.Authentication.Cookies;
+
+    using AutoMapper;
+
 
     public class Startup
     {
@@ -93,6 +98,9 @@
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+
+            //Cloudinary - photo cloud
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

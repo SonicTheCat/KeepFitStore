@@ -4,6 +4,7 @@
 
     using KeepFitStore.Models.Enums;
     using KeepFitStore.WEB.Areas.Administrator.Models.Common;
+    using Microsoft.AspNetCore.Http;
 
     public class CreateAminoAcidProducInputModel
     {
@@ -41,5 +42,9 @@
 
         [Required]
         public double Fat { get; set; }
+
+        [Required]
+        [Display(Name = ModelsConstants.UploadProducImageName)]
+        public IFormFile Image { get; set; }
     }
 }

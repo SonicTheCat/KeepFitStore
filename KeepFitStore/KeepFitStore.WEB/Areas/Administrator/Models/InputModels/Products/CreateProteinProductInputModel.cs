@@ -4,6 +4,7 @@
 
     using KeepFitStore.Models.Enums;
     using KeepFitStore.WEB.Areas.Administrator.Models.Common;
+    using Microsoft.AspNetCore.Http;
 
     public class CreateProteinProductInputModel
     {
@@ -45,5 +46,9 @@
 
         [Display(Name = ModelsConstants.SuatableForVegansName)]
         public bool IsSuatableForVegans { get; set; }
+
+        [Required]
+        [Display(Name = ModelsConstants.UploadProducImageName)]
+        public IFormFile Image { get; set; }
     }
 }
