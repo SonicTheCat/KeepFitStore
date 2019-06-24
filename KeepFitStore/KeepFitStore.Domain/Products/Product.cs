@@ -1,5 +1,6 @@
 ﻿namespace KeepFitStore.Domain.Products
 {
+    using KeepFitStore.Domain.Enums;
     using System.Collections.Generic;
 
     public abstract class Product
@@ -21,6 +22,8 @@
         public string Description { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public ProductType ProductType { get; set; }
 
         public ICollection<ProductOrder> Orders { get; set; }
     }

@@ -6,6 +6,11 @@
     
     public class AminoAcid : Supplement
     {
+        public AminoAcid()
+        {
+            this.ProductType = ProductType.AminoAcid;
+        }
+
         [Column(nameof(AminoAcidType))]
         public AminoAcidType Type { get; set; }
 

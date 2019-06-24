@@ -6,6 +6,11 @@
     
     public class Vitamin : Supplement
     {
+        public Vitamin()
+        {
+            this.ProductType = ProductType.Vitamin;
+        }
+
         [Column(nameof(VitaminType))]
         public VitaminType Type { get; set; }
     }

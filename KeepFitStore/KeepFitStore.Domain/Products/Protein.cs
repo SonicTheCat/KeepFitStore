@@ -6,6 +6,11 @@
     
     public class Protein : Supplement
     {
+        public Protein()
+        {
+            this.ProductType = ProductType.Protein; 
+        }
+
         [Column(nameof(ProteinType))]
         public ProteinType Type{ get; set; }
 
