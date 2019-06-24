@@ -1,4 +1,4 @@
-﻿namespace KeepFitStore.Models.Enums
+﻿namespace KeepFitStore.Domain.Enums
 {
     public enum OrderStatus
     {

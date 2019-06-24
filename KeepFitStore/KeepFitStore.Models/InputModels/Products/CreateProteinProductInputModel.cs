@@ -1,14 +1,14 @@
-﻿namespace KeepFitStore.WEB.Areas.Administrator.Models.InputModels.Products
+﻿namespace KeepFitStore.Models.InputModels.Products
 {
     using System.ComponentModel.DataAnnotations;
 
-    using KeepFitStore.Models.Enums;
-    using KeepFitStore.WEB.Areas.Administrator.Models.Common;
+    using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Models.Common;
     using Microsoft.AspNetCore.Http;
 
-    public class CreateAminoAcidProducInputModel
+    public class CreateProteinProductInputModel
     {
-        private const string AminoAcidTypeName = "Amino Acid Type";
+        private const string ProteinTypeName = "Protein type";
 
         [Required]
         [Display(Name = ModelsConstants.ProductBrandName)]
@@ -26,22 +26,26 @@
         [StringLength(ModelsConstants.MaximumTextLenght)]
         public string Directions { get; set; }
 
-        [Display(Name = ModelsConstants.SuatableForVegansName)]
-        public bool IsSuatableForVegans { get; set; }
-
         [Required]
-        [Display(Name = AminoAcidTypeName)]
-        public AminoAcidType Type { get; set; }
+        [Display(Name = ProteinTypeName)]
+        public ProteinType Type { get; set; }
 
         [Required]
         [Display(Name = ModelsConstants.EnergyPerServingName)]
         public double EnergyPerServing { get; set; }
 
         [Required]
+        [Display(Name = ModelsConstants.ProteinPerServingName)]
+        public double ProteinPerServing { get; set; }
+
+        [Required]
         public double Carbohydrate { get; set; }
 
         [Required]
         public double Fat { get; set; }
+
+        [Display(Name = ModelsConstants.SuatableForVegansName)]
+        public bool IsSuatableForVegans { get; set; }
 
         [Required]
         [Display(Name = ModelsConstants.UploadProducImageName)]

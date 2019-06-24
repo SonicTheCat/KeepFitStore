@@ -8,7 +8,7 @@
     using KeepFitStore.Helpers;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Data;
-    using KeepFitStore.Models.Products;
+    using KeepFitStore.Domain.Products;
 
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;

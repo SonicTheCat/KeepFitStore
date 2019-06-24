@@ -1,4 +1,4 @@
-﻿namespace KeepFitStore.WEB.Areas.Administrator.Models.Common
+﻿namespace KeepFitStore.Models.Common
 {
     public static class ModelsConstants
     {

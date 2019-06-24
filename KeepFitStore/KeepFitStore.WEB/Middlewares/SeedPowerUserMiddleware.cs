@@ -7,7 +7,7 @@
     using Microsoft.Extensions.Configuration;
 
     using KeepFitStore.Common;
-    using KeepFitStore.Models;
+    using KeepFitStore.Domain;
 
     public class SeedPowerUserMiddleware
     {

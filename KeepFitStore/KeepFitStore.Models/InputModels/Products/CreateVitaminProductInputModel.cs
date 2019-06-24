@@ -1,9 +1,9 @@
-﻿namespace KeepFitStore.WEB.Areas.Administrator.Models.InputModels.Products
+﻿namespace KeepFitStore.Models.InputModels.Products
 {
     using System.ComponentModel.DataAnnotations;
 
-    using KeepFitStore.Models.Enums;
-    using KeepFitStore.WEB.Areas.Administrator.Models.Common;
+    using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Models.Common;
     using Microsoft.AspNetCore.Http;
 
     public class CreateVitaminProductInputModel

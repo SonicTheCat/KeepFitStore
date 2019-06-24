@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\KeepFitStore.Data\KeepFitStore.Data.csproj" />
     <ProjectReference Include="..\KeepFitStore.Helpers\KeepFitStore.Helpers.csproj" />
+    <ProjectReference Include="..\KeepFitStore.Models\KeepFitStore.Models.csproj" />
     <ProjectReference Include="..\KeepFitStore.Services\KeepFitStore.Services.csproj" />
   </ItemGroup>
 

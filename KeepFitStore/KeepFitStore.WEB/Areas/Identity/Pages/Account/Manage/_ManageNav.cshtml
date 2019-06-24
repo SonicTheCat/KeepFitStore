@@ -1,4 +1,6 @@
-﻿@inject SignInManager<KeepFitUser> SignInManager
+﻿@using KeepFitStore.Domain
+
+@inject SignInManager<KeepFitUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

@@ -1,5 +1,5 @@
-﻿@using KeepFitStore.WEB.Areas.Administrator.Models.InputModels.Products
-@using KeepFitStore.Models.Enums
+﻿@using KeepFitStore.Models.InputModels.Products
+@using KeepFitStore.Domain.Enums
 
 @model CreateProteinProductInputModel
 @{
@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-xl-12">
-        <section> 
+        <section>
             <form class="shadow p-3 m-4" method="post" enctype="multipart/form-data" asp-area="Administrator" asp-controller="Products" asp-action="CreateProtein">
                 <div class="d-flex justify-content-center mb-4">
                     <h4 class="m-2">Create Protein</h4>

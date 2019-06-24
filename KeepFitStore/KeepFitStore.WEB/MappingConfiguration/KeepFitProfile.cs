@@ -2,8 +2,8 @@
 {
     using AutoMapper;
 
-    using KeepFitStore.Models.Products;
-    using Areas.Administrator.Models.InputModels.Products;
+    using KeepFitStore.Domain.Products;
+    using KeepFitStore.Models.InputModels.Products;
     
     public class KeepFitProfile : Profile
     {

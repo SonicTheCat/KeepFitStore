@@ -20,12 +20,11 @@
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Middlewares;
     using KeepFitStore.Helpers;
-    using KeepFitStore.Models;
+    using KeepFitStore.Domain;
     
     using Microsoft.AspNetCore.Authentication.Cookies;
 
     using AutoMapper;
-
 
     public class Startup
     {
@@ -47,6 +46,7 @@
             });
 
             services.AddDbContext<KeepFitDbContext>(options =>
+
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 

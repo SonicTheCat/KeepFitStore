@@ -5,10 +5,10 @@
 
     using KeepFitStore.Common;
     using KeepFitStore.Services.Contracts;   
-    using KeepFitStore.Models.Products;
+    using KeepFitStore.Domain.Products;
     using KeepFitStore.WEB.Common;
     using KeepFitStore.WEB.Filters;
-    using Areas.Administrator.Models.InputModels.Products;
+    using KeepFitStore.Models.InputModels.Products;
     using Microsoft.AspNetCore.Http;
     using System.Collections.Generic;
 

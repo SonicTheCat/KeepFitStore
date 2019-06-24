@@ -1,14 +1,14 @@
-﻿namespace KeepFitStore.WEB.Areas.Administrator.Models.InputModels.Products
+﻿namespace KeepFitStore.Models.InputModels.Products
 {
     using System.ComponentModel.DataAnnotations;
 
-    using KeepFitStore.Models.Enums;
-    using KeepFitStore.WEB.Areas.Administrator.Models.Common;
+    using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Models.Common;
     using Microsoft.AspNetCore.Http;
 
-    public class CreateCreatineProductInputModel
+    public class CreateAminoAcidProducInputModel
     {
-        public const string CreatineTypeName = "Creatine Type";
+        private const string AminoAcidTypeName = "Amino Acid Type";
 
         [Required]
         [Display(Name = ModelsConstants.ProductBrandName)]
@@ -30,8 +30,18 @@
         public bool IsSuatableForVegans { get; set; }
 
         [Required]
-        [Display(Name = CreatineTypeName)]
-        public CreatineType Type { get; set; }
+        [Display(Name = AminoAcidTypeName)]
+        public AminoAcidType Type { get; set; }
+
+        [Required]
+        [Display(Name = ModelsConstants.EnergyPerServingName)]
+        public double EnergyPerServing { get; set; }
+
+        [Required]
+        public double Carbohydrate { get; set; }
+
+        [Required]
+        public double Fat { get; set; }
 
         [Required]
         [Display(Name = ModelsConstants.UploadProducImageName)]

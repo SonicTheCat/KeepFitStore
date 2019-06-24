@@ -1,8 +1,9 @@
 ﻿namespace KeepFitStore.Data.EntityConfig
 {
-    using KeepFitStore.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using Domain;
 
     public class KeepFitUserConfig : IEntityTypeConfiguration<KeepFitUser>
     {

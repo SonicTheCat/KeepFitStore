@@ -4,8 +4,8 @@
     using Microsoft.EntityFrameworkCore;
 
     using EntityConfig;
-    using Models;
-    using Models.Products;
+    using Domain;
+    using Domain.Products;
 
     public class KeepFitDbContext : IdentityDbContext<KeepFitUser>
     {

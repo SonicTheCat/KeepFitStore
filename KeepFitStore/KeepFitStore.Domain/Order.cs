@@ -1,4 +1,4 @@
-﻿namespace KeepFitStore.Models
+﻿namespace KeepFitStore.Domain
 {
     using System;
     using System.Collections.Generic;

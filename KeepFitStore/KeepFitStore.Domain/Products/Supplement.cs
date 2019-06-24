@@ -1,4 +1,4 @@
-﻿namespace KeepFitStore.Models.Products
+﻿namespace KeepFitStore.Domain.Products
 {
     public abstract class Supplement : Product
     {

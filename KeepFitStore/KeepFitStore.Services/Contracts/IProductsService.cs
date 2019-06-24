@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Http;
 
-    using KeepFitStore.Models.Products;
+    using KeepFitStore.Domain.Products;
     
     public interface IProductsService
     {
