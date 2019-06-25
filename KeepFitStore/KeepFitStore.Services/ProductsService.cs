@@ -12,6 +12,9 @@
 
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
+    using KeepFitStore.Models.ViewModels.Products;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class ProductsService : IProductsService
     {
@@ -75,6 +78,13 @@
 
             this.context.Add(product);
             this.context.SaveChanges();
+        }
+
+        public IEnumerable<ProductViewModel> AllProducts()
+        {
+            var products = this.context.Products.ToList();
+            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
+            return viewModel; 
         }
     }
 }

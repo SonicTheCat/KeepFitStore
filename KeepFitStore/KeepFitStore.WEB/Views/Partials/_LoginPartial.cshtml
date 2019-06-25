@@ -11,7 +11,7 @@
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
+            <a class="nav-link" href="#"><i class="fa fa-shopping-basket" style="font-size:24px"></i></a>
         </li>
         <li class="nav-item mr-4">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

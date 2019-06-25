@@ -19,6 +19,7 @@
         {
             if (!context.ModelState.IsValid)
             {
+                //context.HttpContext.Request.Path 
                 var action = context.Controller
                     .GetType()
                     .GetMethods()
