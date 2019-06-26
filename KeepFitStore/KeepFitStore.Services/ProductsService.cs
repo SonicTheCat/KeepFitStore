@@ -1,21 +1,23 @@
 ﻿namespace KeepFitStore.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using Microsoft.Extensions.Options;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
 
     using AutoMapper;
 
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+   
     using KeepFitStore.Helpers;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
-
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
     using KeepFitStore.Models.ViewModels.Products;
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class ProductsService : IProductsService
     {
         private readonly KeepFitDbContext context;
@@ -80,11 +82,27 @@
             this.context.SaveChanges();
         }
 
-        public IEnumerable<ProductViewModel> AllProducts()
+        public async Task<IEnumerable<ProductViewModel>> GetTopRatedProducts()
         {
-            var products = this.context.Products.ToList();
+            //TODO: change order!
+            var products = await this.context
+                .Products
+                .OrderBy(x => x.Price)
+                .ToListAsync();
+
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
             return viewModel; 
+        }
+
+        public async Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync()
+        {
+            var products = await this.context
+                .Products
+                .OrderByDescending(x => x.CreatedOn)
+                .ToListAsync();
+
+            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
+            return viewModel;
         }
     }
 }

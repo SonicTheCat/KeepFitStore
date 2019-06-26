@@ -2,7 +2,7 @@
 {
     using KeepFitStore.Domain.Enums;
 
-    public class ProductViewModel
+    public class NewestProductViewModel
     {
         public int Id { get; set; }
 
@@ -10,7 +10,7 @@
 
         public decimal Price { get; set; }
 
-       // public bool IsOnSale { get; set; }
+        // public bool IsOnSale { get; set; }
 
         public string Description { get; set; }
 

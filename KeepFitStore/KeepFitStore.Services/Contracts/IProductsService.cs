@@ -6,6 +6,7 @@
 
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
+    using System.Threading.Tasks;
 
     public interface IProductsService
     {
@@ -13,6 +14,8 @@
             where TSourceType : class
             where TEntityType : Product;
 
-        IEnumerable<ProductViewModel> AllProducts(); 
+        Task<IEnumerable<ProductViewModel>> GetTopRatedProducts();
+
+        Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(); 
     }
 }

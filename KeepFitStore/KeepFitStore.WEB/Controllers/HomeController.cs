@@ -1,25 +1,16 @@
 ﻿namespace KeepFitStore.WEB.Controllers
 {
     using System.Diagnostics;
-    using KeepFitStore.Services.Contracts;
+
     using Microsoft.AspNetCore.Mvc;
 
     using ViewModels;
 
     public class HomeController : BaseController
     {
-        private readonly IProductsService productService;
-
-        public HomeController(IProductsService productService)
-        {
-            this.productService = productService;
-        }
-
         public IActionResult Index()
         {
-            var viewModel = this.productService.AllProducts(); 
-
-            return View(viewModel);
+            return View();
         }
 
         //public IActionResult Privacy()
