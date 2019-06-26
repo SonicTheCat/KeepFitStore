@@ -1,6 +1,7 @@
 ﻿namespace KeepFitStore.Domain.Products
 {
     using KeepFitStore.Domain.Enums;
+    using System;
     using System.Collections.Generic;
 
     public abstract class Product
@@ -8,6 +9,7 @@
         protected Product()
         {
             this.Orders = new HashSet<ProductOrder>();
+            this.CreatedOn = DateTime.UtcNow; 
             this.IsOnSale = false; 
         }
 
@@ -18,6 +20,8 @@
         public decimal Price { get; set; }
 
         public bool IsOnSale { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public string Description { get; set; }
 
