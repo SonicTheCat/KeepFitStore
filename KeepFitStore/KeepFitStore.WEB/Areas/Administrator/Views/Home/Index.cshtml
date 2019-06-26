@@ -1,1 +1,8 @@
-﻿<h1>Hello Admin!</h1>
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<partial name="~/Views/Partials/_MessagesHomeIndexPartial.cshtml" />
+<partial name="~/Views/Partials/_CarouselHomeIndexPartial.cshtml" />
+<vc:top-rated-products></vc:top-rated-products>
+<vc:newest-products></vc:newest-products>

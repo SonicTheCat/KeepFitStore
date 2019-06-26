@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using KeepFitStore.Domain
+
+@inject SignInManager<KeepFitUser> SignInManager
+@inject UserManager<KeepFitUser> UserManager
+
+<ul class="nav justify-content-start pr-4">
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Administrator" asp-controller="Home" asp-action="Settings">Settings</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-shopping-basket" style="font-size:24px"></i></a>
+    </li>
+    <li class="nav-item mr-4">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+</ul>
