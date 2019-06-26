@@ -1,0 +1,9 @@
+﻿@using KeepFitStore.Models.ViewModels.Products
+
+@model IEnumerable<ProductViewModel>
+@{
+    this.ViewData["Title"] = "Products Home Page";
+}
+
+<h2><span class="line-center m-4"><em>Products</em></span></h2>
+<partial name="~/Views/Partials/_ProductsIteratorPartial.cshtml" model="Model" />

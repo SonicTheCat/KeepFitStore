@@ -3,7 +3,10 @@
     using AutoMapper;
 
     using KeepFitStore.Domain.Products;
-    using KeepFitStore.Models.InputModels.Products;
+    using KeepFitStore.Models.InputModels.Products.Aminos;
+    using KeepFitStore.Models.InputModels.Products.Creatines;
+    using KeepFitStore.Models.InputModels.Products.Proteins;
+    using KeepFitStore.Models.InputModels.Products.Vitamins;
     using KeepFitStore.Models.ViewModels.Products;
 
     public class KeepFitProfile : Profile

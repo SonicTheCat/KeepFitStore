@@ -12,12 +12,13 @@
 
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
-   
+
     using KeepFitStore.Helpers;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
+
     public class ProductsService : IProductsService
     {
         private readonly KeepFitDbContext context;
@@ -65,7 +66,7 @@
             return uploadResult.Uri?.ToString();
         }
 
-        public void CreateProduct<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
+        public async Task CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
             where TSourceType : class
             where TEntityType : Product
         {
@@ -79,27 +80,39 @@
             product.ImageUrl = UploadImage(image);
 
             this.context.Add(product);
-            this.context.SaveChanges();
+            await this.context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetTopRatedProducts()
+        public async Task<IEnumerable<ProductViewModel>> GetTopRatedProducts(int countOfProducts)
         {
             //TODO: change order!
             var products = await this.context
                 .Products
                 .OrderBy(x => x.Price)
+                .Take(countOfProducts)
                 .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
-            return viewModel; 
+            return viewModel;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync()
+        public async Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts)
         {
             var products = await this.context
                 .Products
                 .OrderByDescending(x => x.CreatedOn)
+                .Take(countOfProducts)
                 .ToListAsync();
+
+            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
+            return viewModel;
+        }
+
+        public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
+        {
+            var products = await this.context
+               .Products
+               .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
             return viewModel;

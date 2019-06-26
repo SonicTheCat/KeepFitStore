@@ -10,12 +10,14 @@
 
     public interface IProductsService
     {
-        void CreateProduct<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
+        Task CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
             where TSourceType : class
             where TEntityType : Product;
 
-        Task<IEnumerable<ProductViewModel>> GetTopRatedProducts();
+        Task<IEnumerable<ProductViewModel>> GetTopRatedProducts(int countOfProducts);
 
-        Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(); 
+        Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts);
+
+        Task<IEnumerable<ProductViewModel>> GetAllAsync();
     }
 }

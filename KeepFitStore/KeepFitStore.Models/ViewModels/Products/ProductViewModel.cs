@@ -10,7 +10,7 @@
 
         public decimal Price { get; set; }
 
-       // public bool IsOnSale { get; set; }
+        public bool IsOnSale { get; set; }
 
         public string Description { get; set; }
 

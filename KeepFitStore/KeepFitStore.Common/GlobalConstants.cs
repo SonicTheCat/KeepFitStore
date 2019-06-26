@@ -4,6 +4,10 @@
     {
         public const string AdministratorRoleName = "Administrator"; 
 
+        public const string AdministratorArea = "Administrator"; 
+
+        public const string ProductsArea = "Products"; 
+
         public const string UserRoleName = "User";
 
         public const string UserSettingsString = "UserSettings";

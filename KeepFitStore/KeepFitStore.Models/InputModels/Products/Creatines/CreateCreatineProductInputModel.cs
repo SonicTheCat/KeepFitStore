@@ -1,4 +1,4 @@
-﻿namespace KeepFitStore.Models.InputModels.Products
+﻿namespace KeepFitStore.Models.InputModels.Products.Creatines
 {
     using System.ComponentModel.DataAnnotations;
 

@@ -5,7 +5,8 @@
     using System.Threading.Tasks;
 
     using KeepFitStore.Services.Contracts;
-    
+    using KeepFitStore.WEB.Common;
+
     [ViewComponentAttribute(Name = "TopRatedProducts")]
     public class TopRatedProductsViewComponent : ViewComponent
     {
@@ -18,7 +19,7 @@
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var products = await this.productsService.GetTopRatedProducts();
+            var products = await this.productsService.GetTopRatedProducts(WebConstants.CountOfProductsToBeShownOnHomePage);
 
             return this.View(products);
         }

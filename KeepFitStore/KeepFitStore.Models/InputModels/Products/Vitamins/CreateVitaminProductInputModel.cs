@@ -1,4 +1,4 @@
-﻿namespace KeepFitStore.Models.InputModels.Products
+﻿namespace KeepFitStore.Models.InputModels.Products.Vitamins
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -6,9 +6,9 @@
     using KeepFitStore.Models.Common;
     using Microsoft.AspNetCore.Http;
 
-    public class CreateAminoAcidProducInputModel
+    public class CreateVitaminProductInputModel
     {
-        private const string AminoAcidTypeName = "Amino Acid Type";
+        private const string VitamineTypeName = "Vitamine Type";
 
         [Required]
         [Display(Name = ModelsConstants.ProductBrandName)]
@@ -30,18 +30,8 @@
         public bool IsSuatableForVegans { get; set; }
 
         [Required]
-        [Display(Name = AminoAcidTypeName)]
-        public AminoAcidType Type { get; set; }
-
-        [Required]
-        [Display(Name = ModelsConstants.EnergyPerServingName)]
-        public double EnergyPerServing { get; set; }
-
-        [Required]
-        public double Carbohydrate { get; set; }
-
-        [Required]
-        public double Fat { get; set; }
+        [Display(Name = VitamineTypeName)]
+        public VitaminType Type { get; set; }
 
         [Required]
         [Display(Name = ModelsConstants.UploadProducImageName)]

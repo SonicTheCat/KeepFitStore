@@ -1,0 +1,12 @@
+﻿@using KeepFitStore.Common
+
+@{
+    if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        Layout = "~/Areas/Administrator/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
+}
