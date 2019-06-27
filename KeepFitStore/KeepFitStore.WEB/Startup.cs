@@ -132,12 +132,12 @@
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                   name: "productRoute",
-                   template: "Administrator/{area:exists}/{controller=Home}/{action=Index}/");
-
-                routes.MapRoute(
                     name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                  name: "productRoute",
+                  template: "Administrator/{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",

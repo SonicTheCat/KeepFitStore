@@ -18,6 +18,7 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Models.ViewModels.Products.Proteins;
 
     public class ProductsService : IProductsService
     {
@@ -115,6 +116,21 @@
                .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
+            return viewModel;
+        }
+
+        public async Task<DetailsProteinViewModel> GetProteinById(int id)
+        {
+            var protein = await this.context
+                .Proteins
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            if (protein == null)
+            {
+                return null;
+            }
+
+            var viewModel = this.mapper.Map<DetailsProteinViewModel>(protein);
             return viewModel;
         }
     }

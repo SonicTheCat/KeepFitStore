@@ -8,6 +8,7 @@
     using KeepFitStore.Models.InputModels.Products.Proteins;
     using KeepFitStore.Models.InputModels.Products.Vitamins;
     using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Models.ViewModels.Products.Proteins;
 
     public class KeepFitProfile : Profile
     {
@@ -21,6 +22,9 @@
 
             //Products - view models
             this.CreateMap<Product, ProductViewModel>();
+            this.CreateMap<Protein, DetailsProteinViewModel>();
+
+
         }
     }
 }

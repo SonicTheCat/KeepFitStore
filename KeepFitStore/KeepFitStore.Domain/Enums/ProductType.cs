@@ -5,6 +5,6 @@
         Protein = 1,
         Creatine = 2,
         Vitamin = 3,
-        AminoAcid = 4
+        Amino = 4
     }
 }

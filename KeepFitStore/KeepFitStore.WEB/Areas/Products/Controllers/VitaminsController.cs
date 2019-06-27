@@ -36,5 +36,10 @@
 
             return this.Redirect(WebConstants.HomePagePath);
         }
+
+        public IActionResult Details(int id)
+        {
+            return this.View(id); 
+        }
     }
 }

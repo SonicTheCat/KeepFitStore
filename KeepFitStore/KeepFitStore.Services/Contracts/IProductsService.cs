@@ -7,6 +7,7 @@
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
     using System.Threading.Tasks;
+    using KeepFitStore.Models.ViewModels.Products.Proteins;
 
     public interface IProductsService
     {
@@ -19,5 +20,7 @@
         Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts);
 
         Task<IEnumerable<ProductViewModel>> GetAllAsync();
+
+        Task<DetailsProteinViewModel> GetProteinById(int id);
     }
 }

@@ -8,7 +8,7 @@
     {
         public AminoAcid()
         {
-            this.ProductType = ProductType.AminoAcid;
+            this.ProductType = ProductType.Amino;
         }
 
         [Column(nameof(AminoAcidType))]

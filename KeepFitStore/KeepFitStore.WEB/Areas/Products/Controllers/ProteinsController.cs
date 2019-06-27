@@ -36,5 +36,17 @@
 
             return this.Redirect(WebConstants.HomePagePath);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var protein = await this.productsService.GetProteinById(id);
+
+            if (protein == null)
+            {
+                return this.NotFound(); 
+            }
+
+            return this.View(protein);
+        }
     }
 }

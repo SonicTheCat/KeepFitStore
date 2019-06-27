@@ -1,6 +1,9 @@
 ﻿@using KeepFitStore.Models.ViewModels.Products
 
 @model IEnumerable<ProductViewModel>
+@{ 
+    var plural = "s"; 
+}
 
 <div class="row">
     @foreach (var item in Model)
@@ -10,7 +13,7 @@
             <div class="card-title"><strong>@item.Name.ToUpper()</strong> @item.ProductType.ToString().ToUpper()</div>
             <div class="card-title text-danger"><strong>@item.Price лв.</strong></div>
             <div class="btn-group" role="group">
-                <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><span class="glyphicon glyphicon-arrow-right"></span>Details</a>
+                <a asp-area="Products" asp-controller="@(item.ProductType.ToString() + @plural)" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><span class="glyphicon glyphicon-arrow-right"></span>Details</a>
                 <a href="#" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-right"></span>Add to basket</a>              
             </div>
         </div>
