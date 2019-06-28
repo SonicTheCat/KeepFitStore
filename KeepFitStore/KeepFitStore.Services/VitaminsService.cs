@@ -23,16 +23,16 @@
 
         public async Task<DetailsVitaminViewModel> GetByIdAsync(int id)
         {
-            var protein = await this.context
-                .Proteins
+            var vitamin = await this.context
+                .Vitamins
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-            if (protein == null)
+            if (vitamin == null)
             {
                 return null;
             }
 
-            var viewModel = this.mapper.Map<DetailsVitaminViewModel>(protein);
+            var viewModel = this.mapper.Map<DetailsVitaminViewModel>(vitamin);
             return viewModel;
         }
     }
