@@ -15,10 +15,12 @@
     public class CreatinesController : ProductsController
     {
         private readonly IProductsService productsService;
+        private readonly ICreatinesService creatinesService;
 
-        public CreatinesController(IProductsService productsService)
+        public CreatinesController(IProductsService productsService, ICreatinesService creatinesService)
         {
             this.productsService = productsService;
+            this.creatinesService = creatinesService;
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -37,9 +39,17 @@
             return this.Redirect(WebConstants.HomePagePath);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return this.View(id);
+            var creatine = await this.creatinesService.GetByIdAsync(id);
+
+            //TODO: Write CustomException in services, they do not have to return null!
+            if (creatine == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(creatine);
         }
     }
 }

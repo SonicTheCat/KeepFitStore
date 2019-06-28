@@ -15,10 +15,12 @@
     public class ProteinsController : ProductsController
     {
         private readonly IProductsService productsService;
+        private readonly IProteinsService proteinsService;
 
-        public ProteinsController(IProductsService productsService)
+        public ProteinsController(IProductsService productsService, IProteinsService proteinsService)
         {
             this.productsService = productsService;
+            this.proteinsService = proteinsService;
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -39,8 +41,9 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var protein = await this.productsService.GetProteinById(id);
+            var protein = await this.proteinsService.GetByIdAsync(id);
 
+            //TODO: Write CustomException in services, they do not have to return null!
             if (protein == null)
             {
                 return this.NotFound(); 

@@ -75,6 +75,6 @@ h2:after {
     top: 50%;
     left: 0;
     right: 0;
-    border-top: solid 3px #007bff;
+    border-top: solid 1.5px #007bff;
     z-index: -1;
 }

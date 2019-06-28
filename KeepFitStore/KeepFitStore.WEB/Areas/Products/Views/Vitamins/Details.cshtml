@@ -1,6 +1,9 @@
-﻿@model int
+﻿@using KeepFitStore.Models.ViewModels.Products.Vitamins
+
+@model DetailsVitaminViewModel
 @{
-    ViewData["Title"] = "Vitamin Details";
+    ViewData["Title"] = $"{Model.Name} Details";
+    this.ViewBag.Product = Model;
 }
 
-<h1>Hello vitamin number - @Model!</h1>
+<partial name="~/Areas/Products/Views/Partials/_ProductShortDetailsPartial.cshtml" />

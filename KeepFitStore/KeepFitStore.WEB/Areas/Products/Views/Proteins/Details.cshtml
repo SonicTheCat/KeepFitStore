@@ -3,18 +3,7 @@
 @model DetailsProteinViewModel
 @{
     ViewData["Title"] = $"{Model.Name} Details";
+    this.ViewBag.Product = Model; 
 }
 
-<h2><span class="line-center m-4"><em>@Model.Name</em></span></h2>
-<div class="d-flex justify-content-between m-3">
-    <div class="w-50">
-        <img src="@Model.ImageUrl" class="img-fluid border" alt="Responsive image">
-    </div>
-    <div class="container text-right ml-4 shadow bg-light">
-        <p>@Model.ProductType</p>
-        <p>@Model.Price</p>
-        <div class="text-center">
-            <a href="#" class="btn btn-lg btn-danger w-75">Add to basket</a>
-        </div>
-    </div>
-</div>
+<partial name="~/Areas/Products/Views/Partials/_ProductShortDetailsPartial.cshtml"/>

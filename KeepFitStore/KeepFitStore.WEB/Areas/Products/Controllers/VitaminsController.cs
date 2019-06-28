@@ -15,10 +15,12 @@
     public class VitaminsController : ProductsController
     {
         private readonly IProductsService productsService;
+        private readonly IVitaminsService vitaminsService;
 
-        public VitaminsController(IProductsService productsService)
+        public VitaminsController(IProductsService productsService, IVitaminsService vitaminsService)
         {
             this.productsService = productsService;
+            this.vitaminsService = vitaminsService;
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -37,9 +39,17 @@
             return this.Redirect(WebConstants.HomePagePath);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return this.View(id); 
+            var vitamin = await this.vitaminsService.GetByIdAsync(id);
+
+            //TODO: Write CustomException in services, they do not have to return null!
+            if (vitamin == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(vitamin);
         }
     }
 }

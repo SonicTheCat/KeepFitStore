@@ -46,7 +46,6 @@
             });
 
             services.AddDbContext<KeepFitDbContext>(options =>
-
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
@@ -75,20 +74,23 @@
                 options.SlidingExpiration = true;
             });
 
-            //Facebook authentication 
+            //Facebook Authentication 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
-            // requires
-            // using Microsoft.AspNetCore.Identity.UI.Services;
-            // using WebPWrecover.Services;
+            //Services
+            services.AddTransient<IProductsService, ProductsService>();
+            services.AddTransient<IProteinsService, ProteinsService>();
+            services.AddTransient<ICreatinesService, CreatinesService>();
+            services.AddTransient<IVitaminsService, VitaminsService>();
+            services.AddTransient<IAminosService, AminosService>();
+
+            //Email Sender Services
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
-
-            services.AddTransient<IProductsService, ProductsService>();
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
@@ -99,7 +101,7 @@
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            //Cloudinary - photo cloud
+            //Cloudinary - storing photos
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             services.AddMvc(options =>
