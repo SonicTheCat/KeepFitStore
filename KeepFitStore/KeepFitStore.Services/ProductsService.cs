@@ -18,10 +18,17 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
-    using KeepFitStore.Models.ViewModels.Products.Proteins;
 
     public class ProductsService : IProductsService
     {
+        private const string CloudinarySettingCrop = "fill";
+
+        private const string CloudinarySettingGravity = "face";
+
+        private const int CloudinarySettingWidth = 500;
+
+        private const int CloudinarySettingHeight = 500;
+
         private readonly KeepFitDbContext context;
         private readonly IMapper mapper;
         private readonly IOptions<CloudinarySettings> cloudinaryConfig;
@@ -57,9 +64,10 @@
                     {
                         File = new FileDescription(image.Name, stream),
                         Transformation = new Transformation()
-                                        .Width(500).Height(500)
-                                        .Crop("fill")
-                                        .Gravity("face")
+                                        .Width(CloudinarySettingWidth)
+                                        .Height(CloudinarySettingHeight)
+                                        .Crop(CloudinarySettingCrop)
+                                        .Gravity(CloudinarySettingGravity)
                     };
                     uploadResult = cloudinary.Upload(uploadParams);
                 }
@@ -116,21 +124,6 @@
                .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
-            return viewModel;
-        }
-
-        public async Task<DetailsProteinViewModel> GetProteinById(int id)
-        {
-            var protein = await this.context
-                .Proteins
-                .SingleOrDefaultAsync(x => x.Id == id);
-
-            if (protein == null)
-            {
-                return null;
-            }
-
-            var viewModel = this.mapper.Map<DetailsProteinViewModel>(protein);
             return viewModel;
         }
     }
