@@ -21,7 +21,7 @@
     using KeepFitStore.WEB.Middlewares;
     using KeepFitStore.Helpers;
     using KeepFitStore.Domain;
-    
+
     using Microsoft.AspNetCore.Authentication.Cookies;
 
     using AutoMapper;
@@ -102,7 +102,11 @@
             //Cloudinary - photo cloud
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,7 +132,7 @@
 
             app.UseSeedRolesMiddleware();
             app.UseSeedPowerUserMiddleware();
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
