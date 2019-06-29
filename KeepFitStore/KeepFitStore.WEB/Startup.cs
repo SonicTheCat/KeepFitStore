@@ -57,7 +57,11 @@
                 identityOptions.Password.RequireNonAlphanumeric = false;
                 identityOptions.Password.RequireLowercase = false;
 
+                identityOptions.User.RequireUniqueEmail = true;
                 identityOptions.SignIn.RequireConfirmedEmail = true;
+
+                identityOptions.Lockout.MaxFailedAccessAttempts = 5;
+                identityOptions.Lockout.DefaultLockoutTimeSpan = new TimeSpan(1, 0, 0); 
             })
               .AddEntityFrameworkStores<KeepFitDbContext>()
               .AddDefaultUI(UIFramework.Bootstrap4)
