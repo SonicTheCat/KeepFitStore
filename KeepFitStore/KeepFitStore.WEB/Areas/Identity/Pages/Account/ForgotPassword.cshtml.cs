@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,10 +7,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using KeepFitStore.WEB.Filters;
 
 namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [RedirectUserIfLoggedInFilter]
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<KeepFitUser> _userManager;

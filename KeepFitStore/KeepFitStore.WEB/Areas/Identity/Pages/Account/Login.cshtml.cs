@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +9,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using KeepFitStore.WEB.Filters;
 
 namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [RedirectUserIfLoggedInFilter]
     public class LoginModel : PageModel
     {
         private const string ConfirmEmailMessage = "You have to confirm your email before login";
@@ -51,10 +52,13 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
-
+       
         public async Task OnGetAsync(string returnUrl = null)
         {
-            //TODO: Check if user is already logged in 
+            //if (_signInManager.IsSignedIn(this.User))
+            //{
+            //    this.HttpContext.Response.Redirect("/"); 
+            //}
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -72,8 +76,12 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        { 
-            
+        {
+            if (_signInManager.IsSignedIn(this.User))
+            {
+                return RedirectToPage("/");
+            }
+
             returnUrl = returnUrl ?? Url.Content("~/");
 
             if (ModelState.IsValid)

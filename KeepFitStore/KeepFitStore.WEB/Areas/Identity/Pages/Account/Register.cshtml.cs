@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,10 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using KeepFitStore.Common;
+using KeepFitStore.WEB.Filters;
 
 namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    [RedirectUserIfLoggedInFilter]
     public class RegisterModel : PageModel
     {
         private const string EmailAlreadyExistMessage = "Email address already exists.";
