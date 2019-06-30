@@ -25,6 +25,8 @@
     using Microsoft.AspNetCore.Authentication.Cookies;
 
     using AutoMapper;
+    using KeepFitStore.WEB.Rules;
+    using Microsoft.AspNetCore.Rewrite;
 
     public class Startup
     {
@@ -138,6 +140,9 @@
 
             app.UseSeedRolesMiddleware();
             app.UseSeedPowerUserMiddleware();
+
+            var rewriteOptions = new RewriteOptions().Add(new AdminRewriteRule());
+            app.UseRewriter(rewriteOptions); 
 
             app.UseMvc(routes =>
             {

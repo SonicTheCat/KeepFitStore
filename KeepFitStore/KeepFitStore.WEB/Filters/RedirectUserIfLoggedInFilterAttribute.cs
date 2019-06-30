@@ -9,7 +9,7 @@
     {
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            if (context.HttpContext.User != null)
+            if (context.HttpContext.User.Identity.IsAuthenticated)
             {
                 context.Result = new RedirectResult(WebConstants.HomePagePath); 
             }
