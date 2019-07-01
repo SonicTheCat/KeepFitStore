@@ -78,3 +78,17 @@ h2:after {
     border-top: solid 1.5px #007bff;
     z-index: -1;
 }
+
+.adminFooter{
+    border-top: 5px solid; 
+    color: black; 
+    margin: 50px; 
+    padding: 30px; 
+}
+
+.normalFooter {
+    border-top: 5px solid;
+    color: #007bff;
+    margin: 50px;
+    padding: 30px;
+}
