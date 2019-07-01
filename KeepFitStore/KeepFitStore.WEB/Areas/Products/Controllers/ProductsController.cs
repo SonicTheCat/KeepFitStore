@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    using KeepFitStore.Common;
+    using KeepFitStore.WEB.Common;
     using KeepFitStore.WEB.Controllers;
     using KeepFitStore.Services.Contracts;
 

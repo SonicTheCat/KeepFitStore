@@ -1,4 +1,4 @@
-﻿namespace KeepFitStore.Common
+﻿namespace KeepFitStore.WEB.Common
 {
     public static class GlobalConstants
     {

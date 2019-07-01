@@ -5,8 +5,8 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
 
-    using KeepFitStore.Common;
-    
+    using KeepFitStore.WEB.Common;
+
     public class SeedRoleMiddleware
     {
         private readonly RequestDelegate next;

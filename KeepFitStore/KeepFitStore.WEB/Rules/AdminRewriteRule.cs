@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Rewrite;
     using Microsoft.Net.Http.Headers;
 
-    using KeepFitStore.Common;
+    using KeepFitStore.WEB.Common;
 
     public class AdminRewriteRule : IRule
     {

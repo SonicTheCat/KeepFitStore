@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KeepFitStore.Common\KeepFitStore.Common.csproj" />
     <ProjectReference Include="..\KeepFitStore.Domain\KeepFitStore.Domain.csproj" />
   </ItemGroup>
 

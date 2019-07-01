@@ -5,7 +5,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using KeepFitStore.Common;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Filters;
     using KeepFitStore.Domain.Products;

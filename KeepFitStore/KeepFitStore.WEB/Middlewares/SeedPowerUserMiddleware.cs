@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
 
-    using KeepFitStore.Common;
+    using KeepFitStore.WEB.Common;
     using KeepFitStore.Domain;
 
     public class SeedPowerUserMiddleware

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.WEB", "KeepFitStore.WEB\KeepFitStore.WEB.csproj", "{35451C1B-2D81-4CA6-8D8C-8D75931F15FF}"
 EndProject
@@ -9,13 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Data", "KeepFi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Models", "KeepFitStore.Models\KeepFitStore.Models.csproj", "{4936C21A-B9A4-4563-9736-A7D1C796147F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Common", "KeepFitStore.Common\KeepFitStore.Common.csproj", "{8A6C511B-5843-474F-A27F-CF5794E51CF8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Services", "KeepFitStore.Services\KeepFitStore.Services.csproj", "{88BC1D15-990F-472F-A2FD-B9782C81D842}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Helpers", "KeepFitStore.Helpers\KeepFitStore.Helpers.csproj", "{1D84DBC6-8991-4FAA-8A4F-D0772B0E5DC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepFitStore.Domain", "KeepFitStore.Domain\KeepFitStore.Domain.csproj", "{84820873-2ED1-4847-BE03-5BA26170CBA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepFitStore.Domain", "KeepFitStore.Domain\KeepFitStore.Domain.csproj", "{84820873-2ED1-4847-BE03-5BA26170CBA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{4936C21A-B9A4-4563-9736-A7D1C796147F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4936C21A-B9A4-4563-9736-A7D1C796147F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4936C21A-B9A4-4563-9736-A7D1C796147F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A6C511B-5843-474F-A27F-CF5794E51CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A6C511B-5843-474F-A27F-CF5794E51CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A6C511B-5843-474F-A27F-CF5794E51CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A6C511B-5843-474F-A27F-CF5794E51CF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88BC1D15-990F-472F-A2FD-B9782C81D842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88BC1D15-990F-472F-A2FD-B9782C81D842}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88BC1D15-990F-472F-A2FD-B9782C81D842}.Release|Any CPU.ActiveCfg = Release|Any CPU

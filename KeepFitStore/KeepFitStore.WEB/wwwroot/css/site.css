@@ -79,16 +79,12 @@ h2:after {
     z-index: -1;
 }
 
-.adminFooter{
-    border-top: 5px solid; 
-    color: black; 
-    margin: 50px; 
-    padding: 30px; 
+.adminFooterColor {
+    border-top: 5px solid black!important;
 }
 
 .normalFooter {
-    border-top: 5px solid;
-    color: #007bff;
+    border-top: 5px solid #007bff;
     margin: 50px;
     padding: 30px;
 }
