@@ -21,9 +21,15 @@ namespace KeepFitStore.WEB.Controllers
             this.basketService = basketService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return null;
+           // if (this.User.Identity.IsAuthenticated)
+          //  {
+                var basketContent = await this.basketService.GetBasketContentAsync(this.User); 
+
+           // }
+
+            return this.View(basketContent); 
         }
 
         public async Task<IActionResult> Add(int id)
@@ -31,20 +37,18 @@ namespace KeepFitStore.WEB.Controllers
             if (this.User.Identity.IsAuthenticated)
             {
                  await this.basketService.AddProductToBasketAsync(id, this.User);
-                    
-
             }
             else
             {
 
             }
 
-            return null;
+            return this.RedirectToAction(nameof(Index)); 
         }
 
-        private int isExist(int id)
-        {
-            return 0;
-        }
+        //private int isExist(int id)
+        //{
+        //    return 0;
+        //}
     }
 }

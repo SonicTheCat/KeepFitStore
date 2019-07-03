@@ -11,7 +11,10 @@
     using KeepFitStore.Domain;
     using KeepFitStore.Services.Contracts;
     using System.Linq;
- 
+    using KeepFitStore.Models.ViewModels.Basket;
+    using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
+
     public class BasketSerivce : IBasketService
     {
         private const int QuantityDefaultValue = 1;
@@ -55,6 +58,22 @@
 
             this.context.BasketItems.Add(basketItem);
             await this.context.SaveChangesAsync(); 
+        }
+
+        public async Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal)
+        {
+            var user = await this.userManager.GetUserAsync(principal);
+            var basketId = user.BasketId;
+
+            var productsInBasket = await this.context
+                .BasketItems
+                .Include(x => x.Basket)
+                .Include(x => x.Product)
+                .Where(x => x.Basket.Id == basketId)
+                .ToListAsync();
+
+            var viewModel = this.mapper.Map<IEnumerable<IndexBasketViewModel>>(productsInBasket);
+            return viewModel; 
         }
 
         private BasketItem GetBasketItemOrDefault(int productId, int basketId)

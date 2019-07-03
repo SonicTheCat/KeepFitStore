@@ -50,7 +50,7 @@ body {
 
 .menuNavbar {
     background-color: white !important;
-    border-bottom: 2px solid black; /*primary color => #007bff;*/
+    border-bottom: 1px solid black; /*primary color => #007bff;*/
 }
 
 ul {
@@ -89,3 +89,18 @@ h2:after {
     margin: 50px;
     padding: 30px;
 }
+
+.center {
+    width: 150px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#quantity {
+    width:20%!important;
+}
+ 

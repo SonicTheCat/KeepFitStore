@@ -12,6 +12,8 @@
     using KeepFitStore.Models.ViewModels.Products.Proteins;
     using KeepFitStore.Models.ViewModels.Products.Vitamins;
     using KeepFitStore.Models.ViewModels.Products.Aminos;
+    using KeepFitStore.Domain;
+    using KeepFitStore.Models.ViewModels.Basket;
 
     public class KeepFitProfile : Profile
     {
@@ -29,6 +31,10 @@
             this.CreateMap<Creatine, DetailsCreatineViewModel>();
             this.CreateMap<AminoAcid, DetailsAminoViewModel>();
             this.CreateMap<Vitamin, DetailsVitaminViewModel>();
+            this.CreateMap<Product, ProductInBasketViewModel>();
+
+            //Basket 
+            this.CreateMap<BasketItem, IndexBasketViewModel>(); 
         }
     }
 }
