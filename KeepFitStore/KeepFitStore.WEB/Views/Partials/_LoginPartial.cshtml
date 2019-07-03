@@ -4,38 +4,39 @@
 @inject SignInManager<KeepFitUser> SignInManager
 @inject UserManager<KeepFitUser> UserManager
 
-<ul class="nav justify-content-end pr-4">
+
+<ul class="navbar-nav navbar-right">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-shopping-basket" style="font-size:24px"></i></a>
-        </li>
-        <li class="nav-item mr-4">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user mr-1"></i>
+                Hello @User.Identity.Name!
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class='far fa-id-card'></i> Account Settings</a>
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </li>
     }
     else
     {
-
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
-                <div class="d-flex justify-content-center"><i class="fas fa-user"></i></div>
-                <div>Login</div>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user mr-1"></i>
+                Account
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
-                <div class="d-flex justify-content-center"><i class="fas fa-user-plus"></i></div>
-                <div>Register</div>
-            </a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#"><i class="fas fa-shopping-basket"></i></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </div>
         </li>
     }
+    <li class="nav-item">
+        <a class="nav-link text-white" href="#">
+            <div class="text-center">
+                <i class="fa fa-shopping-basket"></i>
+            </div>
+        </a>
+    </li>
 </ul>

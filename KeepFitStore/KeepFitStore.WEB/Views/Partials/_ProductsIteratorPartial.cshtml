@@ -14,7 +14,7 @@
             <div class="card-title text-danger"><strong>@item.Price лв.</strong></div>
             <div class="btn-group" role="group">
                 <a asp-area="Products" asp-controller="@(item.ProductType.ToString() + @plural)" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><span class="glyphicon glyphicon-arrow-right"></span>Details</a>
-                <a href="#" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-right"></span>Add to basket</a>              
+                <a asp-controller="Basket" asp-action="Add" asp-route-id="@item.Id" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-right"></span>Add to basket</a>              
             </div>
         </div>
     }

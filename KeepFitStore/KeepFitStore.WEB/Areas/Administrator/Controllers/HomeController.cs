@@ -8,10 +8,5 @@
         {
             return View();
         }
-
-        public IActionResult Settings()
-        {
-            return this.View(); 
-        }
     }
 }

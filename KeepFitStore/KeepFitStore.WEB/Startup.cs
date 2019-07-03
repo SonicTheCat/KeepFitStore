@@ -93,6 +93,7 @@
             services.AddTransient<ICreatinesService, CreatinesService>();
             services.AddTransient<IVitaminsService, VitaminsService>();
             services.AddTransient<IAminosService, AminosService>();
+            services.AddTransient<IBasketService, BasketSerivce>();
 
             //Email Sender Services
             services.AddTransient<IEmailSender, EmailSender>();
@@ -109,6 +110,8 @@
 
             //Cloudinary - storing photos
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
+            services.AddSession();
 
             services.AddMvc(options =>
             {
@@ -141,8 +144,10 @@
             app.UseSeedRolesMiddleware();
             app.UseSeedPowerUserMiddleware();
 
-            var rewriteOptions = new RewriteOptions().Add(new AdminRewriteRule());
-            app.UseRewriter(rewriteOptions); 
+            //var rewriteOptions = new RewriteOptions().Add(new AdminRewriteRule());
+            //app.UseRewriter(rewriteOptions);
+
+            app.UseSession(); 
 
             app.UseMvc(routes =>
             {
@@ -150,9 +155,9 @@
                     name: "areaRoute",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapRoute(
-                    name: "productRoute",
-                    template: "Administrator/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                //routes.MapRoute(
+                //    name: "productRoute",
+                //    template: "Administrator/{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",

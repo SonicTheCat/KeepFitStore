@@ -10,7 +10,6 @@ using KeepFitStore.WEB.Filters;
 namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    [RedirectUserIfLoggedInFilter]
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<KeepFitUser> _userManager;

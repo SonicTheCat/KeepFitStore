@@ -1,8 +1,26 @@
-﻿@{
-    ViewData["Title"] = "Admin Home Page";
-}
-
-<partial name="~/Views/Partials/_MessagesHomeIndexPartial.cshtml" />
-<partial name="~/Views/Partials/_CarouselHomeIndexPartial.cshtml" />
-<vc:top-rated-products></vc:top-rated-products>
-<vc:newest-products></vc:newest-products>
+﻿<div class="row mt-4 d-flex justify-content-between">
+    <div class="card col-3 m-2 p-2" style="width: 18rem;">
+        <img class="card-img-top" src="~/photos/ProductManagment.jpg" alt="Product Managment">
+        <div class="card-body text-center">
+            <h5 class="card-title">Product Manager</h5>
+            <p class="card-text">Add, Update or Delete Products</p>
+            <a class="btn btn-success" asp-area="Administrator" asp-controller="Products" asp-action="Create">Enter</a>
+        </div>
+    </div>
+    <div class="card col-3 m-2 p-2" style="width: 18rem;">
+        <img class="card-img-top" src="~/photos/OrderManagment.jpg" alt="Product Managment">
+        <div class="card-body text-center">
+            <h5 class="card-title">Order Manager</h5>
+            <p class="card-text">Add, Update or Delete Orders</p>
+            <a class="btn btn-success" asp-area="Administrator" asp-controller="Products" asp-action="Create">Enter</a>
+        </div>
+    </div>
+    <div class="card col-3 m-2 p-2" style="width: 18rem;">
+        <img class="card-img-top" src="~/photos/UserManagment.jpg" alt="Product Managment">
+        <div class="card-body text-center">
+            <h5 class="card-title">User Manager</h5>
+            <p class="card-text">Add, Update or Delete Users</p>
+            <a class="btn btn-success" asp-area="Administrator" asp-controller="Products" asp-action="Create">Enter</a>
+        </div>
+    </div>
+</div>

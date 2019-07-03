@@ -9,6 +9,7 @@
     public class AdminRewriteRule : IRule
     {
         private const string AdminPanelSegment = "/Administrator";
+
         private const string IdentityPanelSegment = "/Identity";
 
         public AdminRewriteRule()

@@ -48,8 +48,9 @@ body {
     margin-bottom: 60px;
 }
 
-.layoutColors {
-    background-color: #007bff !important;
+.menuNavbar {
+    background-color: white !important;
+    border-bottom: 2px solid black; /*primary color => #007bff;*/
 }
 
 ul {

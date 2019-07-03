@@ -1,0 +1,13 @@
+﻿@using KeepFitStore.WEB.Common
+
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home mr-1"></i>Home</a>
+    </li>
+    @if (User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="Administrator" asp-controller="Home" asp-action="Index"><i class="fas fa-tools mr-1" style="color:white"></i>Admin Panel</a>
+        </li>
+    }
+</ul>

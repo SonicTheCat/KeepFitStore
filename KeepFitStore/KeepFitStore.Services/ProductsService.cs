@@ -126,5 +126,15 @@
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
             return viewModel;
         }
+
+        public async Task<ProductViewModel> GetProductByIdAsync(int id)
+        {
+            var product = await this.context
+                .Products
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            var viewModel = this.mapper.Map<ProductViewModel>(product);
+            return viewModel;
+        }
     }
 }

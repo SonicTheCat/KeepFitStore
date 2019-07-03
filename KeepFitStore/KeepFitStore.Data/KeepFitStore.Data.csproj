@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20190604185459_InitialEntities.Designer.cs" />
     <Compile Remove="Migrations\20190609180732_Initial.cs" />
     <Compile Remove="Migrations\20190609180732_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190701144234_test.cs" />
+    <Compile Remove="Migrations\20190701144234_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
