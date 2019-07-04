@@ -3,7 +3,8 @@
 @model IEnumerable<IndexBasketViewModel>
 @{
     ViewData["Title"] = "Your Basket";
-    var plural = "s"; 
+    var plural = "s";
+    var total = 0m;
 }
 
 <h1 class="mt-3">Your Basket</h1>
@@ -17,7 +18,7 @@ else
 {
     @foreach (var item in Model)
     {
-        <div class="row border rounded pb-2 pt-2 mt-2 mb-2">
+        <div class="row bg-light border rounded pb-2 pt-2 mt-2 mb-2">
             <div class="col-xl-2 col-lg-2 col-md-4 col-sm-7 col-8 m-1">
                 <img src="@item.Product.ImageUrl" class="img-fluid border" alt="Responsive image">
             </div>
@@ -27,17 +28,18 @@ else
                 </a>
             </div>
             <div class="col-xl-2 col-lg-2 col-md-8 col-sm-10 col-12 m-1">
+                <input type="hidden" basketId="@item.BasketId" productId="@item.Product.Id" name="name">
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-sm btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                        <a asp-controller="Basket" asp-action="Edit" asp-route-basketId="@item.BasketId" asp-route-productId="@item.Product.Id" asp-route-quantity="@(item.Quantity - 1)" class="btn btn-outline-info border btn-sm" dataType="minus">
                             <span> <i class='fas fa-minus'></i></span>
-                        </button>
+                        </a>
                     </span>
-                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="10">
+                    <input type="number" disabled="disabled" class="bg-white pl-1 quantity" value="@item.Quantity" min="1" max="10">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-sm btn-number" data-type="minus" data-field="quant[1]">
+                        <a asp-controller="Basket" asp-action="Edit" asp-route-basketId="@item.BasketId" asp-route-productId="@item.Product.Id" asp-route-quantity="@(item.Quantity + 1)" class="btn btn-outline-info border btn-sm" dataType="plus">
                             <span><i class='fas fa-plus'></i></span>
-                        </button>
+                        </a>
                     </span>
                 </div>
             </div>
@@ -49,7 +51,67 @@ else
             </div>
         </div>
     }
+    <div>Total: @Model.Sum(x => x.Product.Price * x.Quantity)</div>
     <div class="text-center pt-1 pb-1 mt-4 mb-4">
         <a href="#" class="btn btn-warning col-xl-8">Check out</a>
     </div>
+
+}
+
+@section Scripts {
+    <script>
+        $().ready(function () {
+            var inputQuantities = $("input[type='number']").toArray();
+
+            for (var i in inputQuantities) {
+                var currentInput = $(inputQuantities[i])
+                var quantity = currentInput.val();
+
+                if (quantity == 1) {                
+                    var element = currentInput.prev().children().eq(0)[0];
+                    $(element).addClass("disabled");                                  
+                }
+            }
+        });
+
+                //$().ready(function () {
+                //    let quantityButtons = $("button[dataType]");
+                //    quantityButtons.on("click", function () {
+
+                //        let pressedButton = $(this);
+                //        let hiddenInputWithIds = pressedButton.parent().parent().prev();
+                //        let basketId = hiddenInputWithIds.attr("basketId");
+                //        var productId = hiddenInputWithIds.attr("productId");
+
+                //        let buttonValue = pressedButton.attr("dataType");
+
+                //        let input;
+                //        let newValue;
+                //        if (buttonValue == "plus") {
+                //            input = pressedButton.parent().prev();
+                //            newValue = Number(input.val()) + 1;
+                //        } else if (buttonValue == "minus") {
+                //            input = pressedButton.parent().next();
+                //            newValue = Number(input.val()) - 1;
+                //        }
+
+                //        $.ajax({
+                //            type: 'Get',
+                //            url: `/Basket/Edit?basketId=${basketId}&productId=${productId}&quantity=${newValue}`,
+                //            success: function (data) {
+                //                console.log("mina");
+                //                input.val(newValue);
+                //            }
+                //        });
+
+                //        console.log(basketId);
+                //        console.log(productId);
+
+
+                //        //input.val(newValue);
+                //        //console.log(input.val())
+
+                //    });
+                //});
+    </script>
 }

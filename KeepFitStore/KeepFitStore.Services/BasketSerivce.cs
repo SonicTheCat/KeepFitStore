@@ -14,6 +14,7 @@
     using KeepFitStore.Models.ViewModels.Basket;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Mvc;
 
     public class BasketSerivce : IBasketService
     {
@@ -46,17 +47,36 @@
             var basketItem = GetBasketItemOrDefault(product.Id, user.BasketId);
             if (basketItem != null)
             {
-                return;
+                basketItem.Quantity++;
+            }
+            else
+            {
+                basketItem = new BasketItem()
+                {
+                    ProductId = product.Id,
+                    Quantity = quntity.HasValue ? quntity.Value : QuantityDefaultValue,
+                    BasketId = user.BasketId
+                };
+
+                this.context.BasketItems.Add(basketItem);
             }
 
-            basketItem = new BasketItem()
-            {
-                ProductId = product.Id,
-                Quantity = quntity.HasValue ? quntity.Value : QuantityDefaultValue,
-                BasketId = user.BasketId
-            };
+            await this.context.SaveChangesAsync();
+        }
 
-            this.context.BasketItems.Add(basketItem);
+        public async Task EdintBasketItemAsync(int basketId, int productId, int quantity)
+        {
+            var basketItem = this.context
+                .BasketItems
+                .SingleOrDefault(x => x.BasketId == basketId && x.ProductId == productId);
+
+            if (basketItem == null)
+            {
+                //TODO throw Service exception
+                return; 
+            }
+
+            basketItem.Quantity = quantity;
             await this.context.SaveChangesAsync(); 
         }
 
@@ -73,7 +93,7 @@
                 .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<IndexBasketViewModel>>(productsInBasket);
-            return viewModel; 
+            return viewModel;
         }
 
         private BasketItem GetBasketItemOrDefault(int productId, int basketId)

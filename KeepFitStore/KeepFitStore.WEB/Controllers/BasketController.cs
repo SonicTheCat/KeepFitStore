@@ -17,7 +17,6 @@ namespace KeepFitStore.WEB.Controllers
 
         public BasketController(IBasketService basketService)
         {
-
             this.basketService = basketService;
         }
 
@@ -44,6 +43,12 @@ namespace KeepFitStore.WEB.Controllers
             }
 
             return this.RedirectToAction(nameof(Index)); 
+        }
+
+        public async Task<IActionResult> Edit(int basketId, int productId, int quantity)
+        {
+            await this.basketService.EdintBasketItemAsync(basketId, productId, quantity);
+            return this.RedirectToAction(nameof(Index));
         }
 
         //private int isExist(int id)

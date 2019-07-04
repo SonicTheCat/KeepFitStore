@@ -10,6 +10,8 @@
     {
         Task AddProductToBasketAsync(int productId, ClaimsPrincipal principal, int? quntity = null);
 
-        Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal); 
+        Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal);
+
+        Task EdintBasketItemAsync(int basketId, int productId, int quantity); 
     }
 }
