@@ -64,20 +64,26 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task EdintBasketItemAsync(int basketId, int productId, int quantity)
+        public async Task<object> EditBasketItemAsync(int basketId, int productId, int quantity)
         {
             var basketItem = this.context
                 .BasketItems
+                .Include(x => x.Product)
                 .SingleOrDefault(x => x.BasketId == basketId && x.ProductId == productId);
 
             if (basketItem == null)
             {
                 //TODO throw Service exception
-                return; 
             }
 
             basketItem.Quantity = quantity;
-            await this.context.SaveChangesAsync(); 
+            await this.context.SaveChangesAsync();
+
+            return new 
+            {
+                Price = basketItem.Product.Price,
+                Quantity = quantity
+            }; 
         }
 
         public async Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal)

@@ -12,6 +12,6 @@
 
         Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal);
 
-        Task EdintBasketItemAsync(int basketId, int productId, int quantity); 
+        Task<object> EditBasketItemAsync(int basketId, int productId, int quantity); 
     }
 }

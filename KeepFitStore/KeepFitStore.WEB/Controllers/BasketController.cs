@@ -12,7 +12,6 @@ namespace KeepFitStore.WEB.Controllers
 {
     public class BasketController : BaseController
     {
-
         private readonly IBasketService basketService;
 
         public BasketController(IBasketService basketService)
@@ -22,38 +21,35 @@ namespace KeepFitStore.WEB.Controllers
 
         public async Task<IActionResult> Index()
         {
-           // if (this.User.Identity.IsAuthenticated)
-          //  {
-                var basketContent = await this.basketService.GetBasketContentAsync(this.User); 
+            // if (this.User.Identity.IsAuthenticated)
+            //  {
+            var basketContent = await this.basketService.GetBasketContentAsync(this.User);
 
-           // }
+            // }
 
-            return this.View(basketContent); 
+            return this.View(basketContent);
         }
 
         public async Task<IActionResult> Add(int id)
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                 await this.basketService.AddProductToBasketAsync(id, this.User);
+                await this.basketService.AddProductToBasketAsync(id, this.User);
             }
             else
             {
 
             }
 
-            return this.RedirectToAction(nameof(Index)); 
+            return this.RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int basketId, int productId, int quantity)
         {
-            await this.basketService.EdintBasketItemAsync(basketId, productId, quantity);
-            return this.RedirectToAction(nameof(Index));
+            var obj = await this.basketService.EditBasketItemAsync(basketId, productId, quantity);
+            return this.Json(obj);
         }
 
-        //private int isExist(int id)
-        //{
-        //    return 0;
-        //}
+        
     }
 }

@@ -4,7 +4,6 @@
 @{
     ViewData["Title"] = "Your Basket";
     var plural = "s";
-    var total = 0m;
 }
 
 <h1 class="mt-3">Your Basket</h1>
@@ -31,23 +30,23 @@ else
                 <input type="hidden" basketId="@item.BasketId" productId="@item.Product.Id" name="name">
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <a asp-controller="Basket" asp-action="Edit" asp-route-basketId="@item.BasketId" asp-route-productId="@item.Product.Id" asp-route-quantity="@(item.Quantity - 1)" class="btn btn-outline-info border btn-sm" dataType="minus">
+                        <button class="btn btn-outline-info border btn-sm" dataType="minus">
                             <span> <i class='fas fa-minus'></i></span>
-                        </a>
+                        </button>
                     </span>
                     <input type="number" disabled="disabled" class="bg-white pl-1 quantity" value="@item.Quantity" min="1" max="10">
                     <span class="input-group-btn">
-                        <a asp-controller="Basket" asp-action="Edit" asp-route-basketId="@item.BasketId" asp-route-productId="@item.Product.Id" asp-route-quantity="@(item.Quantity + 1)" class="btn btn-outline-info border btn-sm" dataType="plus">
+                        <button class="btn btn-outline-info border btn-sm" dataType="plus">
                             <span><i class='fas fa-plus'></i></span>
-                        </a>
+                        </button>
                     </span>
                 </div>
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-8 col-8">
-                <h6>Total Price:<br /> &pound;@(item.Product.Price * item.Quantity)</h6>
+                <h6>Total Price:<br /> &pound;<span reb="price">@(item.Product.Price * item.Quantity)</span></h6>
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-8 col-8">
-                <a href="#" class="btn btn-link btn-sm btn-danger">Remove</a>
+                <button class="btn btn-link btn-sm btn-danger remove">Remove</button>
             </div>
         </div>
     }
@@ -55,63 +54,14 @@ else
     <div class="text-center pt-1 pb-1 mt-4 mb-4">
         <a href="#" class="btn btn-warning col-xl-8">Check out</a>
     </div>
-
 }
 
 @section Scripts {
     <script>
         $().ready(function () {
-            var inputQuantities = $("input[type='number']").toArray();
-
-            for (var i in inputQuantities) {
-                var currentInput = $(inputQuantities[i])
-                var quantity = currentInput.val();
-
-                if (quantity == 1) {                
-                    var element = currentInput.prev().children().eq(0)[0];
-                    $(element).addClass("disabled");                                  
-                }
-            }
+            chekcIfQuantityIsOne();
+            attachQuantityClickEvent();
+            attachRemoveClickEvent(); 
         });
-
-                //$().ready(function () {
-                //    let quantityButtons = $("button[dataType]");
-                //    quantityButtons.on("click", function () {
-
-                //        let pressedButton = $(this);
-                //        let hiddenInputWithIds = pressedButton.parent().parent().prev();
-                //        let basketId = hiddenInputWithIds.attr("basketId");
-                //        var productId = hiddenInputWithIds.attr("productId");
-
-                //        let buttonValue = pressedButton.attr("dataType");
-
-                //        let input;
-                //        let newValue;
-                //        if (buttonValue == "plus") {
-                //            input = pressedButton.parent().prev();
-                //            newValue = Number(input.val()) + 1;
-                //        } else if (buttonValue == "minus") {
-                //            input = pressedButton.parent().next();
-                //            newValue = Number(input.val()) - 1;
-                //        }
-
-                //        $.ajax({
-                //            type: 'Get',
-                //            url: `/Basket/Edit?basketId=${basketId}&productId=${productId}&quantity=${newValue}`,
-                //            success: function (data) {
-                //                console.log("mina");
-                //                input.val(newValue);
-                //            }
-                //        });
-
-                //        console.log(basketId);
-                //        console.log(productId);
-
-
-                //        //input.val(newValue);
-                //        //console.log(input.val())
-
-                //    });
-                //});
     </script>
 }

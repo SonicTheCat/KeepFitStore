@@ -1,4 +1,68 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function chekcIfQuantityIsOne() {
+    var inputQuantities = $("input[type='number']").toArray();
+    for (var i in inputQuantities) {
+        var currentInput = $(inputQuantities[i])
+        var quantity = currentInput.val();
 
-// Write your JavaScript code.
+        if (quantity == 1) {
+            var element = currentInput.prev().children().eq(0)[0];
+            $(element).attr("disabled", "disable");
+        }
+    }
+}
+
+function attachQuantityClickEvent() {
+    let quantityButtons = $("button[dataType]");
+    quantityButtons.on("click", function () {
+
+        let pressedButton = $(this);
+
+        let buttonValue = pressedButton.attr("dataType");
+        let inputQuantity;
+        let newValue;
+
+        if (buttonValue == "plus") {
+            inputQuantity = pressedButton.parent().prev();
+            newValue = Number(inputQuantity.val()) + 1;
+            if (newValue === 2) {
+                let minusBtn = pressedButton.parent().prev().prev().find("button");
+                minusBtn.removeAttr("disabled")
+            }
+        } else if (buttonValue == "minus") {
+            inputQuantity = pressedButton.parent().next();
+            newValue = Number(inputQuantity.val()) - 1;
+            if (newValue === 1) {
+                pressedButton.attr("disabled", "disabled");
+            }
+        }
+
+        let hiddenInputWithIds = pressedButton.parent().parent().prev();
+        let basketId = hiddenInputWithIds.attr("basketId");
+        let productId = hiddenInputWithIds.attr("productId");
+
+        $.ajax({
+            type: 'Get',
+            url: `/Basket/Edit?basketId=${basketId}&productId=${productId}&quantity=${newValue}`,
+            success: function (data) {
+                let elementTotalPrice = pressedButton
+                    .parent()
+                    .parent()
+                    .parent()
+                    .next()
+                    .find("[reb='price']");
+
+                let newTotalPrice = parseFloat(data.price * data.quantity).toFixed(2)
+                elementTotalPrice.text(newTotalPrice);
+                inputQuantity.val(newValue);
+            }
+        });
+    });
+}
+
+function attachRemoveClickEvent() {
+    let removeButton = $("button.remove");
+    removeButton.on("click", function () {
+        let pressedBtn = $(this);
+        pressedBtn.parent().parent().remove();
+    });
+}
