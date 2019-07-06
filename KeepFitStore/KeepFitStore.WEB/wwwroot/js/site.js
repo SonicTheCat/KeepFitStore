@@ -41,8 +41,8 @@ function attachQuantityClickEvent() {
         let productId = hiddenInputWithIds.attr("productId");
 
         $.ajax({
-            type: 'Get',
-            url: `/Basket/Edit?basketId=${basketId}&productId=${productId}&quantity=${newValue}`,
+            type: "GET",
+            url: `api/BasketApi/EditQuantity?basketId=${basketId}&productId=${productId}&quantity=${newValue}`,
             success: function (data) {
                 let elementTotalPrice = pressedButton
                     .parent()
@@ -51,7 +51,7 @@ function attachQuantityClickEvent() {
                     .next()
                     .find("[reb='price']");
 
-                let newTotalPrice = parseFloat(data.price * data.quantity).toFixed(2)
+                let newTotalPrice = parseFloat(data.productPrice * data.quantity).toFixed(2)
                 elementTotalPrice.text(newTotalPrice);
                 inputQuantity.val(newValue);
             }
@@ -63,6 +63,34 @@ function attachRemoveClickEvent() {
     let removeButton = $("button.remove");
     removeButton.on("click", function () {
         let pressedBtn = $(this);
-        pressedBtn.parent().parent().remove();
+        var hiddenInputWithIds = pressedBtn.parent().parent().find("input[type=hidden]");
+        let basketId = hiddenInputWithIds.attr("basketId");
+        let productId = hiddenInputWithIds.attr("productId");
+
+        $.ajax({
+            type: "GET",
+            url: `api/BasketApi/DeleteBasketItem?basketId=${basketId}&productId=${productId}`,
+            success: function (data) {
+                // console.log(pressedBtn); 
+                let container = pressedBtn.parent().parent().parent();
+                checkIfLastElementInBasket(container);
+                pressedBtn.parent().parent().remove();
+            }
+        });
     });
+}
+
+function checkIfLastElementInBasket(container) {
+    let removeButtons = container.find($("button.remove"));
+    if (removeButtons.length <= 1) {
+        $.ajax({
+            type: "GET",
+            url: `/Basket/Index`,
+            success: function (data) {
+                var newDoc = document.open("text/html", "replace");
+                newDoc.write(data);
+                newDoc.close();
+            }
+        });
+    }
 }

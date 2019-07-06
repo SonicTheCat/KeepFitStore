@@ -12,6 +12,8 @@
 
         Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal);
 
-        Task<object> EditBasketItemAsync(int basketId, int productId, int quantity); 
+        Task<EditBasketItemViewModel> EditBasketItemAsync(int basketId, int productId, int quantity);
+
+        Task<bool> DeleteBasketItemAsync(int basketId, int productId); 
     }
 }

@@ -44,12 +44,7 @@ namespace KeepFitStore.WEB.Controllers
             return this.RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Edit(int basketId, int productId, int quantity)
-        {
-            var obj = await this.basketService.EditBasketItemAsync(basketId, productId, quantity);
-            return this.Json(obj);
-        }
-
+       
         
     }
 }

@@ -64,7 +64,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<object> EditBasketItemAsync(int basketId, int productId, int quantity)
+        public async Task<EditBasketItemViewModel> EditBasketItemAsync(int basketId, int productId, int quantity)
         {
             var basketItem = this.context
                 .BasketItems
@@ -79,11 +79,8 @@
             basketItem.Quantity = quantity;
             await this.context.SaveChangesAsync();
 
-            return new 
-            {
-                Price = basketItem.Product.Price,
-                Quantity = quantity
-            }; 
+            var viewModel = this.mapper.Map<EditBasketItemViewModel>(basketItem);
+            return viewModel; 
         }
 
         public async Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal)
@@ -102,10 +99,33 @@
             return viewModel;
         }
 
+        public async Task<bool> DeleteBasketItemAsync(int basketId, int productId)
+        {
+            var basketItem = this.GetBasketItemOrDefault(productId, basketId);
+
+            if (basketItem == null)
+            {
+                //TODO: throw service exception
+                return false; 
+            }
+
+            this.context.BasketItems.Remove(basketItem);
+            var deletedCount = await this.context.SaveChangesAsync();
+
+            if (deletedCount != 1)
+            {
+                return false; 
+            }
+
+            return true; 
+        }
+
         private BasketItem GetBasketItemOrDefault(int productId, int basketId)
         {
             var basektItem = this.context
                 .BasketItems
+                .Include(x => x.Basket)
+                .Include(x => x.Product)
                 .FirstOrDefault(x => x.ProductId == productId && x.BasketId == basketId);
 
             return basektItem;

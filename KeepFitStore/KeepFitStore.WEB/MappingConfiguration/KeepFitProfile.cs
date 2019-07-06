@@ -20,7 +20,7 @@
         public KeepFitProfile()
         {
             //Products - input models
-            this.CreateMap<CreateProteinProductInputModel, Protein>(); 
+            this.CreateMap<CreateProteinProductInputModel, Protein>();
             this.CreateMap<CreateCreatineProductInputModel, Creatine>();
             this.CreateMap<CreateVitaminProductInputModel, Vitamin>();
             this.CreateMap<CreateAminoAcidProducInputModel, AminoAcid>();
@@ -34,7 +34,10 @@
             this.CreateMap<Product, ProductInBasketViewModel>();
 
             //Basket 
-            this.CreateMap<BasketItem, IndexBasketViewModel>(); 
+            this.CreateMap<BasketItem, IndexBasketViewModel>();
+            this.CreateMap<BasketItem, EditBasketItemViewModel>()
+                   .ForMember(dest => dest.ProductPrice, 
+                                    opt => opt.MapFrom(src => src.Product.Price)); 
         }
     }
 }
