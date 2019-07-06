@@ -1,4 +1,4 @@
-﻿function chekcIfQuantityIsOne() {
+﻿function disableButtonIfQuantityIsOne() {
     var inputQuantities = $("input[type='number']").toArray();
     for (var i in inputQuantities) {
         var currentInput = $(inputQuantities[i])
@@ -54,6 +54,7 @@ function attachQuantityClickEvent() {
                 let newTotalPrice = parseFloat(data.productPrice * data.quantity).toFixed(2)
                 elementTotalPrice.text(newTotalPrice);
                 inputQuantity.val(newValue);
+                recalculateTotalBasketValue(); 
             }
         });
     });
@@ -71,10 +72,10 @@ function attachRemoveClickEvent() {
             type: "GET",
             url: `api/BasketApi/DeleteBasketItem?basketId=${basketId}&productId=${productId}`,
             success: function (data) {
-                // console.log(pressedBtn); 
                 let container = pressedBtn.parent().parent().parent();
                 checkIfLastElementInBasket(container);
                 pressedBtn.parent().parent().remove();
+                recalculateTotalBasketValue();
             }
         });
     });
@@ -93,4 +94,18 @@ function checkIfLastElementInBasket(container) {
             }
         });
     }
+}
+
+function recalculateTotalBasketValue() {
+    let totalBasketValueDiv = $("#totalBasketValue");
+    let container = totalBasketValueDiv.parent().parent();
+    let allBasketItemValues = container.find("[reb='price']");
+
+    let sum = 0.0; 
+    allBasketItemValues.each(function (index) {
+        sum += parseFloat($(this).text());
+    });
+
+    totalBasketValueDiv.find("span").text(sum.toFixed(2)); 
+    console.log(sum); 
 }
