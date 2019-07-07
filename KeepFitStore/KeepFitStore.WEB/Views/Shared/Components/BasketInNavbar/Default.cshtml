@@ -1,0 +1,37 @@
+﻿@using KeepFitStore.Models.ViewModels.Basket
+
+@model IEnumerable<BasketViewModel>
+@{
+    var summedQuantity = Model.Sum(x => x.Quantity);
+    var totalPrice = Model.Select(x => x.Product.Price * x.Quantity).Sum();
+    var plural = "s";
+}
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-shopping-basket mr-2"></i><span id="basketItemsCount">@summedQuantity items | &pound;@totalPrice </span>
+    </a>
+    <div class="dropdown-menu p-4" aria-labelledby="navbarDropdownMenuLink">
+
+        @foreach (var item in Model)
+        {
+
+            <a class="dropdown-item ml-3 mr-3 mb-3 p-2" asp-area="Products" asp-controller="@(item.Product.ProductType.ToString() + plural)" asp-action="Details" asp-route-id="@item.Product.Id">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-sm-4 col-sm-4 col-4">
+                        <img src="@item.Product.ImageUrl" class="img-fluid border" alt="Responsive image">
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-sm-4 col-sm-4 col-4">
+                        <h6><ins>@item.Product.Name @item.Product.ProductType.ToString() &pound;@item.Product.Price</ins></h6>
+                        <hr class="dark col-xl-12" />
+                        <span class="col-xl-2"><strong>Qty: @item.Quantity</strong></span>
+                    </div>
+                </div>
+            </a>
+
+        }
+        <a asp-controller="Basket" asp-action="Index" class="dropdown-item mt-2">
+            <p class="btn btn-warning">View Basket and Check Out</p>
+        </a>
+    </div>
+</li>

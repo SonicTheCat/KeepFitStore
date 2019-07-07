@@ -2,11 +2,11 @@
     var inputQuantities = $("input[type='number']").toArray();
     for (var i in inputQuantities) {
         var currentInput = $(inputQuantities[i])
-        var quantity = currentInput.val();
-
-        if (quantity == 1) {
-            var element = currentInput.prev().children().eq(0)[0];
-            $(element).attr("disabled", "disable");
+        var quantity = currentInput.val();       
+        if (quantity == 1) {     
+            var element = currentInput.prev().children().eq(0)[0];          
+            $(element).css("pointer-events", "none");
+            $(element).css("cursor", "default");
         }
     }
 }

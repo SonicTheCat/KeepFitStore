@@ -30,15 +30,15 @@ else
                 <input type="hidden" basketId="@item.BasketId" productId="@item.Product.Id" name="name">
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button class="btn btn-outline-info border btn-sm" dataType="minus">
+                        <a asp-controller="Basket" asp-action="Edit" asp-route-basketId="@item.BasketId" asp-route-productId="@item.Product.Id" asp-route-quantity="@(item.Quantity - 1)" class="btn btn-outline-info border btn-sm" dataType="minus">
                             <span> <i class='fas fa-minus'></i></span>
-                        </button>
+                        </a>
                     </span>
                     <input type="number" disabled="disabled" class="bg-white pl-1 quantity" value="@item.Quantity" min="1" max="10">
                     <span class="input-group-btn">
-                        <button class="btn btn-outline-info border btn-sm" dataType="plus">
+                        <a asp-controller="Basket" asp-action="Edit" asp-route-basketId="@item.BasketId" asp-route-productId="@item.Product.Id" asp-route-quantity="@(item.Quantity + 1)" class="btn btn-outline-info border btn-sm" dataType="plus">
                             <span><i class='fas fa-plus'></i></span>
-                        </button>
+                        </a>
                     </span>
                 </div>
             </div>
@@ -46,7 +46,7 @@ else
                 <h6>Total Price:<br /> &pound;<span reb="price">@(item.Product.Price * item.Quantity)</span></h6>
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-8 col-8">
-                <button class="btn btn-link btn-sm btn-danger remove">Remove</button>
+                <a asp-controller="Basket" asp-action="Delete" asp-route-basketId="@item.BasketId" asp-route-productId="@item.Product.Id" class="btn btn-link btn-sm btn-danger remove">Remove</a>
             </div>
         </div>
     }
@@ -62,8 +62,8 @@ else
     <script>
         $().ready(function () {
             disableButtonIfQuantityIsOne();
-            attachQuantityClickEvent();
-            attachRemoveClickEvent();
+            //attachQuantityClickEvent();
+            //attachRemoveClickEvent();           
         });
     </script>
 }

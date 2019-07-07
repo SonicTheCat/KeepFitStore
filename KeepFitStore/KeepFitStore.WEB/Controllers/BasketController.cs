@@ -11,6 +11,7 @@ using KeepFitStore.Models.ViewModels.Basket;
 using KeepFitStore.Models.ViewModels.Products;
 using KeepFitStore.Services.Contracts;
 using KeepFitStore.WEB.Common;
+using KeepFitStore.Models.InputModels.Basket;
 
 namespace KeepFitStore.WEB.Controllers
 {
@@ -71,6 +72,55 @@ namespace KeepFitStore.WEB.Controllers
 
                 basketItem.Quantity++;
                 SessionHelper.SetObjectAsJson(HttpContext.Session, WebConstants.BasketKey, basketSession);
+            }
+
+            return this.RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Edit(EditBasketInputModel model)
+        {
+            //TODO: ask what value to return from this method! EditBasketItemViewModel is not very good
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var obj = await this.basketService.EditBasketItemAsync(model.BasketId, model.ProductId, model.Quantity);
+            }
+            else
+            {
+                var basketSession = SessionHelper.GetObjectFromJson<List<BasketViewModel>>(this.HttpContext.Session, WebConstants.BasketKey);
+
+                var basketItem = basketSession.FirstOrDefault(x => x.Product.Id == model.ProductId);
+                if (basketItem == null || model.Quantity <= 0)
+                {
+                    //TODO: throw error 
+                }
+
+                basketItem.Quantity = model.Quantity;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, WebConstants.BasketKey, basketSession);
+            }
+
+            return this.RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(DeleteBasketInputModel model)
+        {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var isDeleted = await this.basketService.DeleteBasketItemAsync(model.BasketId, model.ProductId);
+                if (!isDeleted)
+                {
+                    //TODO: throw error
+                }
+            }
+            else
+            {
+                var basketSession = SessionHelper.GetObjectFromJson<List<BasketViewModel>>(this.HttpContext.Session, WebConstants.BasketKey);
+
+                var basketItem = basketSession.FirstOrDefault(x => x.Product.Id == model.ProductId);
+                if (basketItem != null)
+                {
+                    basketSession.Remove(basketItem);
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, WebConstants.BasketKey, basketSession);
+                }
             }
 
             return this.RedirectToAction(nameof(Index));
