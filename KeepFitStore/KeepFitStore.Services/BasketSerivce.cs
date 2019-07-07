@@ -2,19 +2,18 @@
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
     using AutoMapper;
 
     using KeepFitStore.Data;
     using KeepFitStore.Domain;
     using KeepFitStore.Services.Contracts;
-    using System.Linq;
     using KeepFitStore.Models.ViewModels.Basket;
-    using System.Collections.Generic;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.AspNetCore.Mvc;
 
     public class BasketSerivce : IBasketService
     {
@@ -71,7 +70,7 @@
                 .Include(x => x.Product)
                 .SingleOrDefault(x => x.BasketId == basketId && x.ProductId == productId);
 
-            if (basketItem == null)
+            if (basketItem == null || quantity <= 0)
             {
                 //TODO throw Service exception
             }
@@ -83,7 +82,7 @@
             return viewModel; 
         }
 
-        public async Task<IEnumerable<IndexBasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal)
+        public async Task<IEnumerable<BasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal)
         {
             var user = await this.userManager.GetUserAsync(principal);
             var basketId = user.BasketId;
@@ -95,7 +94,7 @@
                 .Where(x => x.Basket.Id == basketId)
                 .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<IndexBasketViewModel>>(productsInBasket);
+            var viewModel = this.mapper.Map<IEnumerable<BasketViewModel>>(productsInBasket);
             return viewModel;
         }
 

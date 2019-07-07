@@ -4,6 +4,8 @@
     {
         public const string HomePagePath = "/";
 
+        public const string BasketKey = "myBasket"; 
+
         public const int CountOfProductsToBeShownOnHomePage = 7; 
     }
 }

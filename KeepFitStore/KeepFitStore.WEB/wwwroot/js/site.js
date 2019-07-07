@@ -54,7 +54,7 @@ function attachQuantityClickEvent() {
                 let newTotalPrice = parseFloat(data.productPrice * data.quantity).toFixed(2)
                 elementTotalPrice.text(newTotalPrice);
                 inputQuantity.val(newValue);
-                recalculateTotalBasketValue(); 
+                recalculateTotalBasketValue();
             }
         });
     });
@@ -101,11 +101,10 @@ function recalculateTotalBasketValue() {
     let container = totalBasketValueDiv.parent().parent();
     let allBasketItemValues = container.find("[reb='price']");
 
-    let sum = 0.0; 
+    let sum = 0.0;
     allBasketItemValues.each(function (index) {
         sum += parseFloat($(this).text());
     });
 
-    totalBasketValueDiv.find("span").text(sum.toFixed(2)); 
-    console.log(sum); 
+    totalBasketValueDiv.find("span").text(sum.toFixed(2));
 }

@@ -2,7 +2,7 @@
 {
     using KeepFitStore.Models.ViewModels.Products;
 
-    public class IndexBasketViewModel
+    public class BasketViewModel
     {
         public int BasketId { get; set; }
 

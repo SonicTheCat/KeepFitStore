@@ -32,9 +32,10 @@
             this.CreateMap<AminoAcid, DetailsAminoViewModel>();
             this.CreateMap<Vitamin, DetailsVitaminViewModel>();
             this.CreateMap<Product, ProductInBasketViewModel>();
+            this.CreateMap<ProductViewModel, ProductInBasketViewModel>();
 
             //Basket 
-            this.CreateMap<BasketItem, IndexBasketViewModel>();
+            this.CreateMap<BasketItem, BasketViewModel>();
             this.CreateMap<BasketItem, EditBasketItemViewModel>()
                    .ForMember(dest => dest.ProductPrice, 
                                     opt => opt.MapFrom(src => src.Product.Price)); 
