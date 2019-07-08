@@ -104,6 +104,8 @@ input[type=number]::-webkit-outer-spin-button {
     width:20%!important;
 }
 
+/* Dropdown products menu*/
+
 /* Dropdown Button */
 .dropbtn {
     background-color: white;
