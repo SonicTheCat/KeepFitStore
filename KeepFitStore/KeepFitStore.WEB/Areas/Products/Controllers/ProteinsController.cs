@@ -4,6 +4,7 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Filters;
     using KeepFitStore.Models.InputModels.Products.Proteins;
@@ -19,6 +20,15 @@
         {
             this.productsService = productsService;
             this.proteinsService = proteinsService;
+        }
+
+        public async Task<IActionResult> Index([FromQuery]string type)
+        {
+            this.ViewData["proteinType"] = type;
+            var proteins = await this.proteinsService.GetAllByTypeAsync(type);
+
+            return this.View(proteins); 
+
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -44,7 +54,7 @@
             //TODO: Write CustomException in services, they do not have to return null!
             if (protein == null)
             {
-                return this.NotFound(); 
+                return this.NotFound();
             }
 
             return this.View(protein);

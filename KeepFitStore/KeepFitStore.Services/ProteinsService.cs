@@ -9,7 +9,10 @@
     using KeepFitStore.Data;
     using KeepFitStore.Models.ViewModels.Products.Proteins;
     using KeepFitStore.Services.Contracts;
-    
+    using System.Linq;
+    using System.Collections.Generic;
+    using KeepFitStore.Models.ViewModels.Products;
+
     public class ProteinsService : IProteinsService
     {
         private readonly KeepFitDbContext context;
@@ -19,6 +22,17 @@
         {
             this.context = context;
             this.mapper = mapper;
+        }
+
+        public async Task<IEnumerable<ProductViewModel>> GetAllByTypeAsync(string type)
+        {
+            var proteins = await this.context
+               .Proteins
+               .Where(x => x.Type.ToString() == type)
+               .ToListAsync();
+
+            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(proteins);
+            return viewModel; 
         }
 
         public async Task<DetailsProteinViewModel> GetByIdAsync(int id)

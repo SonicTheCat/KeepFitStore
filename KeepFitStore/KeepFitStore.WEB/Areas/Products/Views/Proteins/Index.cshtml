@@ -1,0 +1,10 @@
+﻿@using KeepFitStore.Models.ViewModels.Products
+
+@model IEnumerable<ProductViewModel>
+@{
+    this.ViewData["Title"] = "Proteins " + this.ViewData["proteinType"];
+} 
+
+<partial name="~/Views/Partials/_MessagesHomeIndexPartial.cshtml" />
+<h2><span class="line-center m-4"><em>Proteins - @this.ViewData["proteinType"]</em></span></h2>
+<partial name="~/Views/Partials/_ProductsIteratorPartial.cshtml" model="Model" />

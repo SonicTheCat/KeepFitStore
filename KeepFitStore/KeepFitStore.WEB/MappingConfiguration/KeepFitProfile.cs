@@ -33,6 +33,7 @@
             this.CreateMap<Vitamin, DetailsVitaminViewModel>();
             this.CreateMap<Product, ProductInBasketViewModel>();
             this.CreateMap<ProductViewModel, ProductInBasketViewModel>();
+            this.CreateMap<Protein, ProductViewModel>();
 
             //Basket 
             this.CreateMap<BasketItem, BasketViewModel>();

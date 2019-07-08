@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Mvc;
-
-using AutoMapper;
-
-using KeepFitStore.Helpers;
-using KeepFitStore.Models.ViewModels.Basket;
-using KeepFitStore.Models.ViewModels.Products;
-using KeepFitStore.Services.Contracts;
-using KeepFitStore.WEB.Common;
-using KeepFitStore.Models.InputModels.Basket;
-
-namespace KeepFitStore.WEB.Controllers
+﻿namespace KeepFitStore.WEB.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    using AutoMapper;
+
+    using KeepFitStore.Helpers;
+    using KeepFitStore.Models.ViewModels.Basket;
+    using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.WEB.Common;
+    using KeepFitStore.Models.InputModels.Basket;
     public class BasketController : BaseController
     {
         private const int BasketItemInSessionDefaultQuantityValue = 0;

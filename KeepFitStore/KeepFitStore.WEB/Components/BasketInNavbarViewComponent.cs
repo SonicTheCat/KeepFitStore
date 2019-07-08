@@ -1,12 +1,15 @@
-﻿using KeepFitStore.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace KeepFitStore.WEB.Components
+﻿namespace KeepFitStore.WEB.Components
 {
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Helpers;
+    using KeepFitStore.Models.ViewModels.Basket;
+    using KeepFitStore.WEB.Common;
+
     [ViewComponentAttribute(Name = "BasketInNavbar")]
     public class BasketInNavbarViewComponent : ViewComponent
     {
@@ -19,8 +22,17 @@ namespace KeepFitStore.WEB.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var basketContent = await this.basketService.GetBasketContentAsync(this.HttpContext.User);
-            
+            IEnumerable<BasketViewModel> basketContent = new List<BasketViewModel>(); 
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                 basketContent = await this.basketService.GetBasketContentAsync(this.HttpContext.User);
+            }
+            else
+            {
+                basketContent = SessionHelper.GetObjectFromJson<List<BasketViewModel>>(this.HttpContext.Session, WebConstants.BasketKey);
+            }
+
             return this.View(basketContent);
         }
     }
