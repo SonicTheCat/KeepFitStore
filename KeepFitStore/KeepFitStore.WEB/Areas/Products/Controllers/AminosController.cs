@@ -22,6 +22,14 @@
             this.aminosService = aminosService;
         }
 
+        public async Task<IActionResult> Index([FromQuery]string type)
+        {
+            this.ViewData["aminoType"] = type;
+            var aminos = await this.aminosService.GetAllByTypeAsync(type);
+
+            return this.View(aminos);
+        }
+
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {

@@ -13,13 +13,25 @@
         <div class="nav navbar-nav">
             <a class="nav-item nav-link active text-dark" asp-area="Products" asp-controller="Home" asp-action="Index"><strong>All </strong><span class="sr-only">(current)</span></a>
             <div class="dropdown">
-                <button class="dropbtn">Proteins</button>           
-                <div keep-fit-enums types="@Enum.GetValues(typeof(ProteinType))" class="dropdown-content">                  
+                <button class="dropbtn">Proteins</button>
+                <div keep-fit-enums area="Products" controller="Proteins" action="Index" types="@Enum.GetValues(typeof(ProteinType))" class="dropdown-content">
                 </div>
             </div>
-            <a class="nav-item nav-link active text-dark" href="/Home/Index"><strong>Amino Acids </strong><span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link active text-dark" href="/Home/Index"><strong>Vitamins </strong><span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link active text-dark" href="/Home/Index"><strong>Creatine </strong><span class="sr-only">(current)</span></a>
+            <div class="dropdown">
+                <button class="dropbtn">Amino Acids</button>
+                <div keep-fit-enums area="Products" controller="Aminos" action="Index" types="@Enum.GetValues(typeof(AminoAcidType))" class="dropdown-content">
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Vitamins</button>
+                <div keep-fit-enums area="Products" controller="Vitamins" action="Index" types="@Enum.GetValues(typeof(VitaminType))" class="dropdown-content">
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Creatines</button>
+                <div keep-fit-enums area="Products" controller="Creatines" action="Index" types="@Enum.GetValues(typeof(CreatineType))" class="dropdown-content">
+                </div>
+            </div>
         </div>
     </div>
 </nav>

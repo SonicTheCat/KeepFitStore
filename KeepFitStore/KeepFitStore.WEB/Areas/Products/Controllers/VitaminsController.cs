@@ -22,6 +22,14 @@
             this.vitaminsService = vitaminsService;
         }
 
+        public async Task<IActionResult> Index([FromQuery]string type)
+        {
+            this.ViewData["vitaminType"] = type;
+            var vitamins = await this.vitaminsService.GetAllByTypeAsync(type);
+
+            return this.View(vitamins);
+        }
+
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {

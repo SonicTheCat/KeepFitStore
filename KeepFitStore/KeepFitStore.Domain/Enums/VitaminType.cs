@@ -3,10 +3,10 @@
     public enum VitaminType
     {
         Multi = 1,
-        A = 2, 
-        B = 3, 
-        C = 4, 
-        D = 5, 
-        E = 6
+        VitaminA = 2, 
+        VitaminB = 3, 
+        VitaminC = 4, 
+        VitaminD = 5, 
+        VitaminE = 6
     }
 }

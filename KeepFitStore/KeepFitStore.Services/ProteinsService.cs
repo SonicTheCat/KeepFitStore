@@ -1,6 +1,8 @@
 ﻿namespace KeepFitStore.Services
 {
     using System.Threading.Tasks;
+    using System.Linq;
+    using System.Collections.Generic;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +11,6 @@
     using KeepFitStore.Data;
     using KeepFitStore.Models.ViewModels.Products.Proteins;
     using KeepFitStore.Services.Contracts;
-    using System.Linq;
-    using System.Collections.Generic;
     using KeepFitStore.Models.ViewModels.Products;
 
     public class ProteinsService : IProteinsService

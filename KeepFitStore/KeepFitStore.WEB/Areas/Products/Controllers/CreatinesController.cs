@@ -22,6 +22,14 @@
             this.creatinesService = creatinesService;
         }
 
+        public async Task<IActionResult> Index([FromQuery]string type)
+        {
+            this.ViewData["creatineType"] = type;
+            var creatines = await this.creatinesService.GetAllByTypeAsync(type);
+
+            return this.View(creatines);
+        }
+
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
