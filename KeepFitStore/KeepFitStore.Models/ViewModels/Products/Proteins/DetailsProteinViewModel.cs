@@ -38,5 +38,9 @@
         public double Carbohydrate { get; set; }
 
         public double Fat { get; set; }
+
+        public double Salt { get; set; }
+
+        public double Fibre { get; set; }
     }
 }

@@ -44,6 +44,12 @@
         [Required]
         public double Fat { get; set; }
 
+        [Required]
+        public double Salt { get; set; }
+
+        [Required]
+        public double Fibre { get; set; }
+
         [Display(Name = ModelsConstants.SuatableForVegansName)]
         public bool IsSuatableForVegans { get; set; }
 

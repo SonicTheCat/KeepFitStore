@@ -22,5 +22,11 @@
 
         [Column(nameof(AminoAcid) + nameof(Fat))]
         public double Fat { get; set; }
+
+        [Column(nameof(AminoAcid) + nameof(ProteinPerServing))]
+        public double ProteinPerServing { get; set; }
+
+        [Column(nameof(AminoAcid) + nameof(Salt))]
+        public double Salt { get; set; }
     }
 }

@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20190609180732_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190701144234_test.cs" />
     <Compile Remove="Migrations\20190701144234_test.Designer.cs" />
+    <Compile Remove="Migrations\20190708223549_AdditionalPropertiesAdded.cs" />
+    <Compile Remove="Migrations\20190708223549_AdditionalPropertiesAdded.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

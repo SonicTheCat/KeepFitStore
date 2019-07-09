@@ -25,5 +25,11 @@
 
         [Column(nameof(Protein) + nameof(Fat))]
         public double Fat { get; set; }
+
+        [Column(nameof(Protein) + nameof(Salt))]
+        public double Salt { get; set; }
+
+        [Column(nameof(Protein) + nameof(Fibre))]
+        public double Fibre { get; set; }
     }
 }

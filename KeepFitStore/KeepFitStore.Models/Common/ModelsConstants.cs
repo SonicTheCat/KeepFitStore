@@ -2,7 +2,7 @@
 {
     public static class ModelsConstants
     {
-        public const int MaximumTextLenght = 500;
+        public const int MaximumTextLenght = 5000;
 
         public const string ProductBrandName = "Brand";
 

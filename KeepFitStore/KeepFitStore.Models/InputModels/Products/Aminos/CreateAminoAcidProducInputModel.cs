@@ -44,6 +44,13 @@
         public double Fat { get; set; }
 
         [Required]
+        [Display(Name = ModelsConstants.ProteinPerServingName)]
+        public double ProteinPerServing { get; set; }
+
+        [Required]
+        public double Salt { get; set; }
+
+        [Required]
         [Display(Name = ModelsConstants.UploadProducImageName)]
         public IFormFile Image { get; set; }
     }
