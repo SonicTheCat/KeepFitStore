@@ -6,6 +6,7 @@
     this.ViewBag.Product = Model;
 }
 
+<partial name="~/Areas/Products/Views/Partials/_ReviewForProductPartial.cshtml" />
 <partial name="~/Areas/Products/Views/Partials/_ProductShortDetailsPartial.cshtml" />
 
 <div class="container mt-4 mb-4 p-4">
@@ -52,3 +53,13 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $().ready(function () {
+            $("#reviewTag").on("click", function () {
+                $("#reviewForm").css("visibility", "visible");
+            })
+        });
+    </script>
+}
