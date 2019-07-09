@@ -3,8 +3,16 @@
     var product = this.ViewBag.Product;
 }
 
-<div class="m-4">
+<div class="mt-4 ml-4">
     <h3>@product.Name @product.ProductType @product.Type <span class="text-secondary"><em>&pound;@product.Price</em></span></h3>
+</div>
+<div class="mb-4 ml-4">
+    <span class="fa fa-star checked" style="font-size:24px;"></span>
+    <span class="fa fa-star checked" style="font-size:24px;"></span>
+    <span class="fa fa-star checked" style="font-size:24px;"></span>
+    <span class="fa fa-star" style="font-size:24px;"></span>
+    <span class="fa fa-star" style="font-size:24px;"></span>
+    <span class="ml-4"><a id="reviewTag" href="#" class="btn-link">write a review</a></span>
 </div>
 <div class="row">
     <div class="col-xl-4 col-lg-4 col-md-4 col-12">
@@ -43,6 +51,6 @@
                     Add to favorites
                 </div>
             </a>
-        </div>     
+        </div>
     </div>
 </div>

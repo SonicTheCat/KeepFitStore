@@ -4,6 +4,11 @@
 
     public class City
     {
+        public City()
+        {
+            this.Addresses = new HashSet<Address>();
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; }

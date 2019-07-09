@@ -4,14 +4,16 @@ using KeepFitStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KeepFitStore.Data.Migrations
 {
     [DbContext(typeof(KeepFitDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190709013555_ReviewAdded")]
+    partial class ReviewAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,15 +233,11 @@ namespace KeepFitStore.Data.Migrations
 
                     b.Property<int>("GivenRating");
 
-                    b.Property<string>("KeepFitUserId");
-
                     b.Property<int>("ProductId");
 
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("KeepFitUserId");
 
                     b.HasIndex("ProductId");
 
@@ -499,10 +497,6 @@ namespace KeepFitStore.Data.Migrations
 
             modelBuilder.Entity("KeepFitStore.Domain.Review", b =>
                 {
-                    b.HasOne("KeepFitStore.Domain.KeepFitUser", "KeepFitUser")
-                        .WithMany("Reviews")
-                        .HasForeignKey("KeepFitUserId");
-
                     b.HasOne("KeepFitStore.Domain.Products.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductId")

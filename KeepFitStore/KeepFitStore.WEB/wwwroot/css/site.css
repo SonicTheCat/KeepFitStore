@@ -154,3 +154,11 @@ input[type=number]::-webkit-outer-spin-button {
 .dropdown:hover .dropbtn {
     background-color: #007bff;
 }
+
+#reviewTag {
+    text-decoration: none;
+}
+
+.checked {
+    color: orange;
+}

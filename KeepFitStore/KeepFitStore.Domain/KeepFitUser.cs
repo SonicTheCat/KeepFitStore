@@ -5,6 +5,12 @@
 
     public class KeepFitUser : IdentityUser
     {
+        public KeepFitUser()
+        {
+            this.Orders = new HashSet<Order>();
+            this.Reviews = new HashSet<Review>();
+        }
+
         public string FullName { get; set; }
 
         public int? AddressId { get; set; }
@@ -14,5 +20,7 @@
         public Basket Basket { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+
+        public ICollection<Review> Reviews{ get; set; }
     }
 }

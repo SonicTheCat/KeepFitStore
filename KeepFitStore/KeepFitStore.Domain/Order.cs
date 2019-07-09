@@ -7,6 +7,11 @@
 
     public class Order
     {
+        public Order()
+        {
+            this.Products = new HashSet<ProductOrder>(); 
+        }
+
         public int Id { get; set; }
 
         public decimal TotalPrice { get; set; }

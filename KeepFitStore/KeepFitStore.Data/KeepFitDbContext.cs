@@ -38,6 +38,8 @@
 
         public DbSet<ProductOrder> ProductOrders{ get; set; }
 
+        public DbSet<Review> Reviews{ get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AddressConfig());

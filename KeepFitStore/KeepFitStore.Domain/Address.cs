@@ -4,6 +4,11 @@
 
     public class Address
     {
+        public Address()
+        {
+            this.KeepFitUsers = new HashSet<KeepFitUser>(); 
+        }
+
         public int Id { get; set; }
 
         public int? StreetNumber { get; set; }
