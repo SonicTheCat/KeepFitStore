@@ -163,6 +163,8 @@ input[type=number]::-webkit-outer-spin-button {
     color: orange;
 }
 
-#reviewForm {
-    visibility: hidden;
+span.contentSpan {
+    display: block;
+    width: 600px;
+    word-wrap: break-word;
 }
