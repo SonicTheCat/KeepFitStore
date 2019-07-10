@@ -39,6 +39,7 @@
         {
             var vitamin = await this.context
                 .Vitamins
+                .Include(x => x.Reviews)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (vitamin == null)

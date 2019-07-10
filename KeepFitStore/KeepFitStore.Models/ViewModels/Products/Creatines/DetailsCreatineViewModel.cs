@@ -1,8 +1,10 @@
 ﻿namespace KeepFitStore.Models.ViewModels.Products.Creatines
 {
     using System;
+    using System.Collections.Generic;
 
     using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Models.ViewModels.Reviews;
 
     public class DetailsCreatineViewModel
     {
@@ -30,5 +32,9 @@
         public string Directions { get; set; }
 
         public CreatineType Type { get; set; }
+
+        public int Rating { get; set; }
+
+        public ICollection<ReviewViewModel> Reviews { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 ﻿namespace KeepFitStore.Models.ViewModels.Products.Aminos
 {
     using System;
+    using System.Collections.Generic;
 
     using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Models.ViewModels.Reviews;
 
     public class DetailsAminoViewModel
     {
@@ -40,5 +42,9 @@
         public double ProteinPerServing { get; set; }
 
         public double Salt { get; set; }
+
+        public int Rating { get; set; }
+
+        public ICollection<ReviewViewModel> Reviews { get; set; }
     }
 }

@@ -39,6 +39,7 @@
         {
             var amino = await this.context
                 .Aminos
+                .Include(x => x.Reviews)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (amino == null)

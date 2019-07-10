@@ -39,6 +39,7 @@
         {
             var creatine = await this.context
                 .Creatines
+                .Include(x => x.Reviews)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (creatine == null)

@@ -1,8 +1,10 @@
 ﻿namespace KeepFitStore.Models.ViewModels.Products.Vitamins
 {
     using System;
+    using System.Collections.Generic;
 
     using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Models.ViewModels.Reviews;
 
     public class DetailsVitaminViewModel
     {
@@ -30,5 +32,9 @@
         public string Directions { get; set; }
 
         public VitaminType Type { get; set; }
+
+        public int Rating { get; set; }
+
+        public ICollection<ReviewViewModel> Reviews { get; set; }
     }
 }

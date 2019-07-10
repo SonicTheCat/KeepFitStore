@@ -34,7 +34,7 @@
         public ProductType ProductType { get; set; }
 
         [NotMapped]
-        public int Rating => this.Reviews.Sum(x => x.GivenRating) / this.Reviews.Count; 
+        public int Rating => this.Reviews.Count == 0 ? 0 : this.Reviews.Sum(x => x.GivenRating) / this.Reviews.Count; 
 
         public ICollection<ProductOrder> Orders { get; set; }
 
