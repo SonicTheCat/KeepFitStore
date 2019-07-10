@@ -6,6 +6,7 @@
     this.ViewBag.Product = Model;
 }
 
+<partial name="~/Areas/Products/Views/Partials/_ReviewForProductPartial.cshtml" />
 <partial name="~/Areas/Products/Views/Partials/_ProductShortDetailsPartial.cshtml" />
 
 <div class="container mt-4 mb-4 p-4">
@@ -23,7 +24,7 @@
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <h5>Energy Per Serving:</h5>
                     <p><strong>@Model.EnergyPerServing kcal</strong></p>
-                    <hr class="border" />                  
+                    <hr class="border" />
                     <h5>Carbohydrate:</h5>
                     <p><strong>@Model.Carbohydrate g</strong></p>
                     <hr class="border" />
@@ -49,3 +50,11 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+    $().ready(function () {
+        submitReviewForm();
+    });
+    </script>
+}

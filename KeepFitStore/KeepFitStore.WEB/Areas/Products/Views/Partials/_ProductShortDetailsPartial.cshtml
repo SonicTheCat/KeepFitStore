@@ -7,11 +7,18 @@
     <h3>@product.Name @product.ProductType @product.Type <span class="text-secondary"><em>&pound;@product.Price</em></span></h3>
 </div>
 <div class="mb-4 ml-4">
-    <span class="fa fa-star checked" style="font-size:24px;"></span>
-    <span class="fa fa-star checked" style="font-size:24px;"></span>
-    <span class="fa fa-star checked" style="font-size:24px;"></span>
-    <span class="fa fa-star" style="font-size:24px;"></span>
-    <span class="fa fa-star" style="font-size:24px;"></span>
+    @for (int i = 1; i <= 5; i++)
+    {
+        if (this.ViewBag.Product.Rating >= i)
+        {
+            <span class="fa fa-star checked" style="font-size:24px;"></span>
+        }
+        else
+        {
+            <span class="fa fa-star" style="font-size:24px;"></span>
+        }
+    }
+    <span class="ml-4">(@this.ViewBag.Product.Reviews.Count votes)</span>
     <span class="ml-4"><a id="reviewTag" href="#" data-toggle="modal" data-target="#modalSubscriptionForm" class="btn-link">write a review</a></span>
 </div>
 <div class="row">

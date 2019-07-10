@@ -6,6 +6,7 @@
     this.ViewBag.Product = Model;
 }
 
+<partial name="~/Areas/Products/Views/Partials/_ReviewForProductPartial.cshtml" />
 <partial name="~/Areas/Products/Views/Partials/_ProductShortDetailsPartial.cshtml" />
 
 <div class="container mt-4 mb-4 p-4">
@@ -20,7 +21,7 @@
                 </div>
             </nav>
             <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">                
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     @Model.Directions
@@ -35,3 +36,11 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+    $().ready(function () {
+        submitReviewForm();
+    });
+    </script>
+}

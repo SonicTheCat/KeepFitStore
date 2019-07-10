@@ -14,6 +14,8 @@
     using KeepFitStore.Models.ViewModels.Products.Aminos;
     using KeepFitStore.Domain;
     using KeepFitStore.Models.ViewModels.Basket;
+    using KeepFitStore.Models.InputModels.Reviews;
+    using KeepFitStore.Models.ViewModels.Reviews;
 
     public class KeepFitProfile : Profile
     {
@@ -42,7 +44,11 @@
             this.CreateMap<BasketItem, BasketViewModel>();
             this.CreateMap<BasketItem, EditBasketItemViewModel>()
                    .ForMember(dest => dest.ProductPrice, 
-                                    opt => opt.MapFrom(src => src.Product.Price)); 
+                                    opt => opt.MapFrom(src => src.Product.Price));
+
+            //Reviews
+            this.CreateMap<CreateReviewInputModel, Review>();
+            this.CreateMap<Review, ReviewViewModel>();
         }
     }
 }

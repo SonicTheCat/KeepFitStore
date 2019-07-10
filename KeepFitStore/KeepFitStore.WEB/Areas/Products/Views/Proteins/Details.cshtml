@@ -9,6 +9,7 @@
 <partial name="~/Areas/Products/Views/Partials/_ReviewForProductPartial.cshtml" />
 <partial name="~/Areas/Products/Views/Partials/_ProductShortDetailsPartial.cshtml" />
 
+ @*Product long details *@
 <div class="container mt-4 mb-4 p-4">
     <div class="row">
         <div class="col-xs-12 col-xl-12">
@@ -55,11 +56,9 @@
 </div>
 
 @section Scripts{
-    <script>
-        $().ready(function () {
-            $("#reviewTag").on("click", function () {
-                $("#reviewForm").css("visibility", "visible");
-            })
-        });
-    </script>
+<script>
+    $().ready(function () {
+        submitReviewForm(); 
+    });
+</script>
 }

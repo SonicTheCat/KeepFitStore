@@ -94,6 +94,7 @@
             services.AddTransient<IVitaminsService, VitaminsService>();
             services.AddTransient<IAminosService, AminosService>();
             services.AddTransient<IBasketService, BasketSerivce>();
+            services.AddTransient<IReviewsService, ReviewsService>();
 
             //Email Sender Services
             services.AddTransient<IEmailSender, EmailSender>();
