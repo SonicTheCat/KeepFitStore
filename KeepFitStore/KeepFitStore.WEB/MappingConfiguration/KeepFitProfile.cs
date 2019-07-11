@@ -48,7 +48,9 @@
 
             //Reviews
             this.CreateMap<CreateReviewInputModel, Review>();
-            this.CreateMap<Review, ReviewViewModel>();
+            this.CreateMap<Review, ReviewViewModel>()
+                .ForMember(dest => dest.UserFullName, 
+                                opt => opt.MapFrom(src => src.KeepFitUser.FullName));
         }
     }
 }

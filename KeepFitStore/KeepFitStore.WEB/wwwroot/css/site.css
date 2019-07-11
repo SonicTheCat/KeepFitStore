@@ -67,7 +67,6 @@ ul {
 h2 {
     text-align: center;
     position: relative;
-    z-index: 2;
 }
 
 h2:after {
@@ -173,3 +172,4 @@ span.contentSpan {
     color: inherit;
     text-decoration: none;
 }
+

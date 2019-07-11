@@ -39,11 +39,11 @@
 
                 if (this.Area != null)
                 {
-                    html += $@"<a href=""/{this.Area}/{this.Controller}/{this.Action}?type={item.ToString()}"">{itemValue}</a>";
+                    html += $@"<a href=""/{this.Area}/{this.Controller}/{this.Action}?type={item.ToString()}""><i class=""far fa-arrow-alt-circle-right mr-3 mb-2""></i>{itemValue}</a>";
                 }
                 else
                 {
-                    html += $@"<a href=""/{this.Controller}/{this.Action}?type={item.ToString()}"">{itemValue}</a>";
+                    html += $@"<a href=""/{this.Controller}/{this.Action}?type={item.ToString()}""><i class=""far fa-arrow-alt-circle-right mr-3 mb-2""></i>{itemValue}</a>";
                 }
             }
 

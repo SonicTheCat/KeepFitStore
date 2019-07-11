@@ -1,5 +1,9 @@
 ﻿namespace KeepFitStore.Models.ViewModels.Reviews
 {
+    using System;
+
+    using KeepFitStore.Domain;
+
     public class ReviewViewModel
     {
         public int Id { get; set; }
@@ -16,6 +20,8 @@
 
         public string KeepFitUserId { get; set; }
 
-       // public KeepFitUser KeepFitUser { get; set; }
+        public string UserFullName { get; set; }
+
+        public DateTime PublishedOn { get; set; }
     }
 }

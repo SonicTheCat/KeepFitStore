@@ -40,6 +40,7 @@
             var amino = await this.context
                 .Aminos
                 .Include(x => x.Reviews)
+                .ThenInclude(x => x.KeepFitUser)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (amino == null)

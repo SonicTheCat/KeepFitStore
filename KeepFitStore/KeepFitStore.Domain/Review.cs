@@ -1,9 +1,16 @@
 ﻿namespace KeepFitStore.Domain
 {
-    using KeepFitStore.Domain.Products;
+    using System;
 
+    using KeepFitStore.Domain.Products;
+    
     public class Review
     {
+        public Review()
+        {
+            this.PublishedOn = DateTime.UtcNow; 
+        }
+
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -19,5 +26,7 @@
         public string KeepFitUserId { get; set; }
 
         public KeepFitUser KeepFitUser { get; set; }
+
+        public DateTime PublishedOn { get; set; }
     }
 }

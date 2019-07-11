@@ -40,6 +40,7 @@
             var creatine = await this.context
                 .Creatines
                 .Include(x => x.Reviews)
+                .ThenInclude(x => x.KeepFitUser)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (creatine == null)

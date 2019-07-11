@@ -40,6 +40,7 @@
             var protein = await this.context
                 .Proteins
                 .Include(x => x.Reviews)
+                .ThenInclude(x => x.KeepFitUser)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (protein == null)
