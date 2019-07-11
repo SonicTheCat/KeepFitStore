@@ -117,6 +117,9 @@
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                //Set default message for [Required] attribute
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+                    (_) => "The field is required"); 
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

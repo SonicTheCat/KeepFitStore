@@ -2,9 +2,9 @@
     var inputQuantities = $("input[type='number']").toArray();
     for (var i in inputQuantities) {
         var currentInput = $(inputQuantities[i])
-        var quantity = currentInput.val();       
-        if (quantity == 1) {     
-            var element = currentInput.prev().children().eq(0)[0];          
+        var quantity = currentInput.val();
+        if (quantity == 1) {
+            var element = currentInput.prev().children().eq(0)[0];
             $(element).css("pointer-events", "none");
             $(element).css("cursor", "default");
         }
@@ -38,8 +38,39 @@ function submitReviewForm() {
             },
             success: function (data) {
                 location.reload();
+            },
+            error: function (err) {
+                let errorDiv = $("#error-message");
+                let errorAsJson = err.responseJSON.errors;
+                errorDiv
+                    .empty()
+                    .show()
+                    .append("<p>All Lines are required!</p>");
+
+                if (err.status === 400) {
+                    if (errorAsJson.GivenRating !== undefined) {
+                        errorDiv.append("<p>Rating value must be between 1 and 5</p>");
+
+                    } else {
+                        for (let e in errorAsJson) {
+                            errorDiv.append(`<p>${errorAsJson[e][0]}</p>`);
+                        }
+                    }
+                }
             }
         });
+    });
+}
+
+function goToReviewsForCurrentPrdocut() {
+    $("#rating-stars").on("click", function () {
+        $("#nav-reviews-tab").click();
+
+        setTimeout(function () {
+            $('html, body').animate({
+                scrollTop: ($('#nav-reviews').offset().top)
+            }, 800)
+        }, 200);
     });
 }
 

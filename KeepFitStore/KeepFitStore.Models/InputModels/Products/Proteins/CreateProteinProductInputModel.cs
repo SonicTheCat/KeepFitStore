@@ -2,9 +2,10 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Models.Common;
-    using Microsoft.AspNetCore.Http;
 
     public class CreateProteinProductInputModel
     {

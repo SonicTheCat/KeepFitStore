@@ -26,14 +26,9 @@
         [ActionName(nameof(Create))]
         public async Task Create(CreateReviewInputModel model)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return; 
-            }
-
             var user = await this.userManager.GetUserAsync(this.User);
             model.KeepFitUserId = user.Id;
-            await this.reviewsService.CreateAsync(model); 
+            await this.reviewsService.CreateAsync(model);
         }
     }
 }

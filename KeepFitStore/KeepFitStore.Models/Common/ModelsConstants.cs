@@ -19,5 +19,9 @@
         public const string ProteinPerServingName = "Protein per serving";
 
         public const string UploadProducImageName = "Upload image for this product";
+
+        public const int RatingMinValue = 1; 
+
+        public const int RatingMaxValue = 5; 
     }
 }
