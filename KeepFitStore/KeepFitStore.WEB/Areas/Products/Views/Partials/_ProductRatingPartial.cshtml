@@ -1,0 +1,20 @@
+﻿<div class="mb-4 ml-4">
+    <a id="rating-stars" href="#">
+        @for (int i = 1; i <= 5; i++)
+        {
+            if (this.ViewBag.Product.Rating >= i)
+            {
+                <span class="fa fa-star checked" style="font-size:24px;"></span>
+            }
+            else
+            {
+                <span class="fa fa-star" style="font-size:24px;"></span>
+            }
+        }
+        <span class="ml-2">(@this.ViewBag.Product.Reviews.Count votes)</span>
+    </a>
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <span class="ml-4"><a id="reviewTag" href="#" data-toggle="modal" data-target="#modalSubscriptionForm" class="btn-link">write a review</a></span>
+    }
+</div>

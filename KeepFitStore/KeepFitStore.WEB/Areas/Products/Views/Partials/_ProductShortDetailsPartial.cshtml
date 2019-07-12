@@ -6,23 +6,7 @@
 <div class="mt-4 ml-4">
     <h3>@product.Name @product.ProductType @product.Type <span class="text-secondary"><em>&pound;@product.Price</em></span></h3>
 </div>
-<div class="mb-4 ml-4">
-    <a id="rating-stars" href="#">
-        @for (int i = 1; i <= 5; i++)
-        {
-            if (this.ViewBag.Product.Rating >= i)
-            {
-                <span class="fa fa-star checked" style="font-size:24px;"></span>
-            }
-            else
-            {
-                <span class="fa fa-star" style="font-size:24px;"></span>
-            }
-        }
-        <span class="ml-2">(@this.ViewBag.Product.Reviews.Count votes)</span>
-    </a>
-    <span class="ml-4"><a id="reviewTag" href="#" data-toggle="modal" data-target="#modalSubscriptionForm" class="btn-link">write a review</a></span>
-</div>
+<partial name="~/Areas/Products/Views/Partials/_ProductRatingPartial.cshtml" />
 <div class="row">
     <div class="col-xl-4 col-lg-4 col-md-4 col-12">
         <img src="@product.ImageUrl" class="img-fluid border" alt="Responsive image">
