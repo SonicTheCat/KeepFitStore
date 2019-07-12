@@ -17,7 +17,7 @@
         {
             @foreach (var item in Model)
             {
-                <a class="dropdown-item ml-3 mr-3 mb-3 p-2" asp-area="Products" asp-controller="@(item.Product.ProductType.ToString() + plural)" asp-action="Details" asp-route-id="@item.Product.Id">
+                <a class="dropdown-item col-md-10 mb-2 p-2" asp-area="Products" asp-controller="@(item.Product.ProductType.ToString() + plural)" asp-action="Details" asp-route-id="@item.Product.Id">
                     <div class="row">
                         <div class="col-xl-4 col-lg-4 col-sm-4 col-sm-4 col-4">
                             <img src="@item.Product.ImageUrl" class="img-fluid border" alt="Responsive image">
@@ -29,10 +29,9 @@
                         </div>
                     </div>
                 </a>
-
             }
             <a asp-controller="Basket" asp-action="Index" class="dropdown-item mt-2">
-                <p class="btn btn-warning">View Basket and Check Out</p>
+                <p class="btn btn-warning">View Basket and Checkout</p>
             </a>
         }
         else

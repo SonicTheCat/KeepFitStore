@@ -53,8 +53,8 @@ else
     <div class="border bg-primary m-4 p-2">
         <div id="totalBasketValue" class="row m-3"><h3 class="col-xl-6 offset-xl-3 text-white">Total Basket Price: &pound;<span>@Model.Sum(x => x.Product.Price * x.Quantity)</span></h3></div>
         <div class="row m-3">
-            <a href="#" class="btn btn-warning col-xl-6 offset-xl-3">Check out</a>
-        </div>
+            <a asp-controller="Orders" asp-action="Create" class="btn btn-warning col-xl-6 offset-xl-3">Checkout</a>
+        </div> 
     </div>
 }
 

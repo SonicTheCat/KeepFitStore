@@ -1,0 +1,35 @@
+﻿@using KeepFitStore.Models.InputModels.Orders
+
+@model CreateOrderInputModel
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<div class="container row mt-4">
+    <div class="col-8">
+        <h4>Your Details</h4>
+
+    </div>
+    <div>
+        <h4 class="text-center">Order Summary</h4>
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>@item.Name @item.ProductType.ToString()</td>
+                        <td>@item.Quantity</td>
+                        <td>&pound; @item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
