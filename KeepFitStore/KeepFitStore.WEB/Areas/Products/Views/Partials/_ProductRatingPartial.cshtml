@@ -13,8 +13,5 @@
         }
         <span class="ml-2">(@this.ViewBag.Product.Reviews.Count votes)</span>
     </a>
-    @if (this.User.Identity.IsAuthenticated)
-    {
-        <span class="ml-4"><a id="reviewTag" href="#" data-toggle="modal" data-target="#modalSubscriptionForm" class="btn-link">write a review</a></span>
-    }
+    <span class="ml-4"><a id="reviewTag" href="#" data-toggle="modal" data-target="#modalSubscriptionForm" class="btn-link">write a review</a></span>
 </div>

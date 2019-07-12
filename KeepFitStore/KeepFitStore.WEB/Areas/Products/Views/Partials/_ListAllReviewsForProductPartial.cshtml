@@ -17,7 +17,7 @@ else
 
                 <h5 class="mb-0">@item.Title</h5>
                 <footer class="blockquote-footer">
-                <span class="mr-3">@item.UserFullName</span>
+                <span class="mr-3">@(item.UserFullName== null ? "anonymous" : item.UserFullName)</span>
                 <span>@item.PublishedOn.ToString("hh:mm - dd/MM/yyyy")</span>
                 </footer>
                 <p class="mt-3" style="display:inline-block"><em><span class="contentSpan">@item.Content</span></em></p>
