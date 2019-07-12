@@ -94,14 +94,16 @@
 
         public async Task<IEnumerable<ProductViewModel>> GetTopRatedProducts(int countOfProducts)
         {
-            //TODO: change order!
             var products = await this.context
                 .Products
-                .OrderBy(x => x.Price)
-                .Take(countOfProducts)
+                .Include(x => x.Reviews)
                 .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
+            var orderedProducts = products
+             .OrderByDescending(x => x.Rating)
+             .Take(countOfProducts);
+
+            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(orderedProducts);
             return viewModel;
         }
 
