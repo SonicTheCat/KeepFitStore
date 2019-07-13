@@ -62,8 +62,6 @@
                     Id = userWithProperties.Address.Id,
                     StreetName = userWithProperties.Address.StreetName,
                     StreetNumber = userWithProperties.Address.StreetNumber,
-                    BuildingNumebr = userWithProperties.Address.BuildingNumebr,
-                    RegionName = userWithProperties.Address.RegionName,
                     City = new CreateOrderCityInputModel
                     {
                         Id = userWithProperties.Address.City.Id,

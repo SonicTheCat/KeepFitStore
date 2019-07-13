@@ -9,9 +9,7 @@
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Domain;
 
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class ReviewsApiController : ControllerBase
+    public class ReviewsApiController : ApiController
     {
         private readonly IReviewsService reviewsService;
         private readonly UserManager<KeepFitUser> userManager;

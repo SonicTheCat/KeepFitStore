@@ -7,13 +7,52 @@
 
 <div class="container row mt-4">
     <div class="col-8">
-        <h4>Your Details</h4>
+        <ul>
+            <li class="bg-light border p-3 mb-2">
+                <h3>1. Delivery Address</h3>
+                <div id="address-div">
+                    <form id="address-form" method="post">
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label asp-for="DeliveryAddress.City.Name"></label>
+                                <input asp-for="DeliveryAddress.City.Name" type="text" class="form-control" placeholder="City..." />
+                                <span asp-validation-for="DeliveryAddress.City.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="DeliveryAddress.City.PostCode"></label>
+                                <input asp-for="DeliveryAddress.City.PostCode" type="number" class="form-control" placeholder="Postcode..." />
+                                <span asp-validation-for="DeliveryAddress.City.PostCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-7">
+                                <label asp-for="DeliveryAddress.StreetName"></label>
+                                <input asp-for="DeliveryAddress.StreetName" type="text" class="form-control" placeholder="Streetname..." />
+                                <span asp-validation-for="DeliveryAddress.StreetName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label asp-for="DeliveryAddress.StreetNumber"></label>
+                                <input asp-for="DeliveryAddress.StreetNumber" type="number" class="form-control" placeholder="Streenumber..." />
+                                <span asp-validation-for="DeliveryAddress.StreetNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start m-4">
+                            <button type="submit" class="btn btn-primary">Enter Address</button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <h3>2. Billing</h3>
+            </li>
+            <li>Billing</li>
+        </ul>
 
     </div>
-    <div>
-        <h4 class="text-center">Order Summary</h4>
-        <table class="table table-borderless">
-            <thead>
+    <div class="border rounded p-1">
+        <h4 class="ml-2">Order Summary</h4>
+        <table class="table table-borderless mt-4">
+            <thead class="border-bottom ">
                 <tr>
                     <th scope="col">Product</th>
                     <th scope="col">Qty</th>
@@ -33,3 +72,56 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $().ready(function () {
+            let addressForm = $("#address-form");
+            addressForm.submit(function (evt) {
+                evt.preventDefault();
+
+                let isFormValid = addressForm.valid();
+                if (!isFormValid) {
+                    return;
+                }
+
+                let data = {
+                    CityName: $("#DeliveryAddress_City_Name").val(),
+                    PostCode: $("#DeliveryAddress_City_PostCode").val(),
+                    StreetName: $("#DeliveryAddress_StreetName").val(),
+                    StreetNumber: $("#DeliveryAddress_StreetNumber").val()
+                };
+
+                var antiForgery = $('input[name="__RequestVerificationToken"]').val();
+             console.log("out")
+                $.ajax({
+                    type: "POST",
+                    url: "/api/AddressApi/Create",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),
+                    beforeSend: function (request) {
+                        request.setRequestHeader("RequestVerificationToken", antiForgery);
+                    },
+                    success: function (data) {
+                        console.log("aaa")
+                        $("#address-div").toggle("slow");
+                    },
+                    error: function (er) {
+                        console.log(er)
+                        console.log("errr")
+                    }
+                });
+            });
+
+            function objectifyForm(formArray) {
+
+                let returnArray = {};
+                for (let i = 0; i < formArray.length; i++) {
+                    returnArray[formArray[i]['name']] = formArray[i]['value'];
+                }
+                return returnArray;
+            }
+        });
+    </script>
+}
