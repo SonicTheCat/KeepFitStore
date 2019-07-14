@@ -16,6 +16,8 @@
     using KeepFitStore.Models.ViewModels.Basket;
     using KeepFitStore.Models.InputModels.Reviews;
     using KeepFitStore.Models.ViewModels.Reviews;
+    using KeepFitStore.Models.InputModels.Address;
+    using KeepFitStore.Models.ViewModels.Address;
 
     public class KeepFitProfile : Profile
     {
@@ -43,14 +45,21 @@
             //Basket 
             this.CreateMap<BasketItem, BasketViewModel>();
             this.CreateMap<BasketItem, EditBasketItemViewModel>()
-                   .ForMember(dest => dest.ProductPrice, 
+                   .ForMember(dest => dest.ProductPrice,
                                     opt => opt.MapFrom(src => src.Product.Price));
 
             //Reviews
             this.CreateMap<CreateReviewInputModel, Review>();
             this.CreateMap<Review, ReviewViewModel>()
-                .ForMember(dest => dest.UserFullName, 
-                                opt => opt.MapFrom(src => src.KeepFitUser.FullName));
+                   .ForMember(dest => dest.UserFullName,
+                                    opt => opt.MapFrom(src => src.KeepFitUser.FullName));
+
+            //Address
+            this.CreateMap<Address, CreateAddressViewModel>();
+            this.CreateMap<CreateAddressInputModel, Address>();
+            this.CreateMap<CreateAddressInputModel, City>()
+                .ForMember(dest => dest.Name,
+                                opt => opt.MapFrom(src => src.CityName));
         }
     }
 }

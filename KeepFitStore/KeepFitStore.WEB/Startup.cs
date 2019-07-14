@@ -96,6 +96,7 @@
             services.AddTransient<IBasketService, BasketSerivce>();
             services.AddTransient<IReviewsService, ReviewsService>();
             services.AddTransient<IOrdersService, OrdersService>();
+            services.AddTransient<IAddressService, AddressService>();
 
             //Email Sender Services
             services.AddTransient<IEmailSender, EmailSender>();

@@ -8,7 +8,7 @@
 <div class="container row mt-4">
     <div class="col-8">
         <ul>
-            <li class="bg-light border p-3 mb-2">
+            <li class="my-light-color border rounded p-3 mb-2">
                 <h3>1. Delivery Address</h3>
                 <div id="address-div">
                     <form id="address-form" method="post">
@@ -27,12 +27,12 @@
                         <div class="form-row">
                             <div class="form-group col-md-7">
                                 <label asp-for="DeliveryAddress.StreetName"></label>
-                                <input asp-for="DeliveryAddress.StreetName" type="text" class="form-control" placeholder="Streetname..." />
+                                <input asp-for="DeliveryAddress.StreetName" type="text" class="form-control" placeholder="Street name..." />
                                 <span asp-validation-for="DeliveryAddress.StreetName" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-2">
                                 <label asp-for="DeliveryAddress.StreetNumber"></label>
-                                <input asp-for="DeliveryAddress.StreetNumber" type="number" class="form-control" placeholder="Streenumber..." />
+                                <input asp-for="DeliveryAddress.StreetNumber" type="number" class="form-control" placeholder="Street &num;..." />
                                 <span asp-validation-for="DeliveryAddress.StreetNumber" class="text-danger"></span>
                             </div>
                         </div>
@@ -42,14 +42,22 @@
                     </form>
                 </div>
             </li>
-            <li>
+            <li class="my-light-color border rounded p-3 mb-2">
                 <h3>2. Billing</h3>
+                <div id="billing-div">
+                    <h3>Hello</h3>
+                </div>
             </li>
-            <li>Billing</li>
+            <li class="my-light-color border rounded p-3 mb-2">
+                <h3>3. Confirmation</h3>
+                <div id="confirm-div">
+                    <h3>Hello from confirm</h3>
+                </div>
+            </li>
         </ul>
 
     </div>
-    <div class="border rounded p-1">
+    <div class="border rounded p-1 my-light-color">
         <h4 class="ml-2">Order Summary</h4>
         <table class="table table-borderless mt-4">
             <thead class="border-bottom ">
@@ -94,7 +102,7 @@
                 };
 
                 var antiForgery = $('input[name="__RequestVerificationToken"]').val();
-             console.log("out")
+                console.log(data);
                 $.ajax({
                     type: "POST",
                     url: "/api/AddressApi/Create",
@@ -104,12 +112,11 @@
                         request.setRequestHeader("RequestVerificationToken", antiForgery);
                     },
                     success: function (data) {
-                        console.log("aaa")
                         $("#address-div").toggle("slow");
+                        $("#billing-div").toggle("slow");
                     },
                     error: function (er) {
                         console.log(er)
-                        console.log("errr")
                     }
                 });
             });

@@ -173,3 +173,10 @@ span.contentSpan {
     text-decoration: none;
 }
 
+.my-light-color{
+    background-color: whitesmoke;
+}
+
+#billing-div, #confirm-div{
+    display: none;
+}
