@@ -1,8 +1,10 @@
 ﻿@using KeepFitStore.Models.InputModels.Orders
+@using KeepFitStore.Domain.Enums
 
 @model CreateOrderInputModel
 @{
     ViewData["Title"] = "Create Order";
+    var total = 0m;
 }
 
 <div class="container row mt-4">
@@ -43,9 +45,20 @@
                 </div>
             </li>
             <li class="my-light-color border rounded p-3 mb-2">
-                <h3>2. Billing</h3>
+                <h3>2. Billing & Delivery Type</h3>
                 <div id="billing-div">
-                    <h3>Hello</h3>
+                    <h5 class="mt-4 mb-4 text-center">Choose your delivery type</h5>
+                    <div class="d-flex justify-content-between ml-3 mr-3">
+                        @foreach (var item in Enum.GetValues(typeof(DeliveryType)))
+                        {
+                            <div class="form-check form-check-intline">
+                                <label>
+                                    <input asp-for="DeliveryType" type="radio" name="deliveryType" value="@item" />
+                                    @item
+                                </label>
+                            </div>
+                        }
+                    </div>
                 </div>
             </li>
             <li class="my-light-color border rounded p-3 mb-2">
@@ -70,14 +83,25 @@
             <tbody>
                 @foreach (var item in Model.Products)
                 {
+                    total += (item.Quantity * item.Price);
                     <tr>
                         <td>@item.Name @item.ProductType.ToString()</td>
                         <td>@item.Quantity</td>
-                        <td>&pound; @item.Price</td>
+                        <td>&pound;@item.Price</td>
                     </tr>
                 }
             </tbody>
         </table>
+        @if (total >= 60)
+        {
+            <p class="p-1 m-2">You get <strong>FREE</strong> next day delivery</p>
+        }
+        else if (total >= 20)
+        {
+            <p class="p-1 m-2">You get <strong>FREE</strong> standart delivery</p>
+        }
+
+        <h6 id="totalSum" total-sum="@total" class="p-1 m-2">Total: &pound;@total</h6>
     </div>
 </div>
 
@@ -85,7 +109,8 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         $().ready(function () {
-            addAddress(); 
+            addAddress();
+            chooseDeliveryType();
         });
     </script>
 }

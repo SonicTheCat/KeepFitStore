@@ -1,12 +1,21 @@
-﻿const addressForm = $("#address-form");
-const addressDiv = $("#address-div");
-const billingDiv = $("#billing-div")
+﻿const ADDRESS_FORM = $("#address-form");
+const ADDRESS_DIV = $("#address-div");
+const BILLING_DIV = $("#billing-div")
+
+const INPUT_DELIVERY_TYPE_RADIO_BTN = $('input[type=radio][name=deliveryType]');
+const TOTAL_SUM = $("#totalSum");
+const EXPRESS_DELIVERY = "Express";
+const NEXTDAY_DELIVERY = "NextDay";
+const STANDART_DELIVERY = "Standart";
+const EXPRESS_PRICE = 15;
+const NEXTDAY_PRICE= 10;
+const STANDART_PRICE= 5;
 
 function addAddress() {
-    addressForm.submit(function (evt) {
+    ADDRESS_FORM.submit(function (evt) {
         evt.preventDefault();
 
-        let isFormValid = addressForm.valid();
+        let isFormValid = ADDRESS_FORM.valid();
         if (!isFormValid) {
             return;
         }
@@ -29,12 +38,44 @@ function addAddress() {
                 request.setRequestHeader("RequestVerificationToken", antiForgery);
             },
             success: function (data) {
-                addressDiv.toggle("slow");
-                billingDiv.toggle("slow");
+                ADDRESS_DIV.toggle("slow");
+                BILLING_DIV.toggle("slow");
             },
             error: function (er) {
                 console.log(er)
             }
         });
+    });
+}
+
+function chooseDeliveryType() {
+    INPUT_DELIVERY_TYPE_RADIO_BTN.change(function () {
+
+        let chosenType = this.value;
+        let totalSum = Number(TOTAL_SUM.attr("total-sum"));
+
+        if ((chosenType !== EXPRESS_DELIVERY && totalSum >= 60) ||
+            (chosenType === STANDART_DELIVERY && totalSum >= 20)) {
+
+            TOTAL_SUM.text(`Total: £${totalSum.toFixed(2)}`);
+            return;
+        }
+
+        let deliveryPrice = 0;
+        let message = "";
+        if (chosenType === EXPRESS_DELIVERY) {
+            deliveryPrice = EXPRESS_PRICE;
+            message = "Express delivery: £" + deliveryPrice;
+        } else if (chosenType === NEXTDAY_DELIVERY) {
+            deliveryPrice = NEXTDAY_PRICE;
+            message = "Next day delivery: £" + deliveryPrice;
+        } else {
+            deliveryPrice = STANDART_PRICE;
+            message = "Standart delivery: £" + deliveryPrice;
+        }
+
+        TOTAL_SUM
+            .text(`Total (plus delivery): £${(totalSum + deliveryPrice).toFixed(2)}`)
+            .prepend(`<p>${message}</p>`);
     });
 }
