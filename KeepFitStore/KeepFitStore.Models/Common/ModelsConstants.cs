@@ -20,24 +20,32 @@
 
         public const string UploadProducImageName = "Upload image for this product";
 
-        public const int RatingMinValue = 1; 
+        public const int RatingMinValue = 1;
 
         public const int RatingMaxValue = 5;
 
-        public const int CityNameMinLength = 3; 
+        public const int CityNameMinLength = 3;
 
-        public const int CityNameMaxLength = 20; 
+        public const int CityNameMaxLength = 20;
 
-        public const int StreetNumberMinNumber = 1; 
+        public const int StreetNumberMinNumber = 1;
 
-        public const int StreetNumberMaxNumber = 1000; 
+        public const int StreetNumberMaxNumber = 1000;
 
-        public const int StreetNameMaxLength = 40; 
+        public const int StreetNameMaxLength = 40;
 
         public const int StreetNameMinLength = 5;
 
-        public const string StringErrorMessage = "{0} length must be between {1} and {2} charactes long.";
+        public const string StringErrorMessage = "{0} length must be between {2} and {1} charactes long.";
 
+        public const string Postcode = "Postcode";
 
+        public const string City = "City";
+
+        public const string Street = "Street name";
+
+        public const string StreetNumber = "#";
+
+        
     }
 }

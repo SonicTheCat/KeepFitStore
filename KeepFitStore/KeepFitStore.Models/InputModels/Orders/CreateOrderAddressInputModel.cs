@@ -1,23 +1,24 @@
-﻿using KeepFitStore.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace KeepFitStore.Models.InputModels.Orders
+﻿namespace KeepFitStore.Models.InputModels.Orders
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using KeepFitStore.Models.Common;
+
     public class CreateOrderAddressInputModel
     {
         public int Id { get; set; }
 
         [Required]
-        [Range(ModelsConstants.StreetNumberMinNumber, ModelsConstants.StreetNumberMaxNumber)]
-        [Display(Name = "Ulica")]
-        public int? StreetNumber { get; set; }
+        [StringLength(ModelsConstants.StreetNameMaxLength,
+           MinimumLength = ModelsConstants.StreetNameMinLength,
+           ErrorMessage = ModelsConstants.StringErrorMessage)]
+        [Display(Name = ModelsConstants.Street)]
+        public string StreetName { get; set; }
 
         [Required]
-        [Display(Name = "Ime na Ulica")]
-        public string StreetName { get; set; }
+        [Range(ModelsConstants.StreetNumberMinNumber, ModelsConstants.StreetNumberMaxNumber)]
+        [Display(Name = ModelsConstants.StreetNumber)]
+        public int StreetNumber { get; set; }
 
         public CreateOrderCityInputModel City { get; set; }
     }
