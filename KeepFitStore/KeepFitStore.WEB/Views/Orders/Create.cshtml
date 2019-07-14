@@ -85,50 +85,7 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         $().ready(function () {
-            let addressForm = $("#address-form");
-            addressForm.submit(function (evt) {
-                evt.preventDefault();
-
-                let isFormValid = addressForm.valid();
-                if (!isFormValid) {
-                    return;
-                }
-
-                let data = {
-                    CityName: $("#DeliveryAddress_City_Name").val(),
-                    PostCode: $("#DeliveryAddress_City_PostCode").val(),
-                    StreetName: $("#DeliveryAddress_StreetName").val(),
-                    StreetNumber: $("#DeliveryAddress_StreetNumber").val()
-                };
-
-                var antiForgery = $('input[name="__RequestVerificationToken"]').val();
-                console.log(data);
-                $.ajax({
-                    type: "POST",
-                    url: "/api/AddressApi/Create",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(data),
-                    beforeSend: function (request) {
-                        request.setRequestHeader("RequestVerificationToken", antiForgery);
-                    },
-                    success: function (data) {
-                        $("#address-div").toggle("slow");
-                        $("#billing-div").toggle("slow");
-                    },
-                    error: function (er) {
-                        console.log(er)
-                    }
-                });
-            });
-
-            function objectifyForm(formArray) {
-
-                let returnArray = {};
-                for (let i = 0; i < formArray.length; i++) {
-                    returnArray[formArray[i]['name']] = formArray[i]['value'];
-                }
-                return returnArray;
-            }
+            addAddress(); 
         });
     </script>
 }
