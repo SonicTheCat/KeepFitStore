@@ -177,6 +177,6 @@ span.contentSpan {
     background-color: whitesmoke;
 }
 
-#billing-div, #confirm-div{
+#billing-div, #confirm-div, .hidden-form{
     display: none;
 }

@@ -55,6 +55,7 @@
                                     opt => opt.MapFrom(src => src.KeepFitUser.FullName));
 
             //Address
+            this.CreateMap<Address, GetAddressViewModel>();
             this.CreateMap<Address, CreateAddressViewModel>();
             this.CreateMap<CreateAddressInputModel, Address>();
             this.CreateMap<CreateAddressInputModel, City>()

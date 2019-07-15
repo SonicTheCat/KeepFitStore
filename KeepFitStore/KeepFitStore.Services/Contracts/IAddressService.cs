@@ -8,6 +8,8 @@
 
     public interface IAddressService
     {
-        Task<CreateAddressViewModel> AddAddressToUserAsync(CreateAddressInputModel model, ClaimsPrincipal principal); 
+        Task<CreateAddressViewModel> AddAddressToUserAsync(CreateAddressInputModel model, ClaimsPrincipal principal);
+
+        Task<GetAddressViewModel> GetAddressFromUser(ClaimsPrincipal principal);
     }
 }

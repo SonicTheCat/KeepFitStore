@@ -47,24 +47,60 @@
             <li class="my-light-color border rounded p-3 mb-2">
                 <h3>2. Billing & Delivery Type</h3>
                 <div id="billing-div">
-                    <h5 class="mt-4 mb-4 text-center">Choose your delivery type</h5>
-                    <div class="d-flex justify-content-between ml-3 mr-3">
-                        @foreach (var item in Enum.GetValues(typeof(DeliveryType)))
-                        {
-                            <div class="form-check form-check-intline">
-                                <label>
-                                    <input asp-for="DeliveryType" type="radio" name="deliveryType" value="@item" />
-                                    @item
-                                </label>
-                            </div>
-                        }
-                    </div>
+                    <form method="post" id="fake-form">
+                        <h5 class="mt-4 mb-4 text-center">Choose your delivery type</h5>
+                        <div class="d-flex justify-content-between ml-3 mr-3">
+                            @foreach (var item in Enum.GetValues(typeof(DeliveryType)))
+                            {
+                                <div class="form-check form-check-intline">
+                                    <label>
+                                        <input asp-for="DeliveryType" type="radio" name="deliveryType" value="@item" />
+                                        @item
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                        <h5 class="mt-4 mb-4 text-center">Payment method</h5>
+                        <div class="d-flex justify-content-between ml-3 mr-3">
+                            @foreach (var item in Enum.GetValues(typeof(PaymentType)))
+                            {
+                                <div class="form-check form-check-intline">
+                                    <label>
+                                        <input asp-for="PaymentType" type="radio" name="paymentType" value="@item" />
+                                        @item
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                        <div class="d-flex justify-content-start m-4">
+                            <button type="submit" class="btn btn-primary">Go</button>
+                        </div>
+                    </form>
                 </div>
             </li>
             <li class="my-light-color border rounded p-3 mb-2">
                 <h3>3. Confirmation</h3>
                 <div id="confirm-div">
-                    <h3>Hello from confirm</h3>
+                    <div id="confirmation-data" class="row mt-4">
+                    </div>
+                    <form method="post" asp-controller="Orders" asp-action="Create">
+                        <div class="form-row hidden-form">
+                            <div class="form-group col-md-5">
+                                <input asp-for="DeliveryType" type="text" class="form-control" name="set-delivery" />
+                            </div>
+                            <div class="form-group col-md-5">
+                                <div class="form-check form-check-intline">
+                                    <label>
+                                        <input asp-for="PaymentType" type="radio" name="paymentType" value="" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic example">
+                            <a href="#" class="btn btn-danger">Edit</a>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </form>
                 </div>
             </li>
         </ul>
@@ -111,6 +147,31 @@
         $().ready(function () {
             addAddress();
             chooseDeliveryType();
+            $("#fake-form").submit(function (evt) {
+                evt.preventDefault();
+
+                let isFormValid = $("#fake-form").valid();
+                if (!isFormValid) {
+                    return;
+                }
+
+                let deliveryType = $('input[type=radio][name=deliveryType]:checked').val();
+                let paymentType = $('input[type=radio][name=paymentType]:checked').val();
+
+                $("#confirmation-data")
+                    .append($("<ul>")
+                        .append($(`<li>`)
+                            .append($(`<p>Delivery: ${deliveryType}</p>`).addClass("h6")))
+                        .append($(`<li>`)
+                            .append($(`<p>Payment: ${paymentType}</p>`).addClass("h6"))));
+
+
+                $("input[name*='set-delivery']").attr("value", deliveryType);
+                $("input[name*='set-payment']").attr("value", paymentType);
+               
+                $("#billing-div").toggle("slow");
+                $("#confirm-div").toggle("slow");
+            });
         });
     </script>
 }

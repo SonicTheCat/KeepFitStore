@@ -61,5 +61,18 @@
 
             return this.mapper.Map<CreateAddressViewModel>(address);
         }
+
+        public async Task<GetAddressViewModel> GetAddressFromUser(ClaimsPrincipal principal)
+        {
+            var userFromDb = await this.userManager.GetUserAsync(principal);
+
+            var user = await this.userManager
+                .Users
+                .Include(x => x.Address)
+                .SingleOrDefaultAsync(x => x.Id == userFromDb.Id);
+
+            var address = this.mapper.Map<GetAddressViewModel>(user.Address);
+            return address; 
+        }
     }
 }

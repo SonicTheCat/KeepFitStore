@@ -8,8 +8,8 @@ const EXPRESS_DELIVERY = "Express";
 const NEXTDAY_DELIVERY = "NextDay";
 const STANDART_DELIVERY = "Standart";
 const EXPRESS_PRICE = 15;
-const NEXTDAY_PRICE= 10;
-const STANDART_PRICE= 5;
+const NEXTDAY_PRICE = 10;
+const STANDART_PRICE = 5;
 
 function addAddress() {
     ADDRESS_FORM.submit(function (evt) {
@@ -38,6 +38,19 @@ function addAddress() {
                 request.setRequestHeader("RequestVerificationToken", antiForgery);
             },
             success: function (data) {
+                console.log(data);
+                $("#confirmation-data")
+                    .append($("<ul>")
+                        .append($(`<li>`)
+                            .append($(`<p>City: ${data.cityName}</p>`).addClass("h6")))
+                        .append($(`<li>`)
+                            .append($(`<p>Post code: ${data.cityPostCode}</p>`).addClass("h6")))
+                        .append($(`<li>`)
+                            .append($(`<p>Street name: ${data.streetName}</p>`).addClass("h6")))
+                        .append($(`<li>`)
+                            .append($(`<p>Street number: ${data.streetNumber}</p>`).addClass("h6"))));
+
+
                 ADDRESS_DIV.toggle("slow");
                 BILLING_DIV.toggle("slow");
             },

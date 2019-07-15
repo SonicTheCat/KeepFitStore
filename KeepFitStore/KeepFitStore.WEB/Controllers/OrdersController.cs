@@ -15,12 +15,19 @@ namespace KeepFitStore.WEB.Controllers
             this.ordersService = ordersService;
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var order = await this.ordersService.AddBasketContentToOrderByUserAsync(this.User);
 
             return this.View(order);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateOrderInputModel inputModel)
+        {
+            return null;
         }
     }
 }
