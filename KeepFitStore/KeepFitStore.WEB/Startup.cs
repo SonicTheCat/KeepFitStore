@@ -97,6 +97,7 @@
             services.AddTransient<IReviewsService, ReviewsService>();
             services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IUsersService, UsersSerivce>();
 
             //Email Sender Services
             services.AddTransient<IEmailSender, EmailSender>();

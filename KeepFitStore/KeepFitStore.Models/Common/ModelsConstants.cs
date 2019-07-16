@@ -46,6 +46,8 @@
 
         public const string StreetNumber = "#";
 
-        
+        public const string UserFullName = "Full name";
+
+        public const string UserPhoneNumber = "Phone number";
     }
 }

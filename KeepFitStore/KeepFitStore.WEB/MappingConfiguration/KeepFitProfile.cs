@@ -18,6 +18,7 @@
     using KeepFitStore.Models.ViewModels.Reviews;
     using KeepFitStore.Models.InputModels.Address;
     using KeepFitStore.Models.ViewModels.Address;
+    using KeepFitStore.Models.ViewModels.User;
 
     public class KeepFitProfile : Profile
     {
@@ -61,6 +62,9 @@
             this.CreateMap<CreateAddressInputModel, City>()
                 .ForMember(dest => dest.Name,
                                 opt => opt.MapFrom(src => src.CityName));
+
+            //User 
+            this.CreateMap<KeepFitUser, UpdateUserViewModel>(); 
         }
     }
 }

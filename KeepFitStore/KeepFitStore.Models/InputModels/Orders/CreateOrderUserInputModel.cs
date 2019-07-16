@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KeepFitStore.Models.InputModels.Orders
+﻿namespace KeepFitStore.Models.InputModels.Orders
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using KeepFitStore.Models.Common;
+    
     public class CreateOrderUserInputModel
     {
         public string Id { get; set; }
 
+        [Required]
+        [Display(Name = ModelsConstants.UserFullName)]
         public string FullName { get; set; }
 
         public string Email { get; set; }
 
+        [Required]
+        [Display(Name = ModelsConstants.UserPhoneNumber)]
         public string PhoneNumber { get; set; }
     }
 }
