@@ -47,9 +47,9 @@ function addUsersInfo() {
                 $("#confirmation-data")
                     .append($("<ul>")
                         .append($(`<li>`)
-                            .append($(`<p>Full name: ${data.fullName}</p>`).addClass("h6")))
+                            .append($(`<p>Full name:<em> ${data.fullName}</em></p>`).addClass("h6")))
                         .append($(`<li>`)
-                            .append($(`<p>Mobile: ${data.phoneNumber}</p>`).addClass("h6"))));
+                            .append($(`<p>Mobile:<em> ${data.phoneNumber}</em></p>`).addClass("h6"))));
             },
             error: function (er) {
                 console.log(er)
@@ -91,13 +91,13 @@ function addAddress() {
                 $("#confirmation-data")
                     .append($("<ul>")
                         .append($(`<li>`)
-                            .append($(`<p>City: ${data.cityName}</p>`).addClass("h6")))
+                            .append($(`<p>City:<em> ${data.cityName}</em></p>`).addClass("h6")))
                         .append($(`<li>`)
-                            .append($(`<p>Post code: ${data.cityPostCode}</p>`).addClass("h6")))
+                            .append($(`<p>Post code:<em> ${data.cityPostCode}</em></p>`).addClass("h6")))
                         .append($(`<li>`)
-                            .append($(`<p>Street name: ${data.streetName}</p>`).addClass("h6")))
+                            .append($(`<p>Street name:<em> ${data.streetName}</em></p>`).addClass("h6")))
                         .append($(`<li>`)
-                            .append($(`<p>Street number: ${data.streetNumber}</p>`).addClass("h6"))));
+                            .append($(`<p>Street number:<em> ${data.streetNumber}</em></p>`).addClass("h6"))));
             },
             error: function (er) {
                 console.log(er)

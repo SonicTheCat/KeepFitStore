@@ -1,0 +1,66 @@
+﻿@using KeepFitStore.Models.ViewModels.Orders
+
+@model IEnumerable<AllOrdersViewModel>
+    @{
+    ViewData["Title"] = "All My Orders";
+    }
+
+    <h1 class="mt-3">My orders</h1>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col">Order ID</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Ordered Date</th>
+                <th scope="col">Order Status</th>
+                <th scope="col">Products count</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr class="text-center">
+                <th>@item.Id</th>
+                <td>&pound;@item.TotalPrice</td>
+                <td>@item.OrderDate.Value.ToString("dd/MM/yyyy")</td>
+                <td>@item.Status.ToString()</td>
+                <td>@item.ProductsCount</td>
+                <td><a href="#" class="btn btn-info test-btn"><i class="fas fa-caret-down mr-2"></i>Details</a></td>
+            </tr>
+            <tr style="display:none">
+                <th colspan="6">
+                    <div>
+                        Info for current order
+                        <p>Total Price: 200</p>
+                        <p>Date: 10.10.10</p>
+                        <p>Delivery date: 20.20.10</p>
+                        <p>
+                            Products:
+                            <ul>
+                                <li>Qgodi</li>
+                                <li>Smetana</li>
+                                <li>shampansko</li>
+                            </ul>
+                        </p>
+                    </div>
+                </th>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $().ready(function () {
+            $(".test-btn").click(function (evt) {
+                evt.preventDefault();
+                let nextTr = $(this).parent().parent().next();
+
+                nextTr.toggle();
+            });
+        });
+    </script>
+    }

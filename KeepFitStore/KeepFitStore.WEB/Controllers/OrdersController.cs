@@ -40,5 +40,13 @@
 
             return this.Redirect(WebConstants.HomePagePath); 
         }
+
+        [Authorize]
+        public async Task<IActionResult> All()
+        {
+            var viewModel = await this.ordersService.GetAllOrdersForUserAsync(this.User); 
+
+            return this.View(viewModel); 
+        }
     }
 }
