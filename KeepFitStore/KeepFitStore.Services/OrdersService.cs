@@ -49,6 +49,12 @@
                 Products = this.mapper.Map<ICollection<CreateOrderProductInputModel>>(user.Basket.BasketItems)
             };
 
+            if (order.Products.Count == 0)
+            {
+                //TODO throw service error, dont return null
+                return null;
+            }
+
             if (user.Address != null)
             {
                 order.DeliveryAddress = new CreateOrderAddressInputModel
@@ -76,6 +82,11 @@
             order.KeepFitUser = user;
             order.DeliveryAddress = user.Address;
             order.Products = this.mapper.Map<ICollection<ProductOrder>>(user.Basket.BasketItems);
+
+            if (order.Products.Count == 0)
+            {
+                return; 
+            }
 
             var basketPriceWithoutDelivery = await this.basketService.GetBasketTotalPriceAsync(principal);
             this.CalculateDeliveryPrice(order, basketPriceWithoutDelivery);

@@ -120,9 +120,12 @@
 
         public async Task ClearBasketAsync(int basketId)
         {
-            var basket = await this.context.Baskets.SingleOrDefaultAsync(x => x.Id == basketId);
-            this.context.BasketItems.RemoveRange(basket.BasketItems);
+            var basket = await this.context
+                .Baskets
+                .Include(x => x.BasketItems)
+                .SingleOrDefaultAsync(x => x.Id == basketId);
 
+            this.context.BasketItems.RemoveRange(basket.BasketItems);
             await this.context.SaveChangesAsync();
         }
 

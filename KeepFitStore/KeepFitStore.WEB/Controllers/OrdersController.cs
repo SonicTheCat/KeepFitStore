@@ -1,12 +1,14 @@
-﻿using KeepFitStore.Models.InputModels.Orders;
-using KeepFitStore.Services.Contracts;
-using KeepFitStore.WEB.Common;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-namespace KeepFitStore.WEB.Controllers
+﻿namespace KeepFitStore.WEB.Controllers
 {
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
+    using KeepFitStore.Models.InputModels.Orders;
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.WEB.Common;
+
     public class OrdersController : BaseController
     {
         private readonly IOrdersService ordersService;
@@ -20,6 +22,12 @@ namespace KeepFitStore.WEB.Controllers
         public async Task<IActionResult> Create()
         {
             var order = await this.ordersService.AddBasketContentToOrderByUserAsync(this.User);
+
+            //TODO: catch service error when implemented! dont compare order to null
+            if (order == null)
+            {
+                return this.Redirect(WebConstants.HomePagePath); 
+            }
 
             return this.View(order);
         }
