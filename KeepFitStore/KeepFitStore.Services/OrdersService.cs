@@ -14,6 +14,8 @@
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Data;
+    using KeepFitStore.Models.ViewModels.Orders;
+    using System.Linq;
 
     public class OrdersService : IOrdersService
     {
@@ -85,7 +87,7 @@
 
             if (order.Products.Count == 0)
             {
-                return; 
+                return;
             }
 
             var basketPriceWithoutDelivery = await this.basketService.GetBasketTotalPriceAsync(principal);
@@ -101,7 +103,27 @@
                 //TODO: throw service error
             }
 
-            await this.basketService.ClearBasketAsync(user.BasketId); 
+            await this.basketService.ClearBasketAsync(user.BasketId);
+        }
+
+        public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal)
+        {
+            var userId = this.userManager.GetUserId(principal);
+
+            if (userId == null)
+            {
+                //TODO: throw service error
+            }
+
+            var orders = await this.context
+                .Orders
+                .Include(x => x.Products)
+                .ThenInclude(x => x.Product)
+                .Where(x => x.KeepFitUserId == userId)
+                .ToListAsync();
+
+            var ordersViewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
+            return ordersViewModel; 
         }
 
         private void CalculateDeliveryDate(Order order)

@@ -20,6 +20,8 @@
     using KeepFitStore.Models.ViewModels.Address;
     using KeepFitStore.Models.ViewModels.User;
     using KeepFitStore.Models.InputModels.Orders;
+    using KeepFitStore.Models.ViewModels.Orders;
+    using System.Linq;
 
     public class KeepFitProfile : Profile
     {
@@ -72,10 +74,14 @@
             this.CreateMap<BasketItem, CreateOrderProductInputModel>()
                 .ForMember(dest => dest.ProductType,
                                 opt => opt.MapFrom(src => src.Product.ProductType));
-
             this.CreateMap<BasketItem, ProductOrder>()
                 .ForMember(dest => dest.Product,
-                                opt => opt.MapFrom(src => src.Product));
+                                opt => opt.MapFrom(src => src.Product))
+                .ForMember(dest => dest.ProductQiantity,
+                                opt => opt.MapFrom(src => src.Quantity));
+            this.CreateMap<Order, AllOrdersViewModel>()
+                .ForMember(dest => dest.ProductsCount,
+                                opt => opt.MapFrom(src => src.Products.Sum(x => x.ProductQiantity)));
 
             //User 
             this.CreateMap<KeepFitUser, UpdateUserViewModel>();
