@@ -1,5 +1,6 @@
 ﻿using KeepFitStore.Models.InputModels.Orders;
 using KeepFitStore.Services.Contracts;
+using KeepFitStore.WEB.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -27,7 +28,9 @@ namespace KeepFitStore.WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderInputModel inputModel)
         {
-            return null;
+            await this.ordersService.StartCompletingUserOder(this.User, inputModel);
+
+            return this.Redirect(WebConstants.HomePagePath); 
         }
     }
 }

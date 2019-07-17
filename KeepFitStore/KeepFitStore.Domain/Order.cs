@@ -9,7 +9,9 @@
     {
         public Order()
         {
-            this.Products = new HashSet<ProductOrder>(); 
+            this.Products = new HashSet<ProductOrder>();
+            this.OrderDate = DateTime.UtcNow;
+            this.Status = OrderStatus.Assembling; 
         }
 
         public int Id { get; set; }

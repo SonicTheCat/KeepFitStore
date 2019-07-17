@@ -79,23 +79,22 @@
             await this.context.SaveChangesAsync();
 
             var viewModel = this.mapper.Map<EditBasketItemViewModel>(basketItem);
-            return viewModel; 
+            return viewModel;
         }
 
         public async Task<IEnumerable<BasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal)
         {
-            var user = await this.userManager.GetUserAsync(principal);
-            var basketId = user.BasketId;
+            var basketItems = await this.GetItemsAsync(principal);
 
-            var productsInBasket = await this.context
-                .BasketItems
-                .Include(x => x.Basket)
-                .Include(x => x.Product)
-                .Where(x => x.Basket.Id == basketId)
-                .ToListAsync();
-
-            var viewModel = this.mapper.Map<IEnumerable<BasketViewModel>>(productsInBasket);
+            var viewModel = this.mapper.Map<IEnumerable<BasketViewModel>>(basketItems);
             return viewModel;
+        }
+
+        public async Task<decimal> GetBasketTotalPriceAsync(ClaimsPrincipal principal)
+        {
+            var basketItems = await this.GetItemsAsync(principal);
+            var total = basketItems.Sum(x => x.Quantity * x.Product.Price);
+            return total;
         }
 
         public async Task<bool> DeleteBasketItemAsync(int basketId, int productId)
@@ -105,7 +104,7 @@
             if (basketItem == null)
             {
                 //TODO: throw service exception
-                return false; 
+                return false;
             }
 
             this.context.BasketItems.Remove(basketItem);
@@ -113,10 +112,38 @@
 
             if (deletedCount != 1)
             {
-                return false; 
+                return false;
             }
 
-            return true; 
+            return true;
+        }
+
+        public async Task ClearBasketAsync(int basketId)
+        {
+            var basket = await this.context.Baskets.SingleOrDefaultAsync(x => x.Id == basketId);
+            this.context.BasketItems.RemoveRange(basket.BasketItems);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        private async Task<List<BasketItem>> GetItemsAsync(ClaimsPrincipal principal)
+        {
+            var user = await this.userManager.GetUserAsync(principal);
+            if (user == null)
+            {
+                //TODO: throw service error
+            }
+
+            var basketId = user.BasketId;
+
+            var productsInBasket = await this.context
+                .BasketItems
+                .Include(x => x.Basket)
+                .Include(x => x.Product)
+                .Where(x => x.Basket.Id == basketId)
+                .ToListAsync();
+
+            return productsInBasket; 
         }
 
         private BasketItem GetBasketItemOrDefault(int productId, int basketId)

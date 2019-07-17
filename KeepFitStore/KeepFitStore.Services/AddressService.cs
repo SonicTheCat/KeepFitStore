@@ -32,7 +32,8 @@
         {
             var city = this.context
                 .Cities
-                .SingleOrDefault(x => x.Name == model.CityName);
+                .SingleOrDefault(x => x.Name == model.CityName && 
+                x.PostCode == model.PostCode);
 
             if (city == null)
             {
@@ -45,7 +46,8 @@
                 .SingleOrDefault(x =>
                 x.StreetName == model.StreetName &&
                 x.StreetNumber == model.StreetNumber &&
-                x.City.Name == model.CityName);
+                x.City.Name == model.CityName &&
+                x.City.PostCode == model.PostCode);
 
             if (address != null)
             {

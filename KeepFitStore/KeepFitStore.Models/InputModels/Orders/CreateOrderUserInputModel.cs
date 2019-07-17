@@ -12,8 +12,6 @@
         [Display(Name = ModelsConstants.UserFullName)]
         public string FullName { get; set; }
 
-        public string Email { get; set; }
-
         [Required]
         [Display(Name = ModelsConstants.UserPhoneNumber)]
         public string PhoneNumber { get; set; }

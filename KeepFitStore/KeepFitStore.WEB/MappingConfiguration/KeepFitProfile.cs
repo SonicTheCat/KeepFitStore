@@ -19,6 +19,7 @@
     using KeepFitStore.Models.InputModels.Address;
     using KeepFitStore.Models.ViewModels.Address;
     using KeepFitStore.Models.ViewModels.User;
+    using KeepFitStore.Models.InputModels.Orders;
 
     public class KeepFitProfile : Profile
     {
@@ -63,8 +64,21 @@
                 .ForMember(dest => dest.Name,
                                 opt => opt.MapFrom(src => src.CityName));
 
+            //Orders
+            this.CreateMap<CreateOrderInputModel, Order>()
+                .ForMember(x => x.OrderDate, opt => opt.Ignore())
+                .ForMember(x => x.Status, opt => opt.Ignore());
+            this.CreateMap<KeepFitUser, CreateOrderUserInputModel>();
+            this.CreateMap<BasketItem, CreateOrderProductInputModel>()
+                .ForMember(dest => dest.ProductType,
+                                opt => opt.MapFrom(src => src.Product.ProductType));
+
+            this.CreateMap<BasketItem, ProductOrder>()
+                .ForMember(dest => dest.Product,
+                                opt => opt.MapFrom(src => src.Product));
+
             //User 
-            this.CreateMap<KeepFitUser, UpdateUserViewModel>(); 
+            this.CreateMap<KeepFitUser, UpdateUserViewModel>();
         }
     }
 }

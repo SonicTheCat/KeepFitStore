@@ -7,6 +7,7 @@ const BILLING_DIV = $("#billing-div");
 
 const INPUT_DELIVERY_TYPE_RADIO_BTN = $('input[type=radio][name=deliveryType]');
 const TOTAL_SUM = $("#totalSum");
+const EDIT_BUTTON = $("#edit-btn");
 
 const EXPRESS_DELIVERY = "Express";
 const NEXTDAY_DELIVERY = "NextDay";
@@ -15,7 +16,6 @@ const STANDART_DELIVERY = "Standart";
 const EXPRESS_PRICE = 15;
 const NEXTDAY_PRICE = 10;
 const STANDART_PRICE = 5;
-
 
 function addUsersInfo() {
     WELCOME_FORM.submit(function (evt) {
@@ -42,7 +42,7 @@ function addUsersInfo() {
                 request.setRequestHeader("RequestVerificationToken", antiForgery);
             },
             success: function (data) {
-                toggleElements(WELCOME_DIV, ADDRESS_DIV); 
+                toggleElements(WELCOME_DIV, ADDRESS_DIV);
 
                 $("#confirmation-data")
                     .append($("<ul>")
@@ -74,6 +74,7 @@ function addAddress() {
             StreetNumber: $("#DeliveryAddress_StreetNumber").val()
         };
 
+        console.log(data); 
         var antiForgery = $('input[name="__RequestVerificationToken"]').val();
 
         $.ajax({
@@ -85,7 +86,7 @@ function addAddress() {
                 request.setRequestHeader("RequestVerificationToken", antiForgery);
             },
             success: function (data) {
-                toggleElements(ADDRESS_DIV, BILLING_DIV); 
+                toggleElements(ADDRESS_DIV, BILLING_DIV);
 
                 $("#confirmation-data")
                     .append($("<ul>")
@@ -140,4 +141,10 @@ function chooseDeliveryType() {
 function toggleElements(elementOne, elementTwo) {
     elementOne.toggle("slow");
     elementTwo.toggle("slow");
-} 
+}
+
+function startFromBeginning() {
+    EDIT_BUTTON.click(function () {
+        location.reload();
+    });
+}

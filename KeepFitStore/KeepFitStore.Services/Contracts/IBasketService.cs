@@ -14,6 +14,10 @@
 
         Task<EditBasketItemViewModel> EditBasketItemAsync(int basketId, int productId, int quantity);
 
-        Task<bool> DeleteBasketItemAsync(int basketId, int productId); 
+        Task<bool> DeleteBasketItemAsync(int basketId, int productId);
+
+        Task<decimal> GetBasketTotalPriceAsync(ClaimsPrincipal principal);
+
+        Task ClearBasketAsync(int basketId); 
     }
 }
