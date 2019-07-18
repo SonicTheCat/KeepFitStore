@@ -8,6 +8,7 @@
     using KeepFitStore.Models.InputModels.Orders;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Common;
+    using KeepFitStore.WEB.Filters;
 
     public class OrdersController : BaseController
     {
@@ -34,6 +35,7 @@
 
         [Authorize]
         [HttpPost]
+        [ValidateModelStateFilter(nameof(Create))]
         public async Task<IActionResult> Create(CreateOrderInputModel inputModel)
         {
             await this.ordersService.StartCompletingUserOder(this.User, inputModel);

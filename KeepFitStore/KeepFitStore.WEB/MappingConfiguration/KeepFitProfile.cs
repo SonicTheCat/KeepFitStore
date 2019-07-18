@@ -77,11 +77,17 @@
             this.CreateMap<BasketItem, ProductOrder>()
                 .ForMember(dest => dest.Product,
                                 opt => opt.MapFrom(src => src.Product))
-                .ForMember(dest => dest.ProductQiantity,
+                .ForMember(dest => dest.ProductQuantity,
                                 opt => opt.MapFrom(src => src.Quantity));
             this.CreateMap<Order, AllOrdersViewModel>()
                 .ForMember(dest => dest.ProductsCount,
-                                opt => opt.MapFrom(src => src.Products.Sum(x => x.ProductQiantity)));
+                                opt => opt.MapFrom(src => src.Products.Sum(x => x.ProductQuantity)));
+
+            //Orders - Details
+            this.CreateMap<Order, DetailsOrdersViewModel>();
+            this.CreateMap<KeepFitUser, DetailsOrderUserViewModel>();
+            this.CreateMap<Address, DetailsOrdersAddressViewModel>();
+            this.CreateMap<ProductOrder, DetailsOrdersProductsViewModel>(); 
 
             //User 
             this.CreateMap<KeepFitUser, UpdateUserViewModel>();
