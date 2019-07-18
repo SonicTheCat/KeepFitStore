@@ -163,9 +163,11 @@ function openDetailsForOrder() {
         if (detailsAttribute === "opened") {
             rowDetailsToBeShown.attr("details", "closed");
         } else {
+            if (detailsAttribute === undefined) {
+                let elementToAppendDataTo = rowDetailsToBeShown.children(':first-child');
+                elementToAppendDataTo.load(`/Orders/Details?orderId=${orderId}`)
+            }
             rowDetailsToBeShown.attr("details", "opened");
-            let elementToAppendDataTo = rowDetailsToBeShown.children(':first-child');
-            elementToAppendDataTo.load(`/Orders/Details?orderId=${orderId}`)
         }
 
         rowDetailsToBeShown.toggle();
