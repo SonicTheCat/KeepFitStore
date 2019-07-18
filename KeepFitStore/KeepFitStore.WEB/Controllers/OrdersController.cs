@@ -9,6 +9,7 @@
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Common;
     using KeepFitStore.WEB.Filters;
+    using KeepFitStore.Models.ViewModels.Orders;
 
     public class OrdersController : BaseController
     {
@@ -49,6 +50,14 @@
             var viewModel = await this.ordersService.GetAllOrdersForUserAsync(this.User); 
 
             return this.View(viewModel); 
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Details(int orderId)
+        {
+            var viewModel = await this.ordersService.GetDetailsForOrderAsync(this.User, orderId);
+
+            return this.PartialView("~/Views/Partials/_OrderDetailsPartialView.cshtml", viewModel); 
         }
     }
 }

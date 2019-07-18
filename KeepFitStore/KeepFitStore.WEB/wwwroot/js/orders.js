@@ -17,6 +17,8 @@ const EXPRESS_PRICE = 15;
 const NEXTDAY_PRICE = 10;
 const STANDART_PRICE = 5;
 
+const DETAILS_ORDER_BTN = $(".details-order-btn");
+
 function addUsersInfo() {
     WELCOME_FORM.submit(function (evt) {
         evt.preventDefault();
@@ -74,7 +76,7 @@ function addAddress() {
             StreetNumber: $("#DeliveryAddress_StreetNumber").val()
         };
 
-        console.log(data); 
+        console.log(data);
         var antiForgery = $('input[name="__RequestVerificationToken"]').val();
 
         $.ajax({
@@ -146,5 +148,26 @@ function toggleElements(elementOne, elementTwo) {
 function startFromBeginning() {
     EDIT_BUTTON.click(function () {
         location.reload();
+    });
+}
+
+function openDetailsForOrder() {
+    DETAILS_ORDER_BTN.click(function (evt) {
+        evt.preventDefault();
+
+        var btn = $(this);
+        let orderId = btn.parent().parent().children(':first-child').text();
+        let rowDetailsToBeShown = btn.parent().parent().next();
+        var detailsAttribute = rowDetailsToBeShown.attr("details");
+
+        if (detailsAttribute === "opened") {
+            rowDetailsToBeShown.attr("details", "closed");
+        } else {
+            rowDetailsToBeShown.attr("details", "opened");
+            let elementToAppendDataTo = rowDetailsToBeShown.children(':first-child');
+            elementToAppendDataTo.load(`/Orders/Details?orderId=${orderId}`)
+        }
+
+        rowDetailsToBeShown.toggle();
     });
 }
