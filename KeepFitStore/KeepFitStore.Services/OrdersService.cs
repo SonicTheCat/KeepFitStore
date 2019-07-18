@@ -126,6 +126,34 @@
             return ordersViewModel; 
         }
 
+        public async Task<DetailsOrdersViewModel> GetDetailsForOrderAsync(ClaimsPrincipal principal, int orderId)
+        {
+            var userId = this.userManager.GetUserId(principal);
+
+            var order = await this.context
+                .Orders
+                .Include(x => x.KeepFitUser)
+                .Include(x => x.DeliveryAddress)
+                .ThenInclude(x => x.City)
+                .Include(x => x.Products)
+                .ThenInclude(x => x.Product)
+                .SingleOrDefaultAsync(x => x.Id == orderId);
+
+            if (userId == null || order == null)
+            {
+                //TODO: throw service error
+            }
+
+            if (userId != order.KeepFitUserId)
+            {
+                //TODO: throw service error 
+            }
+
+            var orderViewModel = this.mapper.Map<DetailsOrdersViewModel>(order);
+
+            return orderViewModel;
+        }
+
         private void CalculateDeliveryDate(Order order)
         {
             var deliveryType = order.DeliveryType;
