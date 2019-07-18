@@ -12,7 +12,7 @@
 
         public string ProductImageUrl { get; set; }
 
-        public ProductType ProductProductType { get; set; }
+        public string ProductProductType { get; set; }
 
         public int ProductQuantity { get; set; }
     }

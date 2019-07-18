@@ -41,7 +41,7 @@
         {
             await this.ordersService.StartCompletingUserOder(this.User, inputModel);
 
-            return this.Redirect(WebConstants.HomePagePath); 
+            return this.RedirectToAction(nameof(All)); 
         }
 
         [Authorize]

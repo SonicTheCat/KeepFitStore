@@ -1,8 +1,40 @@
 ﻿@using KeepFitStore.Models.ViewModels.Orders
 
 @model DetailsOrdersViewModel
-@{
-    ViewData["Title"] = "Order Details";
-}
 
-<h1>@Model.TotalPrice</h1>
+<div class="container">
+    <div class="row mt-2 ml-1 mb-4">
+        <div class="col-md-5 border rounded">
+            <h3 class="p-1 m-1">Recipient Details</h3>
+            <hr />
+            <p class="mb-0">Full name: <strong>@Model.KeepFitUser.FullName</strong></p>
+            <p class="m-0">Phone number: <strong>@Model.KeepFitUser.PhoneNumber</strong></p>
+            <p class="m-0">City: <strong>@Model.DeliveryAddress.CityName</strong></p>
+            <p class="m-0">Postcode:<strong> @Model.DeliveryAddress.CityPostCode</strong></p>
+            <p class="mt-0">Street: <strong>@Model.DeliveryAddress.StreetName @Model.DeliveryAddress.StreetNumber</strong></p>
+        </div>
+        <div class="col-md-5 offset-xl-1 offset-md-1 border rounded">
+            <h3 class="p-1 m-1">Delivery Details</h3>
+            <hr />
+            <p class="mb-0">Delivery type: <strong>@Model.DeliveryType - &pound;@Model.DeliveryPrice</strong></p>
+            <p class="m-0">Order date: <strong>@Model.OrderDate.Value.ToString("dd/MM/yyyy - HH:mm")</strong></p>
+            <p class="m-0">Delivery date: <strong>@Model.DeliveryDate.Value.ToString("dd/MM/yyyy")</strong></p>
+            <p class="m-0">Payment method: <strong>@Model.PaymentType</strong></p>
+            <p class="mt-0">Status: <strong>@Model.Status</strong></p>
+            <p class="mt-0">Final price: <strong> &pound;@Model.TotalPrice</strong></p>
+        </div>
+    </div>
+    <div class="list-group">
+        <h3 class="m-3">Products</h3>
+        @foreach (var item in Model.Products)
+        {
+            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <img src="@item.ProductImageUrl" alt="@item.ProductName" class="col-xl-1 col-md-2 col-lg-1 col-sm-2 col-2 img-thumbnail">
+                    <h5 class="mb-1">@item.ProductName @item.ProductProductType &pound;@item.ProductPrice</h5>
+                    <small>Qty: @item.ProductQuantity</small>
+                </div>
+            </div>
+        }
+    </div>
+</div>
