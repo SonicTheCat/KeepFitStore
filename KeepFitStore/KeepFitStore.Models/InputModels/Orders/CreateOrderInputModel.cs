@@ -3,9 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using KeepFitStore.Domain;
+
     using KeepFitStore.Domain.Enums;
-    using KeepFitStore.Models.Common;
 
     public class CreateOrderInputModel
     {
