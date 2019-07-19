@@ -7,11 +7,11 @@
 
     using KeepFitStore.WEB.Common;
 
-    public class SeedRoleMiddleware
+    public class CreateRoleMiddleware
     {
         private readonly RequestDelegate next;
 
-        public SeedRoleMiddleware(RequestDelegate next)
+        public CreateRoleMiddleware(RequestDelegate next)
         {
             this.next = next;
         }

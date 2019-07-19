@@ -9,11 +9,11 @@
     using KeepFitStore.WEB.Common;
     using KeepFitStore.Domain;
 
-    public class SeedPowerUserMiddleware
+    public class CreatePowerUserMiddleware
     {
         private readonly RequestDelegate next;
 
-        public SeedPowerUserMiddleware(RequestDelegate next)
+        public CreatePowerUserMiddleware(RequestDelegate next)
         {
             this.next = next;
         }

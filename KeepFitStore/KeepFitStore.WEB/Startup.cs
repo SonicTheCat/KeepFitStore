@@ -148,8 +148,8 @@
 
             app.UseAuthentication();
 
-            app.UseSeedRolesMiddleware();
-            app.UseSeedPowerUserMiddleware();
+            app.UseCreateRolesMiddleware();
+            app.UseCreatePowerUserMiddleware();
 
             //var rewriteOptions = new RewriteOptions().Add(new AdminRewriteRule());
             //app.UseRewriter(rewriteOptions);
