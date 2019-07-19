@@ -1,0 +1,30 @@
+﻿@using KeepFitStore.Models.ViewModels.Orders
+
+@model IEnumerable<AllOrdersViewModel>
+
+<thead class="thead-light">
+    <tr class="text-center">
+        <th scope="col">Order ID</th>
+        <th scope="col">Total Price</th>
+        <th scope="col">Ordered Date</th>
+        <th scope="col">Order Status</th>
+        <th scope="col">Products count</th>
+        <th scope="col"></th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr class="text-center table-danger">
+            <th>@item.Id</th>
+            <td>&pound;@item.TotalPrice</td>
+            <td>@item.OrderDate.Value.ToString("dd/MM/yyyy")</td>
+            <td>@item.Status.ToString()</td>
+            <td>@item.ProductsCount</td>
+            <td><a href="#" class="btn btn-info details-order-btn"><i class="fas fa-caret-down mr-2"></i>Details</a></td>
+        </tr>
+        <tr style="display:none">
+            <td colspan="6"></td>
+        </tr>
+    }
+</tbody>

@@ -3,6 +3,8 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Dynamic.Core;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -15,8 +17,7 @@
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Data;
     using KeepFitStore.Models.ViewModels.Orders;
-    using System.Linq;
-
+   
     public class OrdersService : IOrdersService
     {
         private const int MinimumBasketValueForNextDayDelivery = 60;
@@ -27,6 +28,8 @@
         private const int ExpressDeliveryHours = 5;
         private const int NextDayDeliveryHours = 24;
         private const int StandartDeliveryHours = 92;
+        private const string DescendingOldValue = "Desc";
+        private const string DescendingNewValue = " descending";
 
         private readonly KeepFitDbContext context;
         private readonly UserManager<KeepFitUser> userManager;
@@ -124,6 +127,29 @@
 
             var ordersViewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
             return ordersViewModel; 
+        }
+
+        public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy)
+        {
+            var userId = this.userManager.GetUserId(principal);
+
+            if (userId == null)
+            {
+                //TODO: throw service error
+            }
+
+            sortBy = sortBy.Replace(DescendingOldValue, DescendingNewValue); 
+
+            var orders = await this.context
+               .Orders
+               .Include(x => x.Products)
+               .ThenInclude(x => x.Product)
+               .Where(x => x.KeepFitUserId == userId)
+               .OrderBy(sortBy)
+               .ToListAsync();
+
+            var ordersViewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
+            return ordersViewModel;
         }
 
         public async Task<DetailsOrdersViewModel> GetDetailsForOrderAsync(ClaimsPrincipal principal, int orderId)

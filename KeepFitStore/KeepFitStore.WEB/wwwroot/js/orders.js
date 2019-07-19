@@ -17,8 +17,6 @@ const EXPRESS_PRICE = 15;
 const NEXTDAY_PRICE = 10;
 const STANDART_PRICE = 5;
 
-const DETAILS_ORDER_BTN = $(".details-order-btn");
-
 function addUsersInfo() {
     WELCOME_FORM.submit(function (evt) {
         evt.preventDefault();
@@ -151,8 +149,8 @@ function startFromBeginning() {
     });
 }
 
-function openDetailsForOrder() {
-    DETAILS_ORDER_BTN.click(function (evt) {
+function attachClickDetailsEventListener() {
+    $(".details-order-btn").click(function (evt) {
         evt.preventDefault();
 
         var btn = $(this);
@@ -171,5 +169,19 @@ function openDetailsForOrder() {
         }
 
         rowDetailsToBeShown.toggle();
+    });
+}
+
+function attachOnChangeSortEventLister() {
+    $("#sortOptions").change(function () {
+        var optionSelected = $("option:selected", this);
+
+        var selectedValue = this.value
+            .split(' ')
+            .map(x => x.trim())
+            .join('');
+
+        $("table")
+            .load(`/Orders/AllSorted?sortBy=${selectedValue}`, attachClickDetailsEventListener);
     });
 }

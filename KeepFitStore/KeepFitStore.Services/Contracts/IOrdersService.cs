@@ -15,6 +15,8 @@
 
         Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal); 
 
+        Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy); 
+
         Task<DetailsOrdersViewModel> GetDetailsForOrderAsync(ClaimsPrincipal principal, int orderId); 
     }
 }

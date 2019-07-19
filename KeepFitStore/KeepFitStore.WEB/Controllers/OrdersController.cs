@@ -9,7 +9,6 @@
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Common;
     using KeepFitStore.WEB.Filters;
-    using KeepFitStore.Models.ViewModels.Orders;
 
     public class OrdersController : BaseController
     {
@@ -50,6 +49,14 @@
             var viewModel = await this.ordersService.GetAllOrdersForUserAsync(this.User); 
 
             return this.View(viewModel); 
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AllSorted(string sortBy)
+        {
+            var viewModel = await this.ordersService.GetAllOrdersForUserSortedAsync(this.User, sortBy);
+
+            return this.PartialView("~/Views/Partials/_MyOrdersPartial.cshtml", viewModel); 
         }
 
         [Authorize]
