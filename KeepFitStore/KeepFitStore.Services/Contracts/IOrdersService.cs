@@ -13,10 +13,14 @@
 
         Task StartCompletingUserOder(ClaimsPrincipal principal, CreateOrderInputModel model);
 
-        Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal); 
+        Task<IEnumerable<AlllOrdersViewModel>> GetAllOrdersAsync();
 
-        Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy); 
+        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal); 
 
-        Task<DetailsOrdersViewModel> GetDetailsForOrderAsync(ClaimsPrincipal principal, int orderId); 
+        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy); 
+
+        Task<DetailsOrdersViewModel> GetOrderDetailsForUser(ClaimsPrincipal principal, int orderId); 
+
+        Task<DetailsOrdersViewModel> GetOrderDetailsAsync(int orderId); 
     }
 }

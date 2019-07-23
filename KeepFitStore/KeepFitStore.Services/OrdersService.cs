@@ -17,7 +17,7 @@
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Data;
     using KeepFitStore.Models.ViewModels.Orders;
-   
+
     public class OrdersService : IOrdersService
     {
         private const int MinimumBasketValueForNextDayDelivery = 60;
@@ -109,7 +109,20 @@
             await this.basketService.ClearBasketAsync(user.BasketId);
         }
 
-        public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal)
+        public async Task<IEnumerable<AlllOrdersViewModel>> GetAllOrdersAsync()
+        {
+            var orders = await this.context
+                .Orders
+                .Include(x => x.Products)
+                .ThenInclude(x => x.Product)
+                .Include(x => x.KeepFitUser)
+                .ToListAsync();
+
+            var viewModel = this.mapper.Map<IEnumerable<AlllOrdersViewModel>>(orders);
+            return viewModel;
+        }
+
+        public async Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal)
         {
             var userId = this.userManager.GetUserId(principal);
 
@@ -125,11 +138,11 @@
                 .Where(x => x.KeepFitUserId == userId)
                 .ToListAsync();
 
-            var ordersViewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
-            return ordersViewModel; 
+            var ordersViewModel = this.mapper.Map<IEnumerable<IndexOrdersViewModel>>(orders);
+            return ordersViewModel;
         }
 
-        public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy)
+        public async Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy)
         {
             var userId = this.userManager.GetUserId(principal);
 
@@ -138,7 +151,7 @@
                 //TODO: throw service error
             }
 
-            sortBy = sortBy.Replace(DescendingOldValue, DescendingNewValue); 
+            sortBy = sortBy.Replace(DescendingOldValue, DescendingNewValue);
 
             var orders = await this.context
                .Orders
@@ -148,11 +161,11 @@
                .OrderBy(sortBy)
                .ToListAsync();
 
-            var ordersViewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
+            var ordersViewModel = this.mapper.Map<IEnumerable<IndexOrdersViewModel>>(orders);
             return ordersViewModel;
         }
 
-        public async Task<DetailsOrdersViewModel> GetDetailsForOrderAsync(ClaimsPrincipal principal, int orderId)
+        public async Task<DetailsOrdersViewModel> GetOrderDetailsForUser(ClaimsPrincipal principal, int orderId)
         {
             var userId = this.userManager.GetUserId(principal);
 
@@ -173,6 +186,27 @@
             if (userId != order.KeepFitUserId)
             {
                 //TODO: throw service error 
+            }
+
+            var orderViewModel = this.mapper.Map<DetailsOrdersViewModel>(order);
+
+            return orderViewModel;
+        }
+
+        public async Task<DetailsOrdersViewModel> GetOrderDetailsAsync(int orderId)
+        {
+            var order = await this.context
+               .Orders
+               .Include(x => x.KeepFitUser)
+               .Include(x => x.DeliveryAddress)
+               .ThenInclude(x => x.City)
+               .Include(x => x.Products)
+               .ThenInclude(x => x.Product)
+               .SingleOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+            {
+                //TODO: throw service error
             }
 
             var orderViewModel = this.mapper.Map<DetailsOrdersViewModel>(order);
