@@ -4,7 +4,7 @@
 
     using KeepFitStore.Domain.Enums;
 
-    public class AllOrdersViewModel
+    public class IndexOrdersViewModel
     {
         public int Id { get; set; }
 
