@@ -40,11 +40,11 @@
         {
             await this.ordersService.StartCompletingUserOder(this.User, inputModel);
 
-            return this.RedirectToAction(nameof(All)); 
+            return this.RedirectToAction(nameof(Index)); 
         }
 
         [Authorize]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> Index()
         {
             var viewModel = await this.ordersService.GetAllOrdersForUserAsync(this.User); 
 
@@ -62,7 +62,7 @@
         [Authorize]
         public async Task<IActionResult> Details(int orderId)
         {
-            var viewModel = await this.ordersService.GetDetailsForOrderAsync(this.User, orderId);
+            var viewModel = await this.ordersService.GetOrderDetailsForUser(this.User, orderId);
 
             return this.PartialView("~/Views/Partials/_OrderDetailsPartialView.cshtml", viewModel); 
         }

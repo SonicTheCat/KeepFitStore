@@ -5,10 +5,10 @@
 
     using Microsoft.AspNetCore.Razor.TagHelpers;
 
-    [HtmlTargetElement("div", Attributes = "[keep-fit-enums]")]
-    public class DropDownTagHelper : TagHelper
+    [HtmlTargetElement("div", Attributes = "[enum-dropdown]")]
+    public class FromEnumToDropdownTagHelper : TagHelper
     {
-        public DropDownTagHelper()
+        public FromEnumToDropdownTagHelper()
         {
 
         }

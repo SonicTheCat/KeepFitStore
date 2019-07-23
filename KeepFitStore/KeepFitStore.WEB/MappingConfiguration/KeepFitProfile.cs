@@ -1,5 +1,7 @@
 ﻿namespace KeepFitStore.WEB.MappingConfiguration
 {
+    using System.Linq;
+
     using AutoMapper;
 
     using KeepFitStore.Domain.Products;
@@ -21,8 +23,7 @@
     using KeepFitStore.Models.ViewModels.User;
     using KeepFitStore.Models.InputModels.Orders;
     using KeepFitStore.Models.ViewModels.Orders;
-    using System.Linq;
-
+    
     public class KeepFitProfile : Profile
     {
         public KeepFitProfile()
@@ -79,7 +80,7 @@
                                 opt => opt.MapFrom(src => src.Product))
                 .ForMember(dest => dest.ProductQuantity,
                                 opt => opt.MapFrom(src => src.Quantity));
-            this.CreateMap<Order, AllOrdersViewModel>()
+            this.CreateMap<Order, IndexOrdersViewModel>()
                 .ForMember(dest => dest.ProductsCount,
                                 opt => opt.MapFrom(src => src.Products.Sum(x => x.ProductQuantity)));
 
@@ -87,7 +88,10 @@
             this.CreateMap<Order, DetailsOrdersViewModel>();
             this.CreateMap<KeepFitUser, DetailsOrderUserViewModel>();
             this.CreateMap<Address, DetailsOrdersAddressViewModel>();
-            this.CreateMap<ProductOrder, DetailsOrdersProductsViewModel>(); 
+            this.CreateMap<ProductOrder, DetailsOrdersProductsViewModel>();
+
+            //Orders - Admin 
+            this.CreateMap<Order, AlllOrdersViewModel>();
 
             //User 
             this.CreateMap<KeepFitUser, UpdateUserViewModel>();

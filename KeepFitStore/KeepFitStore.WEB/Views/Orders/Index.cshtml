@@ -1,6 +1,6 @@
 ﻿@using KeepFitStore.Models.ViewModels.Orders
 
-@model IEnumerable<AllOrdersViewModel>
+@model IEnumerable<IndexOrdersViewModel>
 @{
     ViewData["Title"] = "All My Orders";
 }
@@ -25,7 +25,7 @@ else
         </select>
     </div>
     <table class="table table-responsive-sm">
-        <partial name="~/Views/Partials/_MyOrdersPartial.cshtml" />
+        <partial name="~/Views/Partials/_MyOrdersPartial.cshtml"/>
     </table>
 }
 

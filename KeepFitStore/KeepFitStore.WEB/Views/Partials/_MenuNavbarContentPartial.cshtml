@@ -1,0 +1,32 @@
+﻿@using KeepFitStore.Domain.Enums
+@using System.Linq;
+
+@{
+    var values = Enum.GetValues(typeof(CreatineType));
+}
+
+<div class="collapse navbar-collapse justify-content-around" id="navbarNavAltMarkup">
+    <div class="nav navbar-nav">
+        <a class="nav-item nav-link active text-dark" asp-area="Products" asp-controller="Home" asp-action="Index"><strong>All </strong><span class="sr-only">(current)</span></a>
+        <div class="dropdown">
+            <button class="dropbtn">Proteins</button>
+            <div enum-dropdown area="Products" controller="Proteins" action="Index" types="@Enum.GetValues(typeof(ProteinType))" class="dropdown-content">
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Amino Acids</button>
+            <div enum-dropdown area="Products" controller="Aminos" action="Index" types="@Enum.GetValues(typeof(AminoAcidType))" class="dropdown-content">
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Vitamins</button>
+            <div enum-dropdown area="Products" controller="Vitamins" action="Index" types="@Enum.GetValues(typeof(VitaminType))" class="dropdown-content">
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Creatines</button>
+            <div enum-dropdown area="Products" controller="Creatines" action="Index" types="@Enum.GetValues(typeof(CreatineType))" class="dropdown-content">
+            </div>
+        </div>
+    </div>
+</div>
