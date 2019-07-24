@@ -13,7 +13,7 @@
 
         Task StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model);
 
-        Task<IEnumerable<AlllOrdersViewModel>> GetAllOrdersAsync();
+        Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync();
 
         Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal); 
 

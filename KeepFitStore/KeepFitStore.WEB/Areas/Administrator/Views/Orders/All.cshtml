@@ -1,7 +1,7 @@
 ﻿@using System
 @using KeepFitStore.Models.ViewModels.Orders
 
-@model IEnumerable<AlllOrdersViewModel>
+@model IEnumerable<AllOrdersViewModel>
 @{
     ViewData["Title"] = "Administration - Orders";
 
@@ -55,20 +55,4 @@ else
             </div>
         </div>
     }
-}
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        $().ready(function () {
-            $(".on-mouse-over").mouseover(function () {
-                console.log(this)
-                $(this).next().css("display", "block");
-            }); 
-            $(".on-mouse-over").mouseout(function () {
-                console.log(this)
-                $(this).next().css("display", "none");
-            }); 
-        });
-    </script>
 }

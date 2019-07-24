@@ -91,7 +91,7 @@
             this.CreateMap<ProductOrder, DetailsOrdersProductsViewModel>();
 
             //Orders - Admin 
-            this.CreateMap<Order, AlllOrdersViewModel>();
+            this.CreateMap<Order, AllOrdersViewModel>();
 
             //User 
             this.CreateMap<KeepFitUser, UpdateUserViewModel>();

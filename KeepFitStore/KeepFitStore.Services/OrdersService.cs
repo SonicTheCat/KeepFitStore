@@ -110,7 +110,7 @@
             await this.basketService.ClearBasketAsync(user.BasketId);
         }
 
-        public async Task<IEnumerable<AlllOrdersViewModel>> GetAllOrdersAsync()
+        public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync()
         {
             var orders = await this.context
                 .Orders
@@ -119,7 +119,7 @@
                 .Include(x => x.KeepFitUser)
                 .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<AlllOrdersViewModel>>(orders);
+            var viewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
             return viewModel;
         }
 
