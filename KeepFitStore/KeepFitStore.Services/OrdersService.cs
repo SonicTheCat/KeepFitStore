@@ -147,7 +147,7 @@
         {
             var userId = this.userManager.GetUserId(principal);
 
-            if (userId == null)
+            if (userId == null || sortBy == null)
             {
                 //TODO: throw service error
             }
@@ -163,6 +163,28 @@
                .ToListAsync();
 
             var ordersViewModel = this.mapper.Map<IEnumerable<IndexOrdersViewModel>>(orders);
+            return ordersViewModel;
+        }
+
+        public async Task<IEnumerable<AllOrdersViewModel>> AppendFiltersAndSortOrdersAsync(string[] filters, string sortBy)
+        {
+            if (sortBy == null)
+            {
+                //TODO: throw service error
+            }
+
+            sortBy = sortBy.Replace(DescendingOldValue, DescendingNewValue);
+
+            var orders = await this.context
+             .Orders
+             .Include(x => x.Products)
+             .ThenInclude(x => x.Product)
+             .Include(x => x.KeepFitUser)
+             .Where(x => filters.Length == 0 ? true : filters.Contains(x.Status.ToString()))
+             .OrderBy(sortBy)
+             .ToListAsync();
+
+            var ordersViewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
             return ordersViewModel;
         }
 
@@ -190,7 +212,6 @@
             }
 
             var orderViewModel = this.mapper.Map<DetailsOrdersViewModel>(order);
-
             return orderViewModel;
         }
 
@@ -221,7 +242,7 @@
                 .Orders
                 .SingleOrDefaultAsync(x => x.Id == orderId);
 
-            var isValidOrderStatus = Enum.TryParse(typeof(OrderStatus), currentStatus, out _); 
+            var isValidOrderStatus = Enum.TryParse(typeof(OrderStatus), currentStatus, out _);
 
             if (order == null || !isValidOrderStatus)
             {
@@ -237,7 +258,7 @@
                 order.Status = OrderStatus.Delivered;
             }
 
-            await this.context.SaveChangesAsync(); 
+            await this.context.SaveChangesAsync();
         }
 
         private void CalculateDeliveryDate(Order order)

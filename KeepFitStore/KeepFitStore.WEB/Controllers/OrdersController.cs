@@ -52,7 +52,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> AllSorted(string sortBy)
+        public async Task<IActionResult> AllSorted(string sortBy = WebConstants.DefaultSortingById)
         {
             var viewModel = await this.ordersService.GetAllOrdersForUserSortedAsync(this.User, sortBy);
 

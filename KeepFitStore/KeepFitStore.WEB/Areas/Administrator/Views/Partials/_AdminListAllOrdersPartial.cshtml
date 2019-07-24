@@ -1,0 +1,57 @@
+﻿@using System
+@using KeepFitStore.Models.ViewModels.Orders
+
+@model IEnumerable<AllOrdersViewModel>
+@{
+    var daysDiffrence = new TimeSpan();
+    var daysResult = string.Empty;
+}
+
+<div class="content-orders">
+    @if (this.Model.Count() == 0)
+    {
+        <div class="shadow text-center p-4">
+            <h3 class="text-secondary p-4">No orders to show!</h3>
+        </div>
+    }
+    else
+    {
+        @foreach (var item in Model)
+        {
+            this.ViewData["Id"] = item.Id;
+            this.ViewData["Status"] = item.Status;
+            daysDiffrence = (DateTime.UtcNow - item.OrderDate.Value);
+            if (daysDiffrence.Hours < 1)
+            {
+                daysResult = daysDiffrence.Minutes + " minutes ago";
+            }
+            else if (daysDiffrence.Days < 1)
+            {
+                daysResult = daysDiffrence.Hours + " hours ago";
+            }
+            else
+            {
+                daysResult = daysDiffrence.Days + " days ago";
+            }
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <h5 class="mb-1">Order ID: @item.Id</h5>
+                            <h6 class="mb-1">Order Status: @item.Status</h6>
+                        </div>
+                        <small>@daysResult</small>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between mt-4">
+                        <h6 class="mb-1">User full name: @item.KeepFitUserFullName</h6>
+                    </div>
+                    <div class="d-flex w-100 justify-content-end">
+                        <a asp-area="Administrator" asp-controller="Orders" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                        <partial name="~/Areas/Administrator/Views/Partials/_AdminChangeStatusButtonsPartial.cshtml" model="@item" />
+                    </div>
+                    <p class="mb-1">&pound;@item.TotalPrice</p>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -17,7 +17,9 @@
 
         Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal); 
 
-        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy); 
+        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy);
+
+        Task<IEnumerable<AllOrdersViewModel>>AppendFiltersAndSortOrdersAsync(string[] filters, string sortBy);
 
         Task<DetailsOrdersViewModel> GetOrderDetailsForUserAsync(ClaimsPrincipal principal, int orderId); 
 

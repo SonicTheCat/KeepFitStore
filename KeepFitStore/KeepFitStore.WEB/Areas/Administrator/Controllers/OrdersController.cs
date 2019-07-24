@@ -1,6 +1,7 @@
 ﻿namespace KeepFitStore.WEB.Areas.Administrator.Controllers
 {
     using KeepFitStore.Services.Contracts;
+    using KeepFitStore.WEB.Common;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
@@ -29,6 +30,14 @@
         {
             await this.ordersService.ChangeOrderCurrentStatusAsync(orderId, currentStatus);
             return this.RedirectToAction(nameof(All)); 
-        } 
+        }
+
+        public async Task<IActionResult> Filter(
+            string[] filters, 
+            string sortBy = WebConstants.DefaultSortingById)
+        {
+            var viewModel = await this.ordersService.AppendFiltersAndSortOrdersAsync(filters, sortBy); 
+            return this.PartialView("~/Areas/Administrator/Views/Partials/_AdminListAllOrdersPartial.cshtml", viewModel);
+        }
     }
 }

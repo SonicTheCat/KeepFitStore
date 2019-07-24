@@ -6,6 +6,8 @@
 
         public const string BasketKey = "myBasket"; 
 
-        public const int CountOfProductsToBeShownOnHomePage = 6; 
+        public const int CountOfProductsToBeShownOnHomePage = 6;
+
+        public const string DefaultSortingById = "Id"; 
     }
 }
