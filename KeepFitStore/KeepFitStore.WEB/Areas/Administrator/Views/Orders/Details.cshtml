@@ -1,5 +1,12 @@
 ﻿@using KeepFitStore.Models.ViewModels.Orders
 
 @model DetailsOrdersViewModel
+@{
+    this.ViewData["Id"] = Model.Id; 
+    this.ViewData["Status"] = Model.Status;
+}
 
 <partial name="~/Views/Partials/_OrderDetailsPartialView.cshtml" />
+<div class="col-md-2 offset-md-0 mt-4 ml-4">
+    <partial name="~/Areas/Administrator/Views/Partials/_AdminChangeStatusButtonsPartial.cshtml" model="@Model" />
+</div>

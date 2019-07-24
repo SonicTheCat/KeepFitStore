@@ -11,7 +11,7 @@
     {
         Task<CreateOrderInputModel> AddBasketContentToOrderByUserAsync(ClaimsPrincipal principal);
 
-        Task StartCompletingUserOder(ClaimsPrincipal principal, CreateOrderInputModel model);
+        Task StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model);
 
         Task<IEnumerable<AlllOrdersViewModel>> GetAllOrdersAsync();
 
@@ -19,8 +19,10 @@
 
         Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy); 
 
-        Task<DetailsOrdersViewModel> GetOrderDetailsForUser(ClaimsPrincipal principal, int orderId); 
+        Task<DetailsOrdersViewModel> GetOrderDetailsForUserAsync(ClaimsPrincipal principal, int orderId); 
 
         Task<DetailsOrdersViewModel> GetOrderDetailsAsync(int orderId); 
+
+        Task ChangeOrderCurrentStatusAsync(int orderId, string currentStatus); 
     }
 }

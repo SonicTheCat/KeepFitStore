@@ -38,7 +38,7 @@
         [ValidateModelStateFilter(nameof(Create))]
         public async Task<IActionResult> Create(CreateOrderInputModel inputModel)
         {
-            await this.ordersService.StartCompletingUserOder(this.User, inputModel);
+            await this.ordersService.StartCompletingUserOderAsync(this.User, inputModel);
 
             return this.RedirectToAction(nameof(Index)); 
         }
@@ -62,7 +62,7 @@
         [Authorize]
         public async Task<IActionResult> Details(int orderId)
         {
-            var viewModel = await this.ordersService.GetOrderDetailsForUser(this.User, orderId);
+            var viewModel = await this.ordersService.GetOrderDetailsForUserAsync(this.User, orderId);
 
             return this.PartialView("~/Views/Partials/_OrderDetailsPartialView.cshtml", viewModel); 
         }

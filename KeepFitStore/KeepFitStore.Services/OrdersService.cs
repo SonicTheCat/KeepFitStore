@@ -17,6 +17,7 @@
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Data;
     using KeepFitStore.Models.ViewModels.Orders;
+    using System;
 
     public class OrdersService : IOrdersService
     {
@@ -79,7 +80,7 @@
             return order;
         }
 
-        public async Task StartCompletingUserOder(ClaimsPrincipal principal, CreateOrderInputModel model)
+        public async Task StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model)
         {
             var user = await this.GetUserWithAllProperties(principal);
             var order = this.mapper.Map<Order>(model);
@@ -165,7 +166,7 @@
             return ordersViewModel;
         }
 
-        public async Task<DetailsOrdersViewModel> GetOrderDetailsForUser(ClaimsPrincipal principal, int orderId)
+        public async Task<DetailsOrdersViewModel> GetOrderDetailsForUserAsync(ClaimsPrincipal principal, int orderId)
         {
             var userId = this.userManager.GetUserId(principal);
 
@@ -212,6 +213,31 @@
             var orderViewModel = this.mapper.Map<DetailsOrdersViewModel>(order);
 
             return orderViewModel;
+        }
+
+        public async Task ChangeOrderCurrentStatusAsync(int orderId, string currentStatus)
+        {
+            var order = await this.context
+                .Orders
+                .SingleOrDefaultAsync(x => x.Id == orderId);
+
+            var isValidOrderStatus = Enum.TryParse(typeof(OrderStatus), currentStatus, out _); 
+
+            if (order == null || !isValidOrderStatus)
+            {
+                //TODO: throw service error
+            }
+
+            if (OrderStatus.Assembling.ToString() == currentStatus)
+            {
+                order.Status = OrderStatus.Shipment;
+            }
+            else if (OrderStatus.Shipment.ToString() == currentStatus)
+            {
+                order.Status = OrderStatus.Delivered;
+            }
+
+            await this.context.SaveChangesAsync(); 
         }
 
         private void CalculateDeliveryDate(Order order)

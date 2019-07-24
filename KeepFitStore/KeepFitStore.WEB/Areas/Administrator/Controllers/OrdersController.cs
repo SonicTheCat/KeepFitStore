@@ -24,5 +24,11 @@
             var orderViewModel = await this.ordersService.GetOrderDetailsAsync(id); 
             return this.View(orderViewModel);
         }
+
+        public async Task<IActionResult> ChangeStatus(int orderId, string currentStatus)
+        {
+            await this.ordersService.ChangeOrderCurrentStatusAsync(orderId, currentStatus);
+            return this.RedirectToAction(nameof(All)); 
+        } 
     }
 }

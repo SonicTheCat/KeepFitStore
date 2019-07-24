@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Administration - Orders";
 
-    TimeSpan daysDiffrence = new TimeSpan();
+    var daysDiffrence = new TimeSpan();
     var daysResult = string.Empty;
 }
 
@@ -20,13 +20,14 @@ else
 {
     @foreach (var item in Model)
     {
-
+        this.ViewData["Id"] = item.Id;
+        this.ViewData["Status"] = item.Status;
         daysDiffrence = (DateTime.UtcNow - item.OrderDate.Value);
         if (daysDiffrence.Hours < 1)
         {
             daysResult = daysDiffrence.Minutes + " minutes ago";
         }
-        else if(daysDiffrence.Days < 1)
+        else if (daysDiffrence.Days < 1)
         {
             daysResult = daysDiffrence.Hours + " hours ago";
         }
@@ -44,32 +45,14 @@ else
                     <small>@daysResult</small>
                 </div>
                 <div class="d-flex w-100 justify-content-between mt-4">
-                    <div>
-                        <h6 class="mb-1">User full name: @item.KeepFitUserFullName</h6>
-                    </div>
+                    <h6 class="mb-1">User full name: @item.KeepFitUserFullName</h6>
                 </div>
                 <div class="d-flex w-100 justify-content-end">
                     <a asp-area="Administrator" asp-controller="Orders" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
-                    @if (item.Status.ToString() == "Assembling")
-                    {
-                        <a href="#" class="btn btn-danger ml-1">Proceed</a>
-                    }
-                    else if (item.Status.ToString() != "Delivered")
-                    {
-                        <a href="#" class="btn btn-success ml-1">Deliver</a>
-                    }
+                    <partial name="~/Areas/Administrator/Views/Partials/_AdminChangeStatusButtonsPartial.cshtml" model="@item" />
                 </div>
                 <p class="mb-1">&pound;@item.TotalPrice</p>
             </div>
         </div>
     }
 }
-
-@*@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        $().ready(function () {
-            attachOnChangeSortEventLister();
-        });
-    </script>
-}*@
