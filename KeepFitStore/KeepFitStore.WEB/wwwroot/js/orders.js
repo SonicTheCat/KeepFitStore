@@ -185,3 +185,35 @@ function attachOnChangeSortEventLister() {
             .load(`/Orders/AllSorted?sortBy=${selectedValue}`, attachClickDetailsEventListener);
     });
 }
+
+function showOptionsClickEvent() {
+    $(".options-btn").click(function () {
+        var optionsDiv = $("#filter-options");
+
+        if (optionsDiv.hasClass("d-flex")) {
+            optionsDiv.removeClass("d-flex")
+        } else {
+            optionsDiv.addClass("d-flex")
+        }
+        optionsDiv.toggle();
+    });
+}
+
+function filterBtnClickEvent() {
+    $(".filter-btn").click(function () {
+        var boxes = $('input[type=checkbox]:checked');
+        var urlQuery = "?";
+
+        boxes.each(function (i, e) {
+            urlQuery = urlQuery + `filters=${$(e).val()}&`;
+        });
+
+        var radio = $('input[type=radio]:checked');
+        if (radio[0] !== undefined) {
+            urlQuery = urlQuery + `sortBy=${radio.val()}`;
+        }
+
+        $(".content-orders")
+            .load(`/Administrator/Orders/Filter${urlQuery}`);
+    })
+}

@@ -1,10 +1,12 @@
 ﻿namespace KeepFitStore.WEB.Areas.Administrator.Controllers
 {
-    using KeepFitStore.Services.Contracts;
-    using KeepFitStore.WEB.Common;
-    using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
+
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.WEB.Common;
+    
     public class OrdersController : AdministratorController
     {
         private readonly IOrdersService ordersService;
