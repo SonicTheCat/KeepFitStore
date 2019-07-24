@@ -20,26 +20,12 @@
                     <a class="dropdown-item" href="#">Create Amino</a>
                 </div>
             </div>
-            <div class="dropdown">
-                <button class="btn text-white bg-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Orders
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" asp-area="Administrator" asp-controller="Orders" asp-action="All">All</a>
-                    <a class="dropdown-item" href="#">Delivered</a>
-                    <a class="dropdown-item" href="#">Pending</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="btn text-white bg-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Users
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </div>
+            <a class="btn text-white bg-dark" asp-area="Administrator" asp-controller="Orders" asp-action="All" aria-haspopup="true" aria-expanded="false">
+                Orders
+            </a>
+            @*<a class="btn text-white bg-dark disabled" href="#" aria-haspopup="true" aria-expanded="false">
+                Users
+            </a>*@
         </div>
     </div>
 </nav>
