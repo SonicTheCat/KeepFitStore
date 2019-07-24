@@ -1,20 +1,37 @@
 ﻿@using KeepFitStore.Models.ViewModels.Products
 
 @model IEnumerable<ProductViewModel>
-@{ 
-    var plural = "s"; 
+@{
+    var plural = "s";
+    var productName = string.Empty;
 }
 
 <div class="row">
     @foreach (var item in Model)
     {
+        productName = item.Name.ToUpper() + " " + item.ProductType.ToString().ToUpper();
+        productName = productName.Length > 16 ? productName.Substring(0, 16) : productName;
+
         <div class="col-xl-2 col-md-4 col-lg-3 col-sm-6 mb-4">
             <img src="@item.ImageUrl" alt="@item.Name" class="img-thumbnail">
-            <div class="card-title"><strong>@item.Name.ToUpper()</strong> @item.ProductType.ToString().ToUpper()</div>
+            <div class="card-title"><strong>@productName</strong></div>
+            <div class="m-0">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    if (item.Rating >= i)
+                    {
+                        <span class="fa fa-star checked"></span>
+                    }
+                    else
+                    {
+                        <span class="fa fa-star"></span>
+                    }
+                }
+            </div>
             <div class="card-title text-danger"><strong>&pound;@item.Price</strong></div>
             <div class="btn-group" role="group">
                 <a asp-area="Products" asp-controller="@(item.ProductType.ToString() + @plural)" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><span class="glyphicon glyphicon-arrow-right"></span>Details</a>
-                <a asp-controller="Basket" asp-action="Add" asp-route-id="@item.Id" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-right"></span>Add to basket</a>              
+                <a asp-controller="Basket" asp-action="Add" asp-route-id="@item.Id" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-arrow-right"></span>Add to basket</a>
             </div>
         </div>
     }

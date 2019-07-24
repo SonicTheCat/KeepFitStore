@@ -69,18 +69,18 @@ h2 {
     position: relative;
 }
 
-h2:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    border-top: solid 1.5px #007bff;
-    z-index: -1;
-}
+    h2:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        border-top: solid 1.5px #007bff;
+        z-index: -1;
+    }
 
 .adminFooterColor {
-    border-top: 5px solid black!important;
+    border-top: 5px solid black !important;
 }
 
 .normalFooter {
@@ -100,7 +100,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .quantity {
-    width:20%!important;
+    width: 20% !important;
 }
 
 /* Dropdown products menu*/
@@ -173,10 +173,11 @@ span.contentSpan {
     text-decoration: none;
 }
 
-.my-light-color{
+.my-light-color {
     background-color: whitesmoke;
 }
 
 #billing-div, #confirm-div, #address-div, .hidden-form {
     display: none;
 }
+

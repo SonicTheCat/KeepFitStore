@@ -16,6 +16,8 @@
 
         public string ImageUrl { get; set; }
 
+        public int Rating { get; set; }
+
         public ProductType ProductType { get; set; }
     }
 }

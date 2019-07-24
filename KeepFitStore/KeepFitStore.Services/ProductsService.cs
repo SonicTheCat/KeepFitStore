@@ -111,6 +111,7 @@
         {
             var products = await this.context
                 .Products
+                .Include(x => x.Reviews)
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(countOfProducts)
                 .ToListAsync();
@@ -123,6 +124,7 @@
         {
             var products = await this.context
                .Products
+               .Include(x => x.Reviews)
                .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
@@ -133,6 +135,7 @@
         {
             var product = await this.context
                 .Products
+                .Include(x => x.Reviews)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             var viewModel = this.mapper.Map<ProductViewModel>(product);

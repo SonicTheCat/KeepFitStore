@@ -1,0 +1,12 @@
+﻿@using KeepFitStore.Domain.Enums
+
+@if (this.ViewData["Status"].ToString() != OrderStatus.Delivered.ToString())
+{
+    var buttonContent = this.ViewData["Status"].ToString() == OrderStatus.Assembling.ToString() ? "Proceed" : "Deliver";
+    var btnClass = this.ViewData["Status"].ToString() == OrderStatus.Assembling.ToString() ? "btn-warning" : "btn-danger";
+    <a asp-area="Administrator" asp-controller="Orders" asp-action="ChangeStatus" asp-route-orderId="@this.ViewData["Id"]" asp-route-currentStatus="@this.ViewData["Status"]" class="btn @btnClass ml-1">@buttonContent</a>
+}
+@if (this.ViewData["Status"].ToString() == OrderStatus.Delivered.ToString())
+{
+    <i class="fa fa-check-circle on-mouse-over ml-2" data-toggle="tooltip" data-placement="top" title="delivered" style="font-size:36px;color:green"></i>
+}
