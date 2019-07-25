@@ -12,20 +12,25 @@
     using KeepFitStore.Models.ViewModels.Products.Proteins;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Domain.Enums;
 
     public class ProteinsService : IProteinsService
     {
         private readonly KeepFitDbContext context;
+        private readonly IProductsService productsService;
         private readonly IMapper mapper;
 
-        public ProteinsService(KeepFitDbContext context, IMapper mapper)
+        public ProteinsService(KeepFitDbContext context,IProductsService productsService, IMapper mapper)
         {
             this.context = context;
+            this.productsService = productsService;
             this.mapper = mapper;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllByTypeAsync(string type)
         {
+            this.productsService.ValidateProductType(typeof(ProteinType), type);
+
             var proteins = await this.context
                .Proteins
                .Where(x => x.Type.ToString() == type)

@@ -24,6 +24,11 @@
 
         public async Task<IActionResult> Index([FromQuery]string type)
         {
+            if (type == null)
+            {
+                return this.Redirect(WebConstants.HomePagePath);
+            }
+
             this.ViewData["aminoType"] = type;
             var aminos = await this.aminosService.GetAllByTypeAsync(type);
 

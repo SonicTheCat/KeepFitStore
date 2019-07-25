@@ -12,20 +12,25 @@
     using KeepFitStore.Models.ViewModels.Products.Creatines;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Domain.Enums;
 
     public class CreatinesService : ICreatinesService
     {
         private readonly KeepFitDbContext context;
+        private readonly IProductsService productsService;
         private readonly IMapper mapper;
 
-        public CreatinesService(KeepFitDbContext context, IMapper mapper)
+        public CreatinesService(KeepFitDbContext context,IProductsService productsService, IMapper mapper)
         {
             this.context = context;
+            this.productsService = productsService;
             this.mapper = mapper;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllByTypeAsync(string type)
         {
+            this.productsService.ValidateProductType(typeof(CreatineType), type);
+
             var creatines = await this.context
                .Creatines
                .Where(x => x.Type.ToString() == type)

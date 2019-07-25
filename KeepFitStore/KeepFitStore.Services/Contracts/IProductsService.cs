@@ -1,13 +1,14 @@
 ﻿namespace KeepFitStore.Services.Contracts
 {
+    using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
 
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
-    using System.Threading.Tasks;
-
+    
     public interface IProductsService
     {
         Task CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
@@ -20,6 +21,8 @@
 
         Task<IEnumerable<ProductViewModel>> GetAllAsync();
 
-        Task<ProductViewModel> GetProductByIdAsync(int id); 
+        Task<ProductViewModel> GetProductByIdAsync(int id);
+
+        void ValidateProductType(Type enumType, string type);
     }
 }

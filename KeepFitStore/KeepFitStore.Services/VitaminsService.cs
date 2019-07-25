@@ -12,20 +12,26 @@
     using KeepFitStore.Models.ViewModels.Products.Vitamins;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Domain.Enums;
+    using System;
 
     public class VitaminsService : IVitaminsService
     {
         private readonly KeepFitDbContext context;
+        private readonly IProductsService productsService;
         private readonly IMapper mapper;
 
-        public VitaminsService(KeepFitDbContext context, IMapper mapper)
+        public VitaminsService(KeepFitDbContext context,IProductsService productsService, IMapper mapper)
         {
             this.context = context;
+            this.productsService = productsService;
             this.mapper = mapper;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllByTypeAsync(string type)
         {
+            this.productsService.ValidateProductType(typeof(VitaminType), type); 
+
             var vitamins = await this.context
               .Vitamins
               .Where(x => x.Type.ToString() == type)

@@ -18,6 +18,7 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
+    using System;
 
     public class ProductsService : IProductsService
     {
@@ -140,6 +141,16 @@
 
             var viewModel = this.mapper.Map<ProductViewModel>(product);
             return viewModel;
+        }
+
+        public void ValidateProductType(Type enumType, string wantedType)
+        {
+            var isValidType = Enum.TryParse(enumType, wantedType, true, out _);
+
+            if (!isValidType)
+            {
+                //TODO: throw service error: Invalid product type
+            }
         }
     }
 }
