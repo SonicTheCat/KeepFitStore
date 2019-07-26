@@ -36,6 +36,7 @@
 
             //Products - view models
             this.CreateMap<Product, ProductViewModel>();
+            this.CreateMap<Product, IndexProductViewModel>();
             this.CreateMap<Protein, DetailsProteinViewModel>();
             this.CreateMap<Creatine, DetailsCreatineViewModel>();
             this.CreateMap<AminoAcid, DetailsAminoViewModel>();
@@ -46,7 +47,7 @@
             this.CreateMap<AminoAcid, ProductViewModel>();
             this.CreateMap<Vitamin, ProductViewModel>();
             this.CreateMap<Creatine, ProductViewModel>();
-
+            
             //Basket 
             this.CreateMap<BasketItem, BasketViewModel>();
             this.CreateMap<BasketItem, EditBasketItemViewModel>()

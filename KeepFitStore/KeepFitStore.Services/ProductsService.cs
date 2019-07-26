@@ -121,7 +121,7 @@
             return viewModel;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
+        public async Task<IEnumerable<ProductViewModel>> GetAllWithReviews()
         {
             var products = await this.context
                .Products
@@ -129,6 +129,16 @@
                .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
+            return viewModel;
+        }
+
+        public async Task<IEnumerable<IndexProductViewModel>> GetAll()
+        {
+            var products = await this.context
+               .Products
+               .ToListAsync();
+
+            var viewModel = this.mapper.Map<IEnumerable<IndexProductViewModel>>(products);
             return viewModel;
         }
 

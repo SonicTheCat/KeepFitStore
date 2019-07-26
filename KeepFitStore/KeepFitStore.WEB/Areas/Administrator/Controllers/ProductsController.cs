@@ -17,7 +17,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var viewModel = await this.productsSerive.GetAllAsync();
+            var viewModel = await this.productsSerive.GetAll();
 
             return this.View(viewModel);
         }

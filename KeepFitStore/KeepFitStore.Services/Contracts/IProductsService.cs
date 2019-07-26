@@ -19,7 +19,9 @@
 
         Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts);
 
-        Task<IEnumerable<ProductViewModel>> GetAllAsync();
+        Task<IEnumerable<ProductViewModel>> GetAllWithReviews();
+
+        Task<IEnumerable<IndexProductViewModel>> GetAll();
 
         Task<ProductViewModel> GetProductByIdAsync(int id);
 
