@@ -14,18 +14,13 @@
                     Products
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" asp-area="Products" asp-controller="Proteins" asp-action="Create">Create Protein</a>
-                    <a class="dropdown-item" asp-area="Products" asp-controller="Creatines" asp-action="Create">Create Creatine</a>
-                    <a class="dropdown-item" asp-area="Products" asp-controller="Vitamins" asp-action="Create">Create Vitamin</a>
-                    <a class="dropdown-item" asp-area="Products" asp-controller="Aminos" asp-action="Create">Create Amino</a>
+                    <a class="dropdown-item" asp-area="Administrator" asp-controller="Products" asp-action="Index">List All Products</a>
+                    <a class="dropdown-item" asp-area="Administrator" asp-controller="Products" asp-action="Create">Create Product</a>
                 </div>
             </div>
             <a class="btn text-white bg-dark" asp-area="Administrator" asp-controller="Orders" asp-action="All" aria-haspopup="true" aria-expanded="false">
                 Orders
             </a>
-            @*<a class="btn text-white bg-dark disabled" href="#" aria-haspopup="true" aria-expanded="false">
-                Users
-            </a>*@
         </div>
     </div>
 </nav>
