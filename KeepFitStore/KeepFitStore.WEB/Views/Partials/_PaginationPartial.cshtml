@@ -1,0 +1,49 @@
+﻿@using KeepFitStore.Models.ViewModels.Products
+@using KeepFitStore.Helpers
+
+@model PaginatedList<ProductViewModel>
+
+<ul class="pagination justify-content-end">
+    @if (Model.PageIndex > 1)
+    {
+        <li class="page-item mr-4">
+            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="1" class="page-link bg-dark text-white">
+                First
+            </a>
+        </li>
+        <li class="page-item">
+            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="page-link">
+                Previous
+            </a>
+        </li>
+        <li class="page-item">
+            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="page-link">
+                @(Model.PageIndex - 1)
+            </a>
+        </li>
+    }
+    <li class="page-item">
+        <a href="#" class="page-link bg-warning text-white disabled">
+            @(Model.PageIndex)
+        </a>
+    </li>
+
+    @if (Model.PageIndex < Model.TotalPages)
+    {
+        <li class="page-item">
+            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="page-link">
+                @(Model.PageIndex + 1)
+            </a>
+        </li>
+        <li class="page-item">
+            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="page-link">
+                Next
+            </a>
+        </li>
+        <li class="page-item ml-4">
+            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.TotalPages)" class="page-link bg-dark text-white">
+                Last
+            </a>
+        </li>
+    }
+</ul>

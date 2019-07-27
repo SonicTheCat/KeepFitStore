@@ -23,6 +23,7 @@
     using KeepFitStore.Models.ViewModels.User;
     using KeepFitStore.Models.InputModels.Orders;
     using KeepFitStore.Models.ViewModels.Orders;
+    using KeepFitStore.Helpers;
 
     public class KeepFitProfile : Profile
     {

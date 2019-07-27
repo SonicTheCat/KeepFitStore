@@ -8,6 +8,7 @@
 
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Helpers;
 
     public interface IProductsService
     {
@@ -19,7 +20,7 @@
 
         Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts);
 
-        Task<IEnumerable<ProductViewModel>> GetAllWithReviews();
+        Task<PaginatedList<ProductViewModel>> GetAllWithReviews(int pageNumber);
 
         Task<IEnumerable<IndexProductViewModel>> GetAll();
 

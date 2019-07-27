@@ -1,10 +1,14 @@
 ﻿@using KeepFitStore.Models.ViewModels.Products
+@using KeepFitStore.Helpers
 
-@model IEnumerable<ProductViewModel>
+@model PaginatedList<ProductViewModel>
 @{
     this.ViewData["Title"] = "Products Home Page";
+    var myModel = (IEnumerable<ProductViewModel>)Model;
 }
 
 <partial name="~/Views/Partials/_MessagesHomeIndexPartial.cshtml" />
 <h2><span class="line-center m-4"><em>All Products</em></span></h2>
-<partial name="~/Views/Partials/_ProductsIteratorPartial.cshtml" model="Model" />
+<partial name="~/Views/Partials/_PaginationPartial.cshtml" model="@myModel" />
+<partial name="~/Views/Partials/_ProductsIteratorPartial.cshtml" model="@myModel" />
+<partial name="~/Views/Partials/_PaginationPartial.cshtml" model="@myModel" />

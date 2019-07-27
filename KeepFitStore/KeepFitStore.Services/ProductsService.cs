@@ -88,15 +88,21 @@
             return viewModel;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllWithReviews()
+        public async Task<PaginatedList<ProductViewModel>> GetAllWithReviews(int pageNumber)
         {
-            var products = await this.context
+            var products = this.context
                .Products
                .Include(x => x.Reviews)
-               .ToListAsync();
+               .OrderBy(x => x.Id)
+               .AsQueryable();
 
-            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
-            return viewModel;
+            var paginatedList = await PaginatedList<Product>.CreateAsync(products, pageNumber, 18);
+
+            var paginatedListViewModel = this.mapper.Map<PaginatedList<ProductViewModel>>(paginatedList);
+
+            PaginatedList<ProductViewModel>.SetValues(paginatedListViewModel, paginatedList); 
+             
+            return paginatedListViewModel;
         }
 
         public async Task<IEnumerable<IndexProductViewModel>> GetAll()
@@ -169,7 +175,7 @@
                 .SingleOrDefaultAsync(x => x.Id == productId)
                 .GetAwaiter()
                 .GetResult()
-                .ImageUrl; 
+                .ImageUrl;
 
             if (newImage != null)
             {
@@ -177,7 +183,7 @@
             }
 
             var entity = this.mapper.Map<TDestination>(model);
-            entity.ImageUrl = imageUrl; 
+            entity.ImageUrl = imageUrl;
 
             this.context.Update(entity);
             var countOfEditedRows = await this.context.SaveChangesAsync();
