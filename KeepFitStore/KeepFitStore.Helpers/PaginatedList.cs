@@ -9,9 +9,6 @@
 
     public class PaginatedList<T> : List<T>
     {
-        public int PageIndex { get; private set; }
-        public int TotalPages { get; private set; }
-
         public PaginatedList()
         {
 
@@ -19,11 +16,18 @@
 
         public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
         {
-            PageIndex = pageIndex;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            this.PageIndex = pageIndex;
+            this.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            this.PageSize = pageSize; 
 
             this.AddRange(items);
         }
+
+        public int PageIndex { get; private set; }
+
+        public int TotalPages { get; private set; }
+
+        public int PageSize { get; private set; }
 
         public bool HasPreviousPage
         {
@@ -52,6 +56,7 @@
         {
             destination.PageIndex = source.PageIndex;
             destination.TotalPages = source.TotalPages; 
+            destination.PageSize = source.PageSize; 
         }
     }
 }

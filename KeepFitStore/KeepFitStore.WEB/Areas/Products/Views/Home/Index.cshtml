@@ -9,6 +9,8 @@
 
 <partial name="~/Views/Partials/_MessagesHomeIndexPartial.cshtml" />
 <h2><span class="line-center m-4"><em>All Products</em></span></h2>
-<partial name="~/Views/Partials/_PaginationPartial.cshtml" model="@myModel" />
+
+<partial name="~/Views/Partials/_PaginationPartial.cshtml" model="@Model" />
+<partial name="~/Views/Partials/_PageSizePartial.cshtml" model="@Model" />
 <partial name="~/Views/Partials/_ProductsIteratorPartial.cshtml" model="@myModel" />
-<partial name="~/Views/Partials/_PaginationPartial.cshtml" model="@myModel" />
+<partial name="~/Views/Partials/_PaginationPartial.cshtml" model="@Model" />

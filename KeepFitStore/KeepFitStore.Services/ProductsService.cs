@@ -88,7 +88,7 @@
             return viewModel;
         }
 
-        public async Task<PaginatedList<ProductViewModel>> GetAllWithReviews(int pageNumber)
+        public async Task<PaginatedList<ProductViewModel>> GetAllWithReviews(int pageNumber, int pageSize)
         {
             var products = this.context
                .Products
@@ -96,7 +96,7 @@
                .OrderBy(x => x.Id)
                .AsQueryable();
 
-            var paginatedList = await PaginatedList<Product>.CreateAsync(products, pageNumber, 18);
+            var paginatedList = await PaginatedList<Product>.CreateAsync(products, pageNumber, pageSize);
 
             var paginatedListViewModel = this.mapper.Map<PaginatedList<ProductViewModel>>(paginatedList);
 

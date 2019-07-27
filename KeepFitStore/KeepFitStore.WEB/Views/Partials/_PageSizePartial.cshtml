@@ -1,0 +1,26 @@
+﻿@using KeepFitStore.Models.ViewModels.Products
+@using KeepFitStore.Helpers
+
+@model PaginatedList<ProductViewModel>
+
+@{
+    var availablePageSizes = new int[] { 6, 12, 18, 36, 72 };
+}
+
+<div class="form-group col-2 mb-4 mt-0">
+    <label for="exampleFormControlSelect1">Showing</label>
+    <select class="form-control" onchange="window.location.href=this.value;">
+        @for (int i = 0; i < availablePageSizes.Length; i++)
+        {
+            var currentSize = availablePageSizes[i];
+            if (this.Model.PageSize == currentSize)
+            {
+                <option value="/Products?pageSize=@currentSize" selected>@currentSize</option>
+            }
+            else
+            {
+                <option value="/Products?pageSize=@currentSize">@currentSize</option>
+            }
+        }
+    </select>
+</div>
