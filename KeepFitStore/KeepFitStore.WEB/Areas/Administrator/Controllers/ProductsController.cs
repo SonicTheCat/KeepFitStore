@@ -26,5 +26,12 @@
         {
             return this.View();
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deletedCount = await this.productsSerive.DeleteProductByIdAsync(id);
+
+            return this.RedirectToAction(nameof(Index));
+        }
     }
 }

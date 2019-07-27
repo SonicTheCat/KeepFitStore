@@ -45,11 +45,37 @@
         [HttpPost]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [ValidateModelStateFilter(nameof(Create))]
+        //TODO:Refacotr ValidaModelStateFilter
         public async Task<IActionResult> Create(CreateProteinProductInputModel model)
         {
             await this.productsService.CreateProductAsync<Protein, CreateProteinProductInputModel>(model, model.Image);
 
             return this.Redirect(WebConstants.HomePagePath);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var protein = await this.productsService.FindProductForEditAsync<EditProteinProductInputModel>(id);
+            return this.View(protein);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(EditProteinProductInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            var protein = await this.productsService
+                .EditProductAsync<Protein ,EditProteinProductInputModel>(
+                inputModel, 
+                inputModel.Image, 
+                inputModel.Id);
+
+            return this.Redirect(WebConstants.AdministrationAllProductsPath);
         }
 
         public async Task<IActionResult> Details(int id)

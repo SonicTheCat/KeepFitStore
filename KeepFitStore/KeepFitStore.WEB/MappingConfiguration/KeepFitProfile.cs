@@ -23,7 +23,7 @@
     using KeepFitStore.Models.ViewModels.User;
     using KeepFitStore.Models.InputModels.Orders;
     using KeepFitStore.Models.ViewModels.Orders;
-    
+
     public class KeepFitProfile : Profile
     {
         public KeepFitProfile()
@@ -33,6 +33,8 @@
             this.CreateMap<CreateCreatineProductInputModel, Creatine>();
             this.CreateMap<CreateVitaminProductInputModel, Vitamin>();
             this.CreateMap<CreateAminoAcidProducInputModel, AminoAcid>();
+            this.CreateMap<Protein, EditProteinProductInputModel>();
+            this.CreateMap<EditProteinProductInputModel, Protein>();
 
             //Products - view models
             this.CreateMap<Product, ProductViewModel>();
@@ -47,7 +49,7 @@
             this.CreateMap<AminoAcid, ProductViewModel>();
             this.CreateMap<Vitamin, ProductViewModel>();
             this.CreateMap<Creatine, ProductViewModel>();
-            
+
             //Basket 
             this.CreateMap<BasketItem, BasketViewModel>();
             this.CreateMap<BasketItem, EditBasketItemViewModel>()

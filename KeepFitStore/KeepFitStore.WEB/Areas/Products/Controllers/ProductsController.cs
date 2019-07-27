@@ -7,6 +7,7 @@
 
     [Area(GlobalConstants.ProductsArea)]
     public class ProductsController : BaseController
-    {      
+    {
+      
     }
 }

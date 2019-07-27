@@ -43,39 +43,6 @@
             SetCloudinary();
         }
 
-        private void SetCloudinary()
-        {
-            Account account = new Account(
-           this.cloudinaryConfig.Value.CloudName,
-           this.cloudinaryConfig.Value.ApiKey,
-           this.cloudinaryConfig.Value.ApiSecret
-           );
-
-            this.cloudinary = new Cloudinary(account);
-        }
-
-        private string UploadImage(IFormFile image)
-        {
-            var uploadResult = new ImageUploadResult();
-            if (image.Length > 0)
-            {
-                using (var stream = image.OpenReadStream())
-                {
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(image.Name, stream),
-                        Transformation = new Transformation()
-                                        .Width(CloudinarySettingWidth)
-                                        .Height(CloudinarySettingHeight)
-                                        .Crop(CloudinarySettingCrop)
-                                        .Gravity(CloudinarySettingGravity)
-                    };
-                    uploadResult = cloudinary.Upload(uploadParams);
-                }
-            }
-            return uploadResult.Uri?.ToString();
-        }
-
         public async Task CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
             where TSourceType : class
             where TEntityType : Product
@@ -153,6 +120,71 @@
             return viewModel;
         }
 
+        public async Task<int> DeleteProductByIdAsync(int id)
+        {
+            var product = await this.context.Products.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (product == null)
+            {
+                //TODO: throw service error 
+            }
+
+            this.context.Remove(product);
+            var countOfDeletedItems = await this.context.SaveChangesAsync();
+
+            return countOfDeletedItems;
+        }
+
+        public async Task<TDestination> FindProductForEditAsync<TDestination>(int id)
+        {
+            var product = await this.context
+                .Products
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            if (product == null)
+            {
+                //TODO: throw service error
+            }
+
+            var model = this.mapper.Map<TDestination>(product);
+
+            return model;
+        }
+
+        public async Task<int> EditProductAsync<TDestination, TSourceType>(
+            TSourceType model,
+            IFormFile newImage,
+            int productId)
+            where TSourceType : class
+            where TDestination : Product
+        {
+            if (!this.context.Products.Any(e => e.Id == productId))
+            {
+                //TODO: throw service error
+            }
+
+            string imageUrl = this.context
+                .Products
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == productId)
+                .GetAwaiter()
+                .GetResult()
+                .ImageUrl; 
+
+            if (newImage != null)
+            {
+                imageUrl = UploadImage(newImage);
+            }
+
+            var entity = this.mapper.Map<TDestination>(model);
+            entity.ImageUrl = imageUrl; 
+
+            this.context.Update(entity);
+            var countOfEditedRows = await this.context.SaveChangesAsync();
+
+            return countOfEditedRows;
+        }
+
         public void ValidateProductType(Type enumType, string wantedType)
         {
             var isValidType = Enum.TryParse(enumType, wantedType, true, out _);
@@ -161,6 +193,39 @@
             {
                 //TODO: throw service error: Invalid product type
             }
+        }
+
+        private void SetCloudinary()
+        {
+            Account account = new Account(
+           this.cloudinaryConfig.Value.CloudName,
+           this.cloudinaryConfig.Value.ApiKey,
+           this.cloudinaryConfig.Value.ApiSecret
+           );
+
+            this.cloudinary = new Cloudinary(account);
+        }
+
+        private string UploadImage(IFormFile image)
+        {
+            var uploadResult = new ImageUploadResult();
+            if (image.Length > 0)
+            {
+                using (var stream = image.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(image.Name, stream),
+                        Transformation = new Transformation()
+                                        .Width(CloudinarySettingWidth)
+                                        .Height(CloudinarySettingHeight)
+                                        .Crop(CloudinarySettingCrop)
+                                        .Gravity(CloudinarySettingGravity)
+                    };
+                    uploadResult = cloudinary.Upload(uploadParams);
+                }
+            }
+            return uploadResult.Uri?.ToString();
         }
     }
 }
