@@ -51,6 +51,31 @@
             return this.Redirect(WebConstants.HomePagePath);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var protein = await this.productsService.FindProductForEditAsync<EditVitaminProductInputModel>(id);
+            return this.View(protein);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(EditVitaminProductInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            var protein = await this.productsService
+                .EditProductAsync<Vitamin, EditVitaminProductInputModel>(
+                inputModel,
+                inputModel.Image,
+                inputModel.Id);
+
+            return this.Redirect(WebConstants.AdministrationAllProductsPath);
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             var vitamin = await this.vitaminsService.GetByIdAsync(id);

@@ -51,6 +51,31 @@
             return this.Redirect(WebConstants.HomePagePath);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var protein = await this.productsService.FindProductForEditAsync<EditCreatineProductInputModel>(id);
+            return this.View(protein);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(EditCreatineProductInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            var protein = await this.productsService
+                .EditProductAsync<Creatine, EditCreatineProductInputModel>(
+                inputModel,
+                inputModel.Image,
+                inputModel.Id);
+
+            return this.Redirect(WebConstants.AdministrationAllProductsPath);
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             var creatine = await this.creatinesService.GetByIdAsync(id);

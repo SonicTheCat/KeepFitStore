@@ -35,6 +35,12 @@
             this.CreateMap<CreateAminoAcidProducInputModel, AminoAcid>();
             this.CreateMap<Protein, EditProteinProductInputModel>();
             this.CreateMap<EditProteinProductInputModel, Protein>();
+            this.CreateMap<AminoAcid, EditAminoProductInputModel>();
+            this.CreateMap<EditAminoProductInputModel, AminoAcid>();
+            this.CreateMap<Creatine, EditCreatineProductInputModel>();
+            this.CreateMap<EditCreatineProductInputModel, Creatine>();
+            this.CreateMap<Vitamin, EditVitaminProductInputModel>();
+            this.CreateMap<EditVitaminProductInputModel, Vitamin>();
 
             //Products - view models
             this.CreateMap<Product, ProductViewModel>();
