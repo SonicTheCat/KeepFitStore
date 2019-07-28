@@ -1,0 +1,33 @@
+﻿@using KeepFitStore.Models.ViewModels.Products
+@using KeepFitStore.Helpers
+
+@model PaginatedList<ProductViewModel>
+@{
+    var sortingValues = new Dictionary<string, string>()
+{
+        {"Id", "Id" },
+        {"Price(low to high)", "Price" },
+        {"Price(high to low)", "Price descending" },
+        {"Rating", "Reviews.Count == 0 ? 0 : Reviews.Sum(y => y.GivenRating) / Reviews.Count descending" }
+};
+}
+
+<div class="form-group col-3 mb-4 mt-0">
+    <label for="exampleFormControlSelect1">Order By</label>
+    <select class="form-control" onchange="window.location.href=this.value;">
+        @foreach (var kvp in sortingValues)
+        {
+            var key = kvp.Key;
+            var value = kvp.Value;
+
+            if (this.Model.SortBy == value)
+            {
+                <option value="/Products?pageSize=@Model.PageSize&sortBy=@value" selected>@key</option>
+            }
+            else
+            {
+                <option value="/Products?pageSize=@Model.PageSize&sortBy=@value">@key</option>
+            }
+        }
+    </select>
+</div>

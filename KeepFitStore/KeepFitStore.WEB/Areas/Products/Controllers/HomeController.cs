@@ -15,9 +15,9 @@
             this.productsSerive = productsSerive;
         }
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 18)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 18, string sortBy = "Id")
         {
-            var viewModel = await this.productsSerive.GetAllWithReviews(pageNumber, pageSize);
+            var viewModel = await this.productsSerive.SearchProductsWithReviews(pageNumber, pageSize, sortBy);
 
             return this.View(viewModel);
         }

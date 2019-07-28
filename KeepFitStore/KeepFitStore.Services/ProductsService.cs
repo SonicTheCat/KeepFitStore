@@ -1,8 +1,10 @@
 ﻿namespace KeepFitStore.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Linq.Dynamic.Core;
 
     using Microsoft.Extensions.Options;
     using Microsoft.AspNetCore.Http;
@@ -18,7 +20,6 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Models.ViewModels.Products;
-    using System;
 
     public class ProductsService : IProductsService
     {
@@ -88,20 +89,19 @@
             return viewModel;
         }
 
-        public async Task<PaginatedList<ProductViewModel>> GetAllWithReviews(int pageNumber, int pageSize)
+        public async Task<PaginatedList<ProductViewModel>> SearchProductsWithReviews(int pageNumber, int pageSize, string sortBy)
         {
             var products = this.context
                .Products
                .Include(x => x.Reviews)
-               .OrderBy(x => x.Id)
                .AsQueryable();
 
-            var paginatedList = await PaginatedList<Product>.CreateAsync(products, pageNumber, pageSize);
+            var paginatedList = await PaginatedList<Product>.CreateAsync(products, pageNumber, pageSize, sortBy);
 
             var paginatedListViewModel = this.mapper.Map<PaginatedList<ProductViewModel>>(paginatedList);
 
-            PaginatedList<ProductViewModel>.SetValues(paginatedListViewModel, paginatedList); 
-             
+            PaginatedList<ProductViewModel>.SwapValues(paginatedListViewModel, paginatedList);
+
             return paginatedListViewModel;
         }
 

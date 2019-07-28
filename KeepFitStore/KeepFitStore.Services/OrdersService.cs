@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Dynamic.Core;
+    using System;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,6 @@
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Data;
     using KeepFitStore.Models.ViewModels.Orders;
-    using System;
 
     public class OrdersService : IOrdersService
     {

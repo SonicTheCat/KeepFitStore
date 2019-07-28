@@ -3,21 +3,39 @@
 
 @model PaginatedList<ProductViewModel>
 
-<ul class="pagination justify-content-end">
+<ul class="pagination justify-content-center">
     @if (Model.PageIndex > 1)
     {
         <li class="page-item mr-4">
-            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="1" asp-route-pageSize="@Model.PageSize" class="page-link bg-dark text-white">
+            <a asp-area="Products"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageNumber="1"
+               asp-route-pageSize="@Model.PageSize"
+               asp-route-sortBy="@Model.SortBy"
+               class="page-link bg-dark text-white">
                 First
             </a>
         </li>
         <li class="page-item">
-            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" asp-route-pageSize="@Model.PageSize" class="page-link">
+            <a asp-area="Products"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex-1)"
+               asp-route-pageSize="@Model.PageSize"
+               asp-route-sortBy="@Model.SortBy"
+               class="page-link">
                 Previous
             </a>
         </li>
         <li class="page-item">
-            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" asp-route-pageSize="@Model.PageSize" class="page-link">
+            <a asp-area="Products"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex-1)"
+               asp-route-pageSize="@Model.PageSize"
+               asp-route-sortBy="@Model.SortBy"
+               class="page-link">
                 @(Model.PageIndex - 1)
             </a>
         </li>
@@ -31,17 +49,35 @@
     @if (Model.PageIndex < Model.TotalPages)
     {
         <li class="page-item">
-            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" asp-route-pageSize="@Model.PageSize" class="page-link">
+            <a asp-area="Products"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex+1)"
+               asp-route-pageSize="@Model.PageSize"
+               asp-route-sortBy="@Model.SortBy"
+               class="page-link">
                 @(Model.PageIndex + 1)
             </a>
         </li>
         <li class="page-item">
-            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" asp-route-pageSize="@Model.PageSize" class="page-link">
+            <a asp-area="Products"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex+1)"
+               asp-route-pageSize="@Model.PageSize"
+               asp-route-sortBy="@Model.SortBy"
+               class="page-link">
                 Next
             </a>
         </li>
         <li class="page-item ml-4">
-            <a asp-area="Products" asp-controller="Home" asp-action="Index" asp-route-pageNumber="@(Model.TotalPages)" asp-route-pageSize="@Model.PageSize" class="page-link bg-dark text-white">
+            <a asp-area="Products"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageNumber="@(Model.TotalPages)"
+               asp-route-pageSize="@Model.PageSize"
+               asp-route-sortBy="@Model.SortBy"
+               class="page-link bg-dark text-white">
                 Last
             </a>
         </li>

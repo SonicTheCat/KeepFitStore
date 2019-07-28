@@ -15,11 +15,11 @@
             var currentSize = availablePageSizes[i];
             if (this.Model.PageSize == currentSize)
             {
-                <option value="/Products?pageSize=@currentSize" selected>@currentSize</option>
+                <option value="/Products?pageSize=@currentSize&sortBy=@Model.SortBy" selected>@currentSize</option>
             }
             else
             {
-                <option value="/Products?pageSize=@currentSize">@currentSize</option>
+                <option value="/Products?pageSize=@currentSize&sortBy=@Model.SortBy">@currentSize</option>
             }
         }
     </select>
