@@ -20,7 +20,7 @@
 
         Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts);
 
-        Task<PaginatedList<ProductViewModel>> SearchProductsWithReviews(int pageNumber, int pageSize, string sortBy);
+        Task<PaginatedList<ProductViewModel>> SearchProductsAsync(int pageNumber, int pageSize, string sortBy);
 
         Task<IEnumerable<IndexProductViewModel>> GetAll();
 

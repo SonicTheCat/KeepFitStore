@@ -29,7 +29,7 @@
                 return this.Redirect(WebConstants.HomePagePath);
             }
 
-            this.ViewData["proteinType"] = type;
+            this.ViewData[WebConstants.ProteinType] = type;
             var proteins = await this.proteinsService.GetAllByTypeAsync(type);
 
             return this.View(proteins); 

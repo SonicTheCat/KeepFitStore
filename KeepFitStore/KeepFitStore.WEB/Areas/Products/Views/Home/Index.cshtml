@@ -3,8 +3,7 @@
 
 @model PaginatedList<ProductViewModel>
 @{
-    this.ViewData["Title"] = "Products Home Page";
-    var myModel = (IEnumerable<ProductViewModel>)Model;
+    this.ViewData["Title"] = "Products Home Page";  
 }
 
 <partial name="~/Views/Partials/_MessagesHomeIndexPartial.cshtml" />
@@ -15,5 +14,5 @@
     <partial name="~/Views/Partials/_SortByPartial.cshtml" model="@Model" />
     <partial name="~/Views/Partials/_PageSizePartial.cshtml" model="@Model" />
 </div>
-<partial name="~/Views/Partials/_ProductsIteratorPartial.cshtml" model="@myModel" />
+<partial name="~/Views/Partials/_ProductsIteratorPartial.cshtml" model="@(IEnumerable<ProductViewModel>)Model" />
 <partial name="~/Views/Partials/_PaginationPartial.cshtml" model="@Model" />

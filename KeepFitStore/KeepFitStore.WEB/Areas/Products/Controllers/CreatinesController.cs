@@ -29,7 +29,7 @@
                 return this.Redirect(WebConstants.HomePagePath);
             }
 
-            this.ViewData["creatineType"] = type;
+            this.ViewData[WebConstants.CreatineType] = type;
             var creatines = await this.creatinesService.GetAllByTypeAsync(type);
 
             return this.View(creatines);

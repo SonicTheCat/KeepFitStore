@@ -36,7 +36,7 @@
 
         public async Task<IActionResult> Filter(
             string[] filters, 
-            string sortBy = WebConstants.DefaultSortingById)
+            string sortBy = WebConstants.DefaultSorting)
         {
             var viewModel = await this.ordersService.AppendFiltersAndSortOrdersAsync(filters, sortBy); 
             return this.PartialView("~/Areas/Administrator/Views/Partials/_AdminListAllOrdersPartial.cshtml", viewModel);

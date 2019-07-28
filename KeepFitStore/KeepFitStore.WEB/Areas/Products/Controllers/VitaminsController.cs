@@ -29,7 +29,7 @@
                 return this.Redirect(WebConstants.HomePagePath);
             }
 
-            this.ViewData["vitaminType"] = type;
+            this.ViewData[WebConstants.VitaminType] = type;
             var vitamins = await this.vitaminsService.GetAllByTypeAsync(type);
 
             return this.View(vitamins);

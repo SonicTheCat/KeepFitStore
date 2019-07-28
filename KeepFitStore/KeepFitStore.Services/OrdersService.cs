@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Linq.Dynamic.Core;
     using System;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 

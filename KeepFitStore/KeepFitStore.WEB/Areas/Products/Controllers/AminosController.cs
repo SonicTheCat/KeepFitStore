@@ -29,7 +29,7 @@
                 return this.Redirect(WebConstants.HomePagePath);
             }
 
-            this.ViewData["aminoType"] = type;
+            this.ViewData[WebConstants.AminoType] = type;
             var aminos = await this.aminosService.GetAllByTypeAsync(type);
 
             return this.View(aminos);

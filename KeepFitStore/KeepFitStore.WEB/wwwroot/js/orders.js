@@ -176,10 +176,7 @@ function attachOnChangeSortEventLister() {
     $("#sortOptions").change(function () {
         var optionSelected = $("option:selected", this);
 
-        var selectedValue = this.value
-            .split(' ')
-            .map(x => x.trim())
-            .join('');
+        var selectedValue = this.value;
 
         $("table")
             .load(`/Orders/AllSorted?sortBy=${selectedValue}`, attachClickDetailsEventListener);

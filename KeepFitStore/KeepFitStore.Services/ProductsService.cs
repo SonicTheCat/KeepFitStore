@@ -89,7 +89,7 @@
             return viewModel;
         }
 
-        public async Task<PaginatedList<ProductViewModel>> SearchProductsWithReviews(int pageNumber, int pageSize, string sortBy)
+        public async Task<PaginatedList<ProductViewModel>> SearchProductsAsync(int pageNumber, int pageSize, string sortBy)
         {
             var products = this.context
                .Products

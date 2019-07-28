@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using KeepFitStore.Services.Contracts;
+    using KeepFitStore.WEB.Common;
 
     public class HomeController : ProductsController
     {
@@ -15,9 +16,12 @@
             this.productsSerive = productsSerive;
         }
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 18, string sortBy = "Id")
+        public async Task<IActionResult> Index(
+            int pageNumber = WebConstants.DefaultPageNumber, 
+            int pageSize = WebConstants.DefaultPageSize,
+            string sortBy = WebConstants.DefaultSorting)
         {
-            var viewModel = await this.productsSerive.SearchProductsWithReviews(pageNumber, pageSize, sortBy);
+            var viewModel = await this.productsSerive.SearchProductsAsync(pageNumber, pageSize, sortBy);
 
             return this.View(viewModel);
         }
