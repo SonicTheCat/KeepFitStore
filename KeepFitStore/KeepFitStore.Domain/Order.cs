@@ -11,6 +11,7 @@
         {
             this.Products = new HashSet<ProductOrder>();
             this.OrderDate = DateTime.UtcNow;
+            this.IsCompleted = false;
             this.Status = OrderStatus.Assembling; 
         }
 
@@ -29,6 +30,8 @@
         public PaymentType PaymentType { get; set; }
 
         public OrderStatus Status { get; set; }
+
+        public bool IsCompleted { get; set; }
 
         public string KeepFitUserId { get; set; }
         public KeepFitUser KeepFitUser { get; set; }
