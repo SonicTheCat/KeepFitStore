@@ -123,6 +123,9 @@
             var user = await this.GetUserWithAllPropertiesAsync(principal);
             await this.basketService.ClearBasketAsync(user.BasketId);
             order.IsCompleted = true;
+            order.Status = OrderStatus.Assembling; 
+
+            await this.context.SaveChangesAsync(); 
         }
 
         public async Task<TViewModel> GetOrderByIdAsync<TViewModel>(int orderId)
@@ -152,6 +155,7 @@
                 .Include(x => x.Products)
                 .ThenInclude(x => x.Product)
                 .Include(x => x.KeepFitUser)
+                .Where(x => x.IsCompleted)
                 .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
