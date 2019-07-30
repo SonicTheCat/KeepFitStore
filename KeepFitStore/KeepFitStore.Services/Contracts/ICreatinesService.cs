@@ -8,8 +8,8 @@
 
     public interface ICreatinesService
     {
-        Task<DetailsCreatineViewModel> GetByIdAsync(int id);
+        Task<TViewModel> GetByIdAsync<TViewModel>(int id);
 
-        Task<IEnumerable<ProductViewModel>> GetAllByTypeAsync(string type);
+        Task<IEnumerable<TViewModel>> GetAllByTypeAsync<TViewModel>(string type);
     }
 }

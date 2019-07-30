@@ -10,6 +10,8 @@
     using KeepFitStore.Domain.Products;
     using KeepFitStore.WEB.Common;
     using KeepFitStore.Models.InputModels.Products.Creatines;
+    using KeepFitStore.Models.ViewModels.Products.Creatines;
+    using KeepFitStore.Models.ViewModels.Products;
 
     public class CreatinesController : ProductsController
     {
@@ -30,7 +32,7 @@
             }
 
             this.ViewData[WebConstants.CreatineType] = type;
-            var creatines = await this.creatinesService.GetAllByTypeAsync(type);
+            var creatines = await this.creatinesService.GetAllByTypeAsync<ProductViewModel>(type);
 
             return this.View(creatines);
         }
@@ -78,7 +80,7 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var creatine = await this.creatinesService.GetByIdAsync(id);
+            var creatine = await this.creatinesService.GetByIdAsync<DetailsCreatineViewModel>(id);
 
             //TODO: Write CustomException in services, they do not have to return null!
             if (creatine == null)

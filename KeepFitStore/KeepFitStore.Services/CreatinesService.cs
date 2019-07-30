@@ -27,7 +27,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllByTypeAsync(string type)
+        public async Task<IEnumerable<TViewModel>> GetAllByTypeAsync<TViewModel>(string type)
         {
             this.productsService.ValidateProductType(typeof(CreatineType), type);
 
@@ -36,11 +36,11 @@
                .Where(x => x.Type.ToString() == type)
                .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(creatines);
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(creatines);
             return viewModel;
         }
 
-        public async Task<DetailsCreatineViewModel> GetByIdAsync(int id)
+        public async Task<TViewModel> GetByIdAsync<TViewModel>(int id)
         {
             var creatine = await this.context
                 .Creatines
@@ -50,10 +50,10 @@
 
             if (creatine == null)
             {
-                return null;
+                //TODO: throw service
             }
 
-            var viewModel = this.mapper.Map<DetailsCreatineViewModel>(creatine);
+            var viewModel = this.mapper.Map<TViewModel>(creatine);
             return viewModel;
         }
     }
