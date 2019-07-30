@@ -12,9 +12,8 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain;
     using KeepFitStore.Models.InputModels.Address;
-    using KeepFitStore.Models.ViewModels.Address;
     using KeepFitStore.Services.Contracts;
-    
+
     public class AddressService : IAddressService
     {
         private readonly KeepFitDbContext context;
@@ -28,7 +27,9 @@
             this.userManager = userManager;
         }
 
-        public async Task<CreateAddressViewModel> AddAddressToUserAsync(CreateAddressInputModel model, ClaimsPrincipal principal)
+        public async Task<TViewModel> AddAddressToUserAsync<TViewModel>(
+            CreateAddressInputModel model, 
+            ClaimsPrincipal principal)
         {
             var city = this.context
                 .Cities
@@ -51,7 +52,7 @@
 
             if (address != null)
             {
-                return this.mapper.Map<CreateAddressViewModel>(address);
+                return this.mapper.Map<TViewModel>(address);
             }
 
             address = this.mapper.Map<Address>(model);
@@ -61,10 +62,10 @@
             user.Address = address; 
             await this.context.SaveChangesAsync();
 
-            return this.mapper.Map<CreateAddressViewModel>(address);
+            return this.mapper.Map<TViewModel>(address);
         }
 
-        public async Task<GetAddressViewModel> GetAddressFromUser(ClaimsPrincipal principal)
+        public async Task<TViewModel> GetAddressFromUser<TViewModel>(ClaimsPrincipal principal)
         {
             var userFromDb = await this.userManager.GetUserAsync(principal);
 
@@ -73,7 +74,7 @@
                 .Include(x => x.Address)
                 .SingleOrDefaultAsync(x => x.Id == userFromDb.Id);
 
-            var address = this.mapper.Map<GetAddressViewModel>(user.Address);
+            var address = this.mapper.Map<TViewModel>(user.Address);
             return address; 
         }
     }

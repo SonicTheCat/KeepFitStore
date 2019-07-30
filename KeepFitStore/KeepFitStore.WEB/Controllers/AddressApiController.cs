@@ -22,7 +22,7 @@
         [Authorize]
         public async Task<ActionResult<GetAddressViewModel>> Get()
         {
-            var obj = await this.addressService.GetAddressFromUser(this.User);
+            var obj = await this.addressService.GetAddressFromUser<GetAddressViewModel>(this.User);
 
             return obj;
         }
@@ -32,7 +32,7 @@
         [Authorize]
         public async Task<ActionResult<CreateAddressViewModel>> Create(CreateAddressInputModel model)
         {
-            var createdObj = await this.addressService.AddAddressToUserAsync(model, this.User);
+            var createdObj = await this.addressService.AddAddressToUserAsync<CreateAddressViewModel>(model, this.User);
 
             return createdObj;
         }

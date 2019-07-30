@@ -4,12 +4,11 @@
     using System.Threading.Tasks;
 
     using KeepFitStore.Models.InputModels.Address;
-    using KeepFitStore.Models.ViewModels.Address;
 
     public interface IAddressService
     {
-        Task<CreateAddressViewModel> AddAddressToUserAsync(CreateAddressInputModel model, ClaimsPrincipal principal);
+        Task<TViewModel> AddAddressToUserAsync<TViewModel>(CreateAddressInputModel model, ClaimsPrincipal principal);
 
-        Task<GetAddressViewModel> GetAddressFromUser(ClaimsPrincipal principal);
+        Task<TViewModel> GetAddressFromUser<TViewModel>(ClaimsPrincipal principal);
     }
 }
