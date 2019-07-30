@@ -28,7 +28,7 @@
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var viewModel = await this.ordersService.GetAllOrdersForUserAsync(this.User);
+            var viewModel = await this.ordersService.GetAllOrdersForUserAsync<IndexOrdersViewModel>(this.User);
 
             return this.View(viewModel);
         }
@@ -84,7 +84,7 @@
         [Authorize]
         public async Task<IActionResult> AllSorted(string sortBy = WebConstants.DefaultSorting)
         {
-            var viewModel = await this.ordersService.GetAllOrdersForUserSortedAsync(this.User, sortBy);
+            var viewModel = await this.ordersService.GetAllOrdersForUserSortedAsync<IndexOrdersViewModel>(this.User, sortBy);
 
             return this.PartialView("~/Views/Partials/_MyOrdersPartial.cshtml", viewModel);
         }
@@ -92,7 +92,8 @@
         [Authorize]
         public async Task<IActionResult> Details(int orderId)
         {
-            var viewModel = await this.ordersService.GetOrderDetailsForUserAsync(this.User, orderId);
+            var viewModel = await this.ordersService
+                .GetOrderDetailsForUserAsync<DetailsOrdersViewModel>(this.User, orderId);
 
             return this.PartialView("~/Views/Partials/_OrderDetailsPartialView.cshtml", viewModel);
         }

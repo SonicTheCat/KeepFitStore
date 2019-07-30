@@ -148,7 +148,7 @@
             return viewModel; 
         }
 
-        public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync()
+        public async Task<IEnumerable<TViewModel>> GetAllOrdersAsync<TViewModel>()
         {
             var orders = await this.context
                 .Orders
@@ -158,11 +158,11 @@
                 .Where(x => x.IsCompleted)
                 .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
             return viewModel;
         }
 
-        public async Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal)
+        public async Task<IEnumerable<TViewModel>> GetAllOrdersForUserAsync<TViewModel>(ClaimsPrincipal principal)
         {
             var userId = this.userManager.GetUserId(principal);
 
@@ -178,11 +178,13 @@
                 .Where(x => x.KeepFitUserId == userId)
                 .ToListAsync();
 
-            var ordersViewModel = this.mapper.Map<IEnumerable<IndexOrdersViewModel>>(orders);
+            var ordersViewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
             return ordersViewModel;
         }
 
-        public async Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy)
+        public async Task<IEnumerable<TViewModel>> GetAllOrdersForUserSortedAsync<TViewModel>(
+            ClaimsPrincipal principal,
+            string sortBy)
         {
             var userId = this.userManager.GetUserId(principal);
 
@@ -201,11 +203,13 @@
                .OrderBy(sortBy)
                .ToListAsync();
 
-            var ordersViewModel = this.mapper.Map<IEnumerable<IndexOrdersViewModel>>(orders);
+            var ordersViewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
             return ordersViewModel;
         }
 
-        public async Task<IEnumerable<AllOrdersViewModel>> AppendFiltersAndSortOrdersAsync(string[] filters, string sortBy)
+        public async Task<IEnumerable<TViewModel>> AppendFiltersAndSortOrdersAsync<TViewModel>(
+            string[] filters, 
+            string sortBy)
         {
             if (sortBy == null)
             {
@@ -223,11 +227,11 @@
              .OrderBy(sortBy)
              .ToListAsync();
 
-            var ordersViewModel = this.mapper.Map<IEnumerable<AllOrdersViewModel>>(orders);
+            var ordersViewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
             return ordersViewModel;
         }
 
-        public async Task<DetailsOrdersViewModel> GetOrderDetailsForUserAsync(ClaimsPrincipal principal, int orderId)
+        public async Task<TViewModel> GetOrderDetailsForUserAsync<TViewModel>(ClaimsPrincipal principal, int orderId)
         {
             var userId = this.userManager.GetUserId(principal);
 
@@ -250,11 +254,11 @@
                 //TODO: throw service error 
             }
 
-            var orderViewModel = this.mapper.Map<DetailsOrdersViewModel>(order);
+            var orderViewModel = this.mapper.Map<TViewModel>(order);
             return orderViewModel;
         }
 
-        public async Task<DetailsOrdersViewModel> GetOrderDetailsAsync(int orderId)
+        public async Task<TViewModel> GetOrderDetailsAsync<TViewModel>(int orderId)
         {
             var order = await this.context
                .Orders
@@ -270,7 +274,7 @@
                 //TODO: throw service error
             }
 
-            var orderViewModel = this.mapper.Map<DetailsOrdersViewModel>(order);
+            var orderViewModel = this.mapper.Map<TViewModel>(order);
 
             return orderViewModel;
         }

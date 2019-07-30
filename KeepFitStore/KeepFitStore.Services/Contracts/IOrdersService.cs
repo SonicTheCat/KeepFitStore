@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using KeepFitStore.Models.InputModels.Orders;
-    using KeepFitStore.Models.ViewModels.Orders;
 
     public interface IOrdersService
     {
@@ -17,17 +16,17 @@
 
         Task<TViewModel> GetOrderByIdAsync<TViewModel>(int orderId); 
 
-        Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync();
+        Task<IEnumerable<TViewModel>> GetAllOrdersAsync<TViewModel>();
 
-        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal);
+        Task<IEnumerable<TViewModel>> GetAllOrdersForUserAsync<TViewModel>(ClaimsPrincipal principal);
 
-        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy);
+        Task<IEnumerable<TViewModel>> GetAllOrdersForUserSortedAsync<TViewModel>(ClaimsPrincipal principal, string sortBy);
 
-        Task<IEnumerable<AllOrdersViewModel>> AppendFiltersAndSortOrdersAsync(string[] filters, string sortBy);
+        Task<IEnumerable<TViewModel>> AppendFiltersAndSortOrdersAsync<TViewModel>(string[] filters, string sortBy);
 
-        Task<DetailsOrdersViewModel> GetOrderDetailsForUserAsync(ClaimsPrincipal principal, int orderId);
+        Task<TViewModel> GetOrderDetailsForUserAsync<TViewModel>(ClaimsPrincipal principal, int orderId);
 
-        Task<DetailsOrdersViewModel> GetOrderDetailsAsync(int orderId);
+        Task<TViewModel> GetOrderDetailsAsync<TViewModel>(int orderId);
 
         Task ChangeOrderCurrentStatusAsync(int orderId, string currentStatus);
     }

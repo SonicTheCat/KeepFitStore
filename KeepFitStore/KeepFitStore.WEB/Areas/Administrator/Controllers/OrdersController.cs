@@ -6,7 +6,8 @@
 
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Common;
-    
+    using KeepFitStore.Models.ViewModels.Orders;
+
     public class OrdersController : AdministratorController
     {
         private readonly IOrdersService ordersService;
@@ -18,13 +19,13 @@
 
         public async Task<IActionResult> All()
         {
-            var allOrders = await this.ordersService.GetAllOrdersAsync();
+            var allOrders = await this.ordersService.GetAllOrdersAsync<AllOrdersViewModel>();
             return this.View(allOrders); 
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var orderViewModel = await this.ordersService.GetOrderDetailsAsync(id); 
+            var orderViewModel = await this.ordersService.GetOrderDetailsAsync<DetailsOrdersViewModel>(id); 
             return this.View(orderViewModel);
         }
 
@@ -38,7 +39,9 @@
             string[] filters, 
             string sortBy = WebConstants.DefaultSorting)
         {
-            var viewModel = await this.ordersService.AppendFiltersAndSortOrdersAsync(filters, sortBy); 
+            var viewModel = await this.ordersService
+                .AppendFiltersAndSortOrdersAsync<AllOrdersViewModel>(filters, sortBy); 
+
             return this.PartialView("~/Areas/Administrator/Views/Partials/_AdminListAllOrdersPartial.cshtml", viewModel);
         }
     }
