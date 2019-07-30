@@ -40,12 +40,15 @@
 
         public DbSet<Review> Reviews{ get; set; }
 
+        public DbSet<KeepFitUserFavoriteProducts> UserFavoriteProducts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AddressConfig());
             builder.ApplyConfiguration(new BasketItemConfig());
             builder.ApplyConfiguration(new ProductOrderConfig());
             builder.ApplyConfiguration(new KeepFitUserConfig());
+            builder.ApplyConfiguration(new KeepFitUserFavoriteProductsConfig());
 
             base.OnModelCreating(builder);
         }

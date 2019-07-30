@@ -13,6 +13,7 @@
         {
             this.Orders = new HashSet<ProductOrder>();
             this.Reviews = new HashSet<Review>();
+            this.FavoriteProducts = new HashSet<KeepFitUserFavoriteProducts>();
             this.CreatedOn = DateTime.UtcNow; 
             this.IsOnSale = false; 
         }
@@ -39,5 +40,7 @@
         public ICollection<ProductOrder> Orders { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
+
+        public ICollection<KeepFitUserFavoriteProducts> FavoriteProducts { get; set; }
     }
 }

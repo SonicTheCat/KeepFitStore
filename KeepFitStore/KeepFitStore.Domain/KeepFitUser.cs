@@ -9,6 +9,7 @@
         {
             this.Orders = new HashSet<Order>();
             this.Reviews = new HashSet<Review>();
+            this.FavoriteProducts = new HashSet<KeepFitUserFavoriteProducts>();
         }
 
         public string FullName { get; set; }
@@ -22,5 +23,7 @@
         public ICollection<Order> Orders { get; set; }
 
         public ICollection<Review> Reviews{ get; set; }
+
+        public ICollection<KeepFitUserFavoriteProducts> FavoriteProducts{ get; set; }
     }
 }
