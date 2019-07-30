@@ -9,9 +9,7 @@
     using AutoMapper;
 
     using KeepFitStore.Data;
-    using KeepFitStore.Models.ViewModels.Products.Creatines;
     using KeepFitStore.Services.Contracts;
-    using KeepFitStore.Models.ViewModels.Products;
     using KeepFitStore.Domain.Enums;
 
     public class CreatinesService : ICreatinesService

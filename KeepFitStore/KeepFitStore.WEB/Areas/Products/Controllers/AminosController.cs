@@ -10,6 +10,8 @@
     using KeepFitStore.Domain.Products;
     using KeepFitStore.WEB.Common;
     using KeepFitStore.Models.InputModels.Products.Aminos;
+    using KeepFitStore.Models.ViewModels.Products.Aminos;
+    using KeepFitStore.Models.ViewModels.Products;
 
     public class AminosController : ProductsController
     {
@@ -30,7 +32,7 @@
             }
 
             this.ViewData[WebConstants.AminoType] = type;
-            var aminos = await this.aminosService.GetAllByTypeAsync(type);
+            var aminos = await this.aminosService.GetAllByTypeAsync<ProductViewModel>(type);
 
             return this.View(aminos);
         }
@@ -78,7 +80,7 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var amino = await this.aminosService.GetByIdAsync(id);
+            var amino = await this.aminosService.GetByIdAsync<DetailsAminoViewModel>(id);
 
             //TODO: Write CustomException in services, they do not have to return null!
             if (amino == null)

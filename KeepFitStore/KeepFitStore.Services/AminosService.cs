@@ -9,9 +9,7 @@
     using AutoMapper;
 
     using KeepFitStore.Data;
-    using KeepFitStore.Models.ViewModels.Products.Aminos;
     using KeepFitStore.Services.Contracts;
-    using KeepFitStore.Models.ViewModels.Products;
     using KeepFitStore.Domain.Enums;
 
     public class AminosService : IAminosService
@@ -27,7 +25,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllByTypeAsync(string type)
+        public async Task<IEnumerable<TViewModel>> GetAllByTypeAsync<TViewModel>(string type)
         {
             this.productsService.ValidateProductType(typeof(AminoAcidType), type);
 
@@ -36,11 +34,11 @@
               .Where(x => x.Type.ToString() == type)
               .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(aminos);
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(aminos);
             return viewModel;
         }
 
-        public async Task<DetailsAminoViewModel> GetByIdAsync(int id)
+        public async Task<TViewModel> GetByIdAsync<TViewModel>(int id)
         {
             var amino = await this.context
                 .Aminos
@@ -50,10 +48,10 @@
 
             if (amino == null)
             {
-                return null;
+               //TODO: throw service error 
             }
 
-            var viewModel = this.mapper.Map<DetailsAminoViewModel>(amino);
+            var viewModel = this.mapper.Map<TViewModel>(amino);
             return viewModel;
         }
     }
