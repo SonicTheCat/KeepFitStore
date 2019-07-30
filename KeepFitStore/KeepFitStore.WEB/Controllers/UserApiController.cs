@@ -23,7 +23,7 @@
         [Authorize]
         public async Task<ActionResult<UpdateUserViewModel>> Update(UpdateUserInputModel model)
         {
-            var obj = await this.usersService.UpdateUserOrderInfoAsync(this.User, model);
+            var obj = await this.usersService.UpdateUserOrderInfoAsync<UpdateUserViewModel>(this.User, model);
 
             return obj;
         }

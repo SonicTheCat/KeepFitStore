@@ -16,7 +16,6 @@
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Data;
-    using KeepFitStore.Models.ViewModels.Orders;
 
     public class OrdersService : IOrdersService
     {

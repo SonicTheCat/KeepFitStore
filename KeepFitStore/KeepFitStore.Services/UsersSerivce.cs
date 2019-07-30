@@ -10,9 +10,8 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain;
     using KeepFitStore.Models.InputModels.User;
-    using KeepFitStore.Models.ViewModels.User;
     using KeepFitStore.Services.Contracts;
-    
+
     public class UsersSerivce : IUsersService
     {
         private readonly UserManager<KeepFitUser> userManager;
@@ -26,14 +25,14 @@
             this.mapper = mapper;
         }
 
-        public async Task<UpdateUserViewModel> UpdateUserOrderInfoAsync(ClaimsPrincipal principal, UpdateUserInputModel model)
+        public async Task<TViewModel> UpdateUserOrderInfoAsync<TViewModel>(ClaimsPrincipal principal, UpdateUserInputModel model)
         {
             var user = await this.userManager.GetUserAsync(principal);
             user.FullName = model.FullName;
             user.PhoneNumber = model.PhoneNumber;
             await this.context.SaveChangesAsync();
 
-            var viewModel = this.mapper.Map<UpdateUserViewModel>(user); 
+            var viewModel = this.mapper.Map<TViewModel>(user); 
             return viewModel;
         }
     }

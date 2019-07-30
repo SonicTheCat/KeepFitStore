@@ -4,10 +4,11 @@
     using System.Threading.Tasks;
 
     using KeepFitStore.Models.InputModels.User;
-    using KeepFitStore.Models.ViewModels.User;
 
     public interface IUsersService
     {
-        Task<UpdateUserViewModel> UpdateUserOrderInfoAsync(ClaimsPrincipal claimsPrincipal, UpdateUserInputModel model); 
+        Task<TViewModel> UpdateUserOrderInfoAsync<TViewModel>(
+            ClaimsPrincipal claimsPrincipal, 
+            UpdateUserInputModel model); 
     }
 }
