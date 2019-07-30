@@ -26,7 +26,7 @@
 
             if (this.User.Identity.IsAuthenticated)
             {
-                 basketContent = await this.basketService.GetBasketContentAsync(this.HttpContext.User);
+                 basketContent = await this.basketService.GetBasketContentAsync<BasketViewModel>(this.HttpContext.User);
             }
             else
             {

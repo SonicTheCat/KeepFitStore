@@ -33,7 +33,7 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                var basketContent = await this.basketService.GetBasketContentAsync(this.User);
+                var basketContent = await this.basketService.GetBasketContentAsync<BasketViewModel>(this.User);
                 return this.View(basketContent);
             }
 
@@ -81,11 +81,16 @@
             //TODO: ask what value to return from this method! EditBasketItemViewModel is not very good
             if (this.User.Identity.IsAuthenticated)
             {
-                var obj = await this.basketService.EditBasketItemAsync(model.BasketId, model.ProductId, model.Quantity);
+                var obj = await this.basketService.EditBasketItemAsync<EditBasketItemViewModel>(
+                    model.BasketId,
+                    model.ProductId, 
+                    model.Quantity);
             }
             else
             {
-                var basketSession = SessionHelper.GetObjectFromJson<List<BasketViewModel>>(this.HttpContext.Session, WebConstants.BasketKey);
+                var basketSession = SessionHelper.GetObjectFromJson<List<BasketViewModel>>(
+                    this.HttpContext.Session, 
+                    WebConstants.BasketKey);
 
                 var basketItem = basketSession.FirstOrDefault(x => x.Product.Id == model.ProductId);
                 if (basketItem == null || model.Quantity <= 0)

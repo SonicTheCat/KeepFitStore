@@ -13,7 +13,6 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain;
     using KeepFitStore.Services.Contracts;
-    using KeepFitStore.Models.ViewModels.Basket;
     using KeepFitStore.Models.ViewModels.Products;
 
     public class BasketSerivce : IBasketService
@@ -64,7 +63,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<EditBasketItemViewModel> EditBasketItemAsync(int basketId, int productId, int quantity)
+        public async Task<TViewModel> EditBasketItemAsync<TViewModel>(int basketId, int productId, int quantity)
         {
             var basketItem = this.context
                 .BasketItems
@@ -79,15 +78,15 @@
             basketItem.Quantity = quantity;
             await this.context.SaveChangesAsync();
 
-            var viewModel = this.mapper.Map<EditBasketItemViewModel>(basketItem);
+            var viewModel = this.mapper.Map<TViewModel>(basketItem);
             return viewModel;
         }
 
-        public async Task<IEnumerable<BasketViewModel>> GetBasketContentAsync(ClaimsPrincipal principal)
+        public async Task<IEnumerable<TViewModel>> GetBasketContentAsync<TViewModel>(ClaimsPrincipal principal)
         {
             var basketItems = await this.GetItemsAsync(principal);
 
-            var viewModel = this.mapper.Map<IEnumerable<BasketViewModel>>(basketItems);
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(basketItems);
             return viewModel;
         }
 
