@@ -15,14 +15,21 @@
 <tbody>
     @foreach (var item in Model)
     {
-        <tr class="text-center table-danger">
-            <th>@item.Id</th>
-            <td>&pound;@item.TotalPrice</td>
-            <td>@item.OrderDate.Value.ToString("dd/MM/yyyy")</td>
-            <td>@item.Status.ToString()</td>
-            <td>@item.ProductsCount</td>
+    <tr class="text-center table-danger">
+        <th>@item.Id</th>
+        <td>&pound;@item.TotalPrice</td>
+        <td>@item.OrderDate.Value.ToString("dd/MM/yyyy")</td>
+        <td>@item.Status.ToString()</td>
+        <td>@item.ProductsCount</td>
+        @if (item.Status == KeepFitStore.Domain.Enums.OrderStatus.NotPayed)
+        {
+            <td><a asp-controller="Orders" asp-action="Complete" asp-route-orderId="@item.Id" class="btn btn-danger"><i class="fa fa-credit-card mr-2"></i>Finish</a></td>
+        }
+        else
+        {
             <td><a href="#" class="btn btn-info details-order-btn"><i class="fas fa-caret-down mr-2"></i>Details</a></td>
-        </tr>
+        }
+    </tr>
         <tr style="display:none">
             <td colspan="6"></td>
         </tr>

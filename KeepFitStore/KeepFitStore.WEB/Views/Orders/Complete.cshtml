@@ -16,7 +16,7 @@
 
 @if (Model.PaymentType == PaymentType.Card)
 {
-    <h6 class="mb-3">At the bottom of the page you can find <strong>Pay With Card</strong> button.</h6>
+<h6 class="mb-3">Go to <a href="#my-pay-form"><strong>Pay With Card </strong></a>options</h6>
 }
 <ul class="list-group mb-3">
     @foreach (var item in Model.Products)
@@ -39,14 +39,13 @@
 
 @if (Model.PaymentType == PaymentType.Card)
 {
-    <div class="text-center">
+    <div id="my-pay-form" class="text-center">
         <form asp-controller="Payment" asp-action="Charge" asp-route-amount="@Model.TotalPrice" asp-route-orderId="@Model.Id" method="POST">
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                     data-key="@Stripe.Value.PublishableKey"
                     data-locale="auto"
                     data-name="@Model.KeepFitUserFullName"
                     data-description="Keep Fit Store Supliments"
-                    data-amount="@Model.TotalPrice"
                     data-label="Pay with Card &pound;@Model.TotalPrice">
             </script>
         </form>

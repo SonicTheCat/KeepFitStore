@@ -12,7 +12,7 @@
             this.Products = new HashSet<ProductOrder>();
             this.OrderDate = DateTime.UtcNow;
             this.IsCompleted = false;
-            this.Status = OrderStatus.Assembling; 
+            this.Status = OrderStatus.NotPayed; 
         }
 
         public int Id { get; set; }
