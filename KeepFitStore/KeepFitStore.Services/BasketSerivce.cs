@@ -14,6 +14,7 @@
     using KeepFitStore.Domain;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Models.ViewModels.Basket;
+    using KeepFitStore.Models.ViewModels.Products;
 
     public class BasketSerivce : IBasketService
     {
@@ -34,7 +35,7 @@
 
         public async Task AddProductToBasketAsync(int productId, ClaimsPrincipal principal, int? quntity = null)
         {
-            var product = await this.productsService.GetProductByIdAsync(productId);
+            var product = await this.productsService.GetProductByIdAsync<ProductViewModel>(productId);
             var user = await this.userManager.GetUserAsync(principal);
 
             if (product == null || user == null)

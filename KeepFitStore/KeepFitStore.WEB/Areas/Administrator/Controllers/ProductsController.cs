@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Models.ViewModels.Products;
 
     public class ProductsController : AdministratorController
     {
@@ -17,7 +18,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var viewModel = await this.productsSerive.GetAll();
+            var viewModel = await this.productsSerive.GetAll<IndexProductViewModel>();
 
             return this.View(viewModel);
         }

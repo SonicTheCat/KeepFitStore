@@ -43,6 +43,7 @@
 
             if (charge.Status == SucceededPayment)
             {
+                //TODO: do something with balanceTransactionId
                 string balanceTransactionId = charge.BalanceTransactionId;
                 return true; 
             }

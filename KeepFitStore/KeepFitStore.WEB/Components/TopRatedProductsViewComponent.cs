@@ -6,6 +6,7 @@
 
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Common;
+    using KeepFitStore.Models.ViewModels.Products;
 
     [ViewComponentAttribute(Name = "TopRatedProducts")]
     public class TopRatedProductsViewComponent : ViewComponent
@@ -19,7 +20,8 @@
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var products = await this.productsService.GetTopRatedProducts(WebConstants.CountOfProductsToBeShownOnHomePage);
+            var products = await this.productsService
+                .GetTopRatedProducts<ProductViewModel>(WebConstants.CountOfProductsToBeShownOnHomePage);
 
             return this.View(products);
         }

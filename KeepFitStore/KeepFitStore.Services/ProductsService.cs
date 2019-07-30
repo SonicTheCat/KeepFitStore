@@ -61,7 +61,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetTopRatedProducts(int countOfProducts)
+        public async Task<IEnumerable<TViewModel>> GetTopRatedProducts<TViewModel>(int countOfProducts)
         {
             var products = await this.context
                 .Products
@@ -72,11 +72,11 @@
              .OrderByDescending(x => x.Rating)
              .Take(countOfProducts);
 
-            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(orderedProducts);
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(orderedProducts);
             return viewModel;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts)
+        public async Task<IEnumerable<TViewModel>> GetNewestProductsAsync<TViewModel>(int countOfProducts)
         {
             var products = await this.context
                 .Products
@@ -85,11 +85,11 @@
                 .Take(countOfProducts)
                 .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(products);
             return viewModel;
         }
 
-        public async Task<PaginatedList<ProductViewModel>> SearchProductsAsync(int pageNumber, int pageSize, string sortBy)
+        public async Task<PaginatedList<TViewModel>> SearchProductsAsync<TViewModel>(int pageNumber, int pageSize, string sortBy)
         {
             var products = this.context
                .Products
@@ -98,31 +98,31 @@
 
             var paginatedList = await PaginatedList<Product>.CreateAsync(products, pageNumber, pageSize, sortBy);
 
-            var paginatedListViewModel = this.mapper.Map<PaginatedList<ProductViewModel>>(paginatedList);
+            var paginatedListViewModel = this.mapper.Map<PaginatedList<TViewModel>>(paginatedList);
 
-            PaginatedList<ProductViewModel>.SwapValues(paginatedListViewModel, paginatedList);
+            PaginatedList<TViewModel>.SwapValues(paginatedListViewModel, paginatedList);
 
             return paginatedListViewModel;
         }
 
-        public async Task<IEnumerable<IndexProductViewModel>> GetAll()
+        public async Task<IEnumerable<TViewModel>> GetAll<TViewModel>()
         {
             var products = await this.context
                .Products
                .ToListAsync();
 
-            var viewModel = this.mapper.Map<IEnumerable<IndexProductViewModel>>(products);
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(products);
             return viewModel;
         }
 
-        public async Task<ProductViewModel> GetProductByIdAsync(int id)
+        public async Task<TViewModel> GetProductByIdAsync<TViewModel>(int id)
         {
             var product = await this.context
                 .Products
                 .Include(x => x.Reviews)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-            var viewModel = this.mapper.Map<ProductViewModel>(product);
+            var viewModel = this.mapper.Map<TViewModel>(product);
             return viewModel;
         }
 

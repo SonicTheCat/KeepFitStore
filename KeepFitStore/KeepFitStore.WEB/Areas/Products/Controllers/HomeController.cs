@@ -6,6 +6,7 @@
 
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.WEB.Common;
+    using KeepFitStore.Models.ViewModels.Products;
 
     public class HomeController : ProductsController
     {
@@ -21,7 +22,8 @@
             int pageSize = WebConstants.DefaultPageSize,
             string sortBy = WebConstants.DefaultSorting)
         {
-            var viewModel = await this.productsSerive.SearchProductsAsync(pageNumber, pageSize, sortBy);
+            var viewModel = await this.productsSerive
+                .SearchProductsAsync<ProductViewModel>(pageNumber, pageSize, sortBy);
 
             return this.View(viewModel);
         }

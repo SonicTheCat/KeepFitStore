@@ -7,6 +7,7 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain;
     using KeepFitStore.Models.InputModels.Reviews;
+    using KeepFitStore.Models.ViewModels.Products;
     using KeepFitStore.Services.Contracts;
 
     public class ReviewsService : IReviewsService
@@ -24,7 +25,7 @@
 
         public async Task CreateAsync(CreateReviewInputModel model)
         {
-            var product = await this.productsService.GetProductByIdAsync(model.ProductId);
+            var product = await this.productsService.GetProductByIdAsync<ProductViewModel>(model.ProductId);
 
             if (product == null)
             {

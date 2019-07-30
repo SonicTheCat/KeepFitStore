@@ -7,7 +7,6 @@
     using Microsoft.AspNetCore.Http;
 
     using KeepFitStore.Domain.Products;
-    using KeepFitStore.Models.ViewModels.Products;
     using KeepFitStore.Helpers;
 
     public interface IProductsService
@@ -16,15 +15,15 @@
             where TSourceType : class
             where TEntityType : Product;
 
-        Task<IEnumerable<ProductViewModel>> GetTopRatedProducts(int countOfProducts);
+        Task<IEnumerable<TViewModel>> GetTopRatedProducts<TViewModel>(int countOfProducts);
 
-        Task<IEnumerable<ProductViewModel>> GetNewestProductsAsync(int countOfProducts);
+        Task<IEnumerable<TViewModel>> GetNewestProductsAsync<TViewModel>(int countOfProducts);
 
-        Task<PaginatedList<ProductViewModel>> SearchProductsAsync(int pageNumber, int pageSize, string sortBy);
+        Task<PaginatedList<TViewModel>> SearchProductsAsync<TViewModel>(int pageNumber, int pageSize, string sortBy);
 
-        Task<IEnumerable<IndexProductViewModel>> GetAll();
+        Task<IEnumerable<TViewModel>> GetAll<TViewModel>();
 
-        Task<ProductViewModel> GetProductByIdAsync(int id);
+        Task<TViewModel> GetProductByIdAsync<TViewModel>(int id);
 
         Task<int> DeleteProductByIdAsync(int id);
 
