@@ -10,6 +10,8 @@
     using KeepFitStore.Models.InputModels.Products.Proteins;
     using KeepFitStore.Domain.Products;
     using KeepFitStore.WEB.Common;
+    using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Models.ViewModels.Products.Proteins;
 
     public class ProteinsController : ProductsController
     {
@@ -30,7 +32,7 @@
             }
 
             this.ViewData[WebConstants.ProteinType] = type;
-            var proteins = await this.proteinsService.GetAllByTypeAsync(type);
+            var proteins = await this.proteinsService.GetAllByTypeAsync<ProductViewModel>(type);
 
             return this.View(proteins); 
 
@@ -80,7 +82,7 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            var protein = await this.proteinsService.GetByIdAsync(id);
+            var protein = await this.proteinsService.GetByIdAsync<DetailsProteinViewModel>(id);
 
             //TODO: Write CustomException in services, they do not have to return null!
             if (protein == null)

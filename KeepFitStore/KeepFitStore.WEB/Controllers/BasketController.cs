@@ -59,7 +59,7 @@
                 var basketItem = basketSession.FirstOrDefault(x => x.Product.Id == id);
                 if (basketItem == null)
                 {
-                    var product = await this.productsService.GetProductByIdAsync(id);
+                    var product = await this.productsService.GetProductByIdAsync<ProductViewModel>(id);
                     basketItem = new BasketViewModel
                     {
                         Quantity = BasketItemInSessionDefaultQuantityValue,
