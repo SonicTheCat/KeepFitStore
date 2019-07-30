@@ -27,6 +27,7 @@
     using AutoMapper;
     using KeepFitStore.WEB.Rules;
     using Microsoft.AspNetCore.Rewrite;
+    using Stripe;
 
     public class Startup
     {
@@ -98,6 +99,7 @@
             services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<IUsersService, UsersSerivce>();
+            services.AddTransient<IPaymentService, PaymentService>();
 
             //Email Sender Services
             services.AddTransient<IEmailSender, EmailSender>();
@@ -114,6 +116,9 @@
 
             //Cloudinary - storing photos
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
+            //Stripe
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe")); 
 
             services.AddSession();
 
@@ -141,6 +146,9 @@
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //stripe
+            StripeConfiguration.ApiKey = Configuration["Stripe:SecretKey"];
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
