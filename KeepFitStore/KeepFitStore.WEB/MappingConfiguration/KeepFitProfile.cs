@@ -93,6 +93,10 @@
             this.CreateMap<Order, IndexOrdersViewModel>()
                 .ForMember(dest => dest.ProductsCount,
                                 opt => opt.MapFrom(src => src.Products.Sum(x => x.ProductQuantity)));
+            this.CreateMap<Order, CompleteOrderViewModel>();
+            this.CreateMap<ProductOrder, CompleteOrderProductsViewModel>()
+                .ForMember(dest => dest.Quantity,
+                                opt => opt.MapFrom(src => src.ProductQuantity)); 
 
             //Orders - Details
             this.CreateMap<Order, DetailsOrdersViewModel>();

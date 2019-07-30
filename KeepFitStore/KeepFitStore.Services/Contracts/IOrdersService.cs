@@ -11,20 +11,24 @@
     {
         Task<CreateOrderInputModel> AddBasketContentToOrderByUserAsync(ClaimsPrincipal principal);
 
-        Task StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model);
+        Task<int> StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model);
+
+        Task CompleteOrderAsync(ClaimsPrincipal principal, int orderId);
+
+        Task<TViewModel> GetOrderByIdAsync<TViewModel>(int orderId); 
 
         Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync();
 
-        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal); 
+        Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserAsync(ClaimsPrincipal principal);
 
         Task<IEnumerable<IndexOrdersViewModel>> GetAllOrdersForUserSortedAsync(ClaimsPrincipal principal, string sortBy);
 
-        Task<IEnumerable<AllOrdersViewModel>>AppendFiltersAndSortOrdersAsync(string[] filters, string sortBy);
+        Task<IEnumerable<AllOrdersViewModel>> AppendFiltersAndSortOrdersAsync(string[] filters, string sortBy);
 
-        Task<DetailsOrdersViewModel> GetOrderDetailsForUserAsync(ClaimsPrincipal principal, int orderId); 
+        Task<DetailsOrdersViewModel> GetOrderDetailsForUserAsync(ClaimsPrincipal principal, int orderId);
 
-        Task<DetailsOrdersViewModel> GetOrderDetailsAsync(int orderId); 
+        Task<DetailsOrdersViewModel> GetOrderDetailsAsync(int orderId);
 
-        Task ChangeOrderCurrentStatusAsync(int orderId, string currentStatus); 
+        Task ChangeOrderCurrentStatusAsync(int orderId, string currentStatus);
     }
 }

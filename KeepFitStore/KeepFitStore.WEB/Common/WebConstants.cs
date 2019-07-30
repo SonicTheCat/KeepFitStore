@@ -6,6 +6,8 @@
 
         public const string AdministrationAllProductsPath = "/Administrator/Products";
 
+        public const string OrdersIndexPath = "/Orders/Index";
+
         public const string BasketKey = "myBasket"; 
 
         public const string CreatineType = "creatineType"; 
@@ -22,6 +24,8 @@
 
         public const int DefaultPageSize = 18; 
 
-        public const int DefaultPageNumber = 1; 
+        public const int DefaultPageNumber = 1;
+
+        public const string SucceededPayment = "succeeded"; 
     }
 }

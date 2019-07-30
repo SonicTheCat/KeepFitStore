@@ -46,7 +46,7 @@
 
         public async Task<CreateOrderInputModel> AddBasketContentToOrderByUserAsync(ClaimsPrincipal principal)
         {
-            var user = await this.GetUserWithAllProperties(principal);
+            var user = await this.GetUserWithAllPropertiesAsync(principal);
 
             var order = new CreateOrderInputModel
             {
@@ -79,9 +79,9 @@
             return order;
         }
 
-        public async Task StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model)
+        public async Task<int> StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model)
         {
-            var user = await this.GetUserWithAllProperties(principal);
+            var user = await this.GetUserWithAllPropertiesAsync(principal);
             var order = this.mapper.Map<Order>(model);
 
             order.KeepFitUser = user;
@@ -90,7 +90,7 @@
 
             if (order.Products.Count == 0)
             {
-                return;
+                //TODO: throw service error
             }
 
             var basketPriceWithoutDelivery = await this.basketService.GetBasketTotalPriceAsync(principal);
@@ -106,7 +106,43 @@
                 //TODO: throw service error
             }
 
+            return order.Id;
+        }
+
+        public async Task CompleteOrderAsync(ClaimsPrincipal principal, int orderId)
+        {
+            var order = await this.context
+                 .Orders
+                 .SingleOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null || order.IsCompleted)
+            {
+                //TODO: throw service error
+            }
+
+            var user = await this.GetUserWithAllPropertiesAsync(principal);
             await this.basketService.ClearBasketAsync(user.BasketId);
+            order.IsCompleted = true;
+        }
+
+        public async Task<TViewModel> GetOrderByIdAsync<TViewModel>(int orderId)
+        {
+            var order = await this.context
+                .Orders
+                .Include(x => x.KeepFitUser)
+                .Include(x => x.Products)
+                .ThenInclude(x => x.Product)
+                .Include(x => x.DeliveryAddress)
+                .SingleOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+            {
+                //TODO: throw service error
+            }
+
+            var viewModel = this.mapper.Map<TViewModel>(order);
+
+            return viewModel; 
         }
 
         public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync()
@@ -308,11 +344,11 @@
             return false;
         }
 
-        private async Task<KeepFitUser> GetUserWithAllProperties(ClaimsPrincipal principal)
+        private async Task<KeepFitUser> GetUserWithAllPropertiesAsync(ClaimsPrincipal principal)
         {
-            var user = await this.userManager.GetUserAsync(principal);
+            var userId = this.userManager.GetUserId(principal);
 
-            if (user == null)
+            if (userId == null)
             {
                 //TODO: throw service error
             }
@@ -324,7 +360,7 @@
                 .ThenInclude(x => x.Product)
                 .Include(x => x.Address)
                 .ThenInclude(x => x.City)
-                .SingleOrDefaultAsync(x => x.Id == user.Id);
+                .SingleOrDefaultAsync(x => x.Id == userId);
 
             return userWithProperties;
         }
