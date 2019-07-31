@@ -13,6 +13,16 @@
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult Delivery()
+        {
+            return this.View(); 
+        }
+
         //public IActionResult Privacy()
         //{
         //    return View();

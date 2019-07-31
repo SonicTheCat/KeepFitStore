@@ -66,16 +66,6 @@
             return viewModel;
         }
 
-        //TODO remove this method
-        private async Task<KeepFitUser> GetUserAsync(string username)
-        {
-            return await this.context
-                .Users
-                .Include(x => x.FavoriteProducts)
-                .ThenInclude(x => x.Product)
-                .SingleOrDefaultAsync(x => x.UserName == username);
-        }
-
         public async Task<bool> RemoveAsync(int productId, string username)
         {
             var product = await this.context
@@ -91,6 +81,16 @@
             await this.context.SaveChangesAsync();
 
             return true; 
+        }
+
+        //TODO remove this method
+        private async Task<KeepFitUser> GetUserAsync(string username)
+        {
+            return await this.context
+                .Users
+                .Include(x => x.FavoriteProducts)
+                .ThenInclude(x => x.Product)
+                .SingleOrDefaultAsync(x => x.UserName == username);
         }
     }
 }
