@@ -16,17 +16,7 @@
             <img src="@item.ImageUrl" alt="@item.Name" class="img-thumbnail">
             <div class="card-title"><strong>@productName</strong></div>
             <div class="m-0">
-                @for (int i = 1; i <= 5; i++)
-                {
-                    if (item.Rating >= i)
-                    {
-                        <span class="fa fa-star checked"></span>
-                    }
-                    else
-                    {
-                        <span class="fa fa-star"></span>
-                    }
-                }
+                <partial name="~/Areas/Products/Views/Partials/_RatingLoopPartial.cshtml" model="@item.Rating" />
             </div>
             <div class="card-title text-danger"><strong>&pound;@item.Price</strong></div>
             <div class="btn-group" role="group">

@@ -13,6 +13,7 @@
     {
         productName = item.Name.ToUpper() + " " + item.ProductType.ToString().ToUpper();
         productName = productName.Length > 16 ? productName.Substring(0, 16) : productName;
+      
 
         <li class="list-group-item mt-4 shadow flex-lg-row flex-md-row flex-sm-row flex-column d-flex justify-content-between align-items-center">
             <img src="@item.ImageUrl" width="75" height="75" alt="@item.Name" class="img-thumbnail">

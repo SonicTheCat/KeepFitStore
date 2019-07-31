@@ -24,6 +24,7 @@
     using KeepFitStore.Models.InputModels.Orders;
     using KeepFitStore.Models.ViewModels.Orders;
     using KeepFitStore.Helpers;
+    using KeepFitStore.Models.ViewModels.Favorites;
 
     public class KeepFitProfile : Profile
     {
@@ -109,6 +110,10 @@
 
             //User 
             this.CreateMap<KeepFitUser, UpdateUserViewModel>();
+
+            //Favorites
+            this.CreateMap<Product, IndexFavoritesViewModel>(); 
+
         }
     }
 }

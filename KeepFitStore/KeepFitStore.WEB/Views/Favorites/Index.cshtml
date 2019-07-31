@@ -1,0 +1,53 @@
+﻿@using KeepFitStore.Models.ViewModels.Favorites
+
+@model IEnumerable<IndexFavoritesViewModel>
+@{
+    ViewData["Title"] = "Favorite Products";
+    var plural = "s";
+}
+
+<h1 class="mt-3">Favorites</h1>
+@if (!this.Model.Any())
+{
+    <div class="shadow text-center p-4">
+        <i class="fa fa-heart" style="font-size:48px;color:red"></i>
+        <h3 class="text-secondary p-4">No products in Favorites</h3>
+        <a asp-area="Products" asp-controller="Home" asp-action="Index" class="btn btn-link">Explore keepFitStore</a>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Type</th>
+                <th scope="col">Rating</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in this.Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-area="Products" asp-controller="@(item.ProductType + plural)" asp-action="Details" asp-route-id="@item.Id">
+                            <img src="@item.ImageUrl" width="45" height="45" alt="Alternate Text" />
+                        </a>
+                    </td>
+                    <td>@item.Name</td>
+                    <td>&pound;@item.Price</td>
+                    <td>@item.ProductType</td>
+                    <td>
+                        <partial name="~/Areas/Products/Views/Partials/_RatingLoopPartial.cshtml" model="@item.Rating" />
+                    </td>
+                    <td><a class="btn btn-sm btn-info" asp-area="Products" asp-controller="@(item.ProductType + plural)" asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+                    <td><a class="btn btn-sm btn-danger" asp-controller="Favorites" asp-action="Remove" asp-route-productId="@item.Id">Remove</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
