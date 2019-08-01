@@ -56,9 +56,10 @@
             var favProducts = await this
                 .context
                 .UserFavoriteProducts
-                 .Where(x => x.KeepFitUser.UserName == username)
-                 .Select(x => x.Product)
-                 .Include(x => x.Reviews)
+                .Where(x => x.KeepFitUser.UserName == username)
+                .Select(x => x.Product)
+                .Include(x => x.Reviews)
+                .AsNoTracking()
                 .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(favProducts);
@@ -74,13 +75,13 @@
 
             if (product == null)
             {
-                return false; 
+                return false;
             }
 
             this.context.UserFavoriteProducts.Remove(product);
             await this.context.SaveChangesAsync();
 
-            return true; 
+            return true;
         }
 
         //TODO remove this method

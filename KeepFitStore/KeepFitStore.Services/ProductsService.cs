@@ -51,6 +51,7 @@
             var products = await this.context
                 .Products
                 .Include(x => x.Reviews)
+                .AsNoTracking()
                 .ToListAsync();
 
             var orderedProducts = products
@@ -68,6 +69,7 @@
                 .Include(x => x.Reviews)
                 .OrderByDescending(x => x.CreatedOn)
                 .Take(countOfProducts)
+                .AsNoTracking()
                 .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(products);
@@ -94,6 +96,7 @@
         {
             var products = await this.context
                .Products
+               .AsNoTracking()
                .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(products);
@@ -105,6 +108,7 @@
             var product = await this.context
                 .Products
                 .Include(x => x.Reviews)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             var viewModel = this.mapper.Map<TViewModel>(product);
@@ -130,6 +134,7 @@
         {
             var product = await this.context
                 .Products
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (product == null)

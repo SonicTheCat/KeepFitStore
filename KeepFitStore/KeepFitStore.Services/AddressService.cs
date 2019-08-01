@@ -72,6 +72,7 @@
             var user = await this.userManager
                 .Users
                 .Include(x => x.Address)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == userFromDb.Id);
 
             var address = this.mapper.Map<TViewModel>(user.Address);

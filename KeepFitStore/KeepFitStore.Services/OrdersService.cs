@@ -135,6 +135,7 @@
                 .Include(x => x.Products)
                 .ThenInclude(x => x.Product)
                 .Include(x => x.DeliveryAddress)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == orderId);
 
             if (order == null)
@@ -155,6 +156,7 @@
                 .ThenInclude(x => x.Product)
                 .Include(x => x.KeepFitUser)
                 .Where(x => x.IsCompleted)
+                .AsNoTracking()
                 .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
@@ -175,6 +177,7 @@
                 .Include(x => x.Products)
                 .ThenInclude(x => x.Product)
                 .Where(x => x.KeepFitUserId == userId)
+                .AsNoTracking()
                 .ToListAsync();
 
             var ordersViewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
@@ -200,6 +203,7 @@
                .ThenInclude(x => x.Product)
                .Where(x => x.KeepFitUserId == userId)
                .OrderBy(sortBy)
+               .AsNoTracking()
                .ToListAsync();
 
             var ordersViewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
@@ -225,6 +229,7 @@
              .Where(x => x.IsCompleted)
              .Where(x => filters.Length == 0 ? true : filters.Contains(x.Status.ToString()))
              .OrderBy(sortBy)
+             .AsNoTracking()
              .ToListAsync();
 
             var ordersViewModel = this.mapper.Map<IEnumerable<TViewModel>>(orders);
@@ -242,6 +247,7 @@
                 .ThenInclude(x => x.City)
                 .Include(x => x.Products)
                 .ThenInclude(x => x.Product)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == orderId);
 
             if (userId == null || order == null)
@@ -267,6 +273,7 @@
                .ThenInclude(x => x.City)
                .Include(x => x.Products)
                .ThenInclude(x => x.Product)
+               .AsNoTracking()
                .SingleOrDefaultAsync(x => x.Id == orderId);
 
             if (order == null)

@@ -32,6 +32,7 @@
             var creatines = await this.context
                .Creatines
                .Where(x => x.Type.ToString() == type)
+               .AsNoTracking()
                .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(creatines);
@@ -44,6 +45,7 @@
                 .Creatines
                 .Include(x => x.Reviews)
                 .ThenInclude(x => x.KeepFitUser)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (creatine == null)

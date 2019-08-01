@@ -32,6 +32,7 @@
             var aminos = await this.context
               .Aminos
               .Where(x => x.Type.ToString() == type)
+              .AsNoTracking()
               .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(aminos);
@@ -44,6 +45,7 @@
                 .Aminos
                 .Include(x => x.Reviews)
                 .ThenInclude(x => x.KeepFitUser)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (amino == null)

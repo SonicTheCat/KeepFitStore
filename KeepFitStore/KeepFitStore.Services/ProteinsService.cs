@@ -32,6 +32,7 @@
             var proteins = await this.context
                .Proteins
                .Where(x => x.Type.ToString() == type)
+               .AsNoTracking()
                .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(proteins);
@@ -44,6 +45,7 @@
                 .Proteins
                 .Include(x => x.Reviews)
                 .ThenInclude(x => x.KeepFitUser)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (protein == null)

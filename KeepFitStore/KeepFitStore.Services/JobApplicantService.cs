@@ -53,6 +53,7 @@
             var allApplicants = await this.context
                 .Applicants
                 .Include(x => x.Position)
+                .AsNoTracking()
                 .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(allApplicants);

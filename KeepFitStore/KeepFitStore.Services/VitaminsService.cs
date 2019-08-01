@@ -32,6 +32,7 @@
             var vitamins = await this.context
               .Vitamins
               .Where(x => x.Type.ToString() == type)
+              .AsNoTracking()
               .ToListAsync();
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(vitamins);
@@ -44,6 +45,7 @@
                 .Vitamins
                 .Include(x => x.Reviews)
                 .ThenInclude(x => x.KeepFitUser)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             if (vitamin == null)

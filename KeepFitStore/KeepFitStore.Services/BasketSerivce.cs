@@ -144,6 +144,7 @@
                 .Include(x => x.Basket)
                 .Include(x => x.Product)
                 .Where(x => x.Basket.Id == basketId)
+                .AsNoTracking()
                 .ToListAsync();
 
             return productsInBasket; 
