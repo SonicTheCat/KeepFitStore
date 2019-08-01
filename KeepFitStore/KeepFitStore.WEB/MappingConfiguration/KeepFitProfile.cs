@@ -26,6 +26,7 @@
     using KeepFitStore.Helpers;
     using KeepFitStore.Models.ViewModels.Favorites;
     using KeepFitStore.Models.ViewModels.JobPositions;
+    using KeepFitStore.Models.InputModels.Jobs;
 
     public class KeepFitProfile : Profile
     {
@@ -117,7 +118,8 @@
 
             //Job
             this.CreateMap<JobPosition, JobPositionViewModel>(); 
-
+            this.CreateMap<CreateJobApplicantInputModel, JobApplicant>()
+                .ForMember(x => x.Position, opt => opt.Ignore());
         }
     }
 }
