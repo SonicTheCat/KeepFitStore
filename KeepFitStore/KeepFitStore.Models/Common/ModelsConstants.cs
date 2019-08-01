@@ -4,6 +4,8 @@
     {
         public const int MaximumTextLenght = 5000;
 
+        public const int MinimumTextLenght = 20;
+
         public const string ProductBrandName = "Brand";
 
         public const string PriceMinValue = "0.01";
@@ -49,5 +51,15 @@
         public const string UserFullName = "Full name";
 
         public const string UserPhoneNumber = "Phone number";
+
+        public const int JobApplicantMinAge = 18;
+
+        public const int JobApplicantMaxAge = 99;      
+
+        public const string Biography= "Biography";
+
+        public const string BiographyErrorMessage = "The {0} must be at between {2} and {1} characters long.";
+
+        public const string AgeErrorMessage = "Choosen {0} must be in range {1} and {2}";
     }
 }

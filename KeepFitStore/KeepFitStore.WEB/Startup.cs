@@ -101,6 +101,7 @@
             services.AddTransient<IUsersService, UsersSerivce>();
             services.AddTransient<IPaymentService, PaymentService>();
             services.AddTransient<IFavoriteService, FavoriteService>();
+            services.AddTransient<IJobPositionService, JobPositionService>();
 
             //Email Sender Services
             services.AddTransient<IEmailSender, EmailSender>();

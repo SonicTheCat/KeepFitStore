@@ -1,0 +1,88 @@
+﻿@using KeepFitStore.Models.InputModels.Jobs
+@using KeepFitStore.Models.ViewModels.JobPositions
+
+@model CreateJobsInputModel
+@{
+    ViewData["Title"] = "Wirking at KeepFitStore";
+}
+
+<div class="m-4 p-1">
+    <h1 class="text-center text-secondary">Working at KeepFit</h1>
+    <p class="text-center">
+        It’s not easy working here. The pace is fast. The pressure’s high. And we expect a lot. But, if you’re interested in healthy living and want to help people make better life choices, there’s a genuine career opportunity for you here.
+        Join us – you won’t find anywhere quite like it.
+    </p>
+    <div class="text-center">
+        <button id="show-job-form-btn" class="btn btn-warning btn-sm"><i class="fas fa-caret-down"></i> Start now</button>
+    </div>
+</div>
+
+<div>
+    <form asp-controller="JobApplicant" asp-action="CreateProcces" method="post" id="job-form" style="display:none">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label asp-for="Firstname"></label>
+                <input asp-for="Firstname" type="text" class="form-control" placeholder="Firstname...">
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Middlename"></label>
+                <input asp-for="Middlename" type="text" class="form-control" placeholder="Middlename...">
+                <span asp-validation-for="Middlename" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Lastname"></label>
+                <input asp-for="Lastname" type="text" class="form-control" placeholder="Lastname...">
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label asp-for="Age"></label>
+                <input asp-for="Age" type="number" class="form-control" placeholder="Age...">
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="Phone number...">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Position</label>
+                <select class="form-control">
+                    <option selected>Choose...</option>
+                    @foreach (var item in (IEnumerable<JobPositionViewModel>)this.ViewData["positions"])
+                    {
+                        <option value="@item.Name">@item.Name -  &pound;@item.Salary</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Bio"></label>
+                <textarea asp-for="Bio" type="text" class="form-control" placeholder="Tell us something about you..."></textarea>
+                <span asp-validation-for="Bio" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-check mb-2" col-md-1>
+            <input asp-for="ExperienceInSelling" class="form-check-input" type="checkbox">
+            <label asp-for="ExperienceInSelling" class="form-check-label" for="gridCheck">
+                Previous experience in similar job
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $().ready(function () {
+            $("#show-job-form-btn").click(function () {
+                
+                $("#job-form").toggle("slow");
+            })
+        });
+    </script>
+}
