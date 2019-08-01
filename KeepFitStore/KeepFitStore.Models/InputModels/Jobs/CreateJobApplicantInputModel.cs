@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using KeepFitStore.Models.Common;
+    using Microsoft.AspNetCore.Http;
 
     public class CreateJobApplicantInputModel
     {
@@ -30,5 +31,9 @@
         public string Bio { get; set; }
     
         public string Position { get; set; }
+
+        [Required]
+        [Display(Name = ModelsConstants.UploadApplicantImage)]
+        public IFormFile Image { get; set; }
     }
 }

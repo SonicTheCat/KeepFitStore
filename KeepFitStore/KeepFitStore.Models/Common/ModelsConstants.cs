@@ -22,6 +22,8 @@
 
         public const string UploadProducImageName = "Upload image for this product";
 
+        public const string UploadApplicantImage = "Upload photo of yourself";
+
         public const int RatingMinValue = 1;
 
         public const int RatingMaxValue = 5;
@@ -61,5 +63,15 @@
         public const string BiographyErrorMessage = "The {0} must be at between {2} and {1} characters long.";
 
         public const string AgeErrorMessage = "Choosen {0} must be in range {1} and {2}";
+
+        public const string StartingSalaryMinValue = "500";
+
+        public const string StartingSalaryMaxValue = "5000";
+
+        public const string StartingSalary = "Starting Salary";
+
+        public const string StartingSalaryErrorMessage = "{0} must be in range &pound;{1} and &pound;{2}";
+
+        public const string PositionName = "Position name";
     }
 }
