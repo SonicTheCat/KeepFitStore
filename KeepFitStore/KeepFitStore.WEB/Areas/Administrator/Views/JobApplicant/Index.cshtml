@@ -1,0 +1,67 @@
+﻿@using KeepFitStore.Models.ViewModels.JobApplicants
+
+@model IEnumerable<IndexJobApplicantViewModel>
+@{
+    ViewData["Title"] = "Jobs";
+}
+
+<div class="container-fluid mt-4 mb-2">
+    <h3 class="mt-3 text-center">Job Applicantions</h3>
+    <hr class="mb-4 w-25 bg-dark"/>
+    @if (!this.Model.Any())
+    {
+        <h1 class="text-center text-secondary mt-4">There are no job applications yet!</h1>
+    }
+    else
+    {
+        <div class="row m-2">
+            @foreach (var applicant in this.Model)
+            {
+                <div class="card ml-2 mb-2" style="width: 14rem;">
+                    <img class="card-img-top" src="@applicant.ImageUrl" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@(applicant.Firstname + " " + applicant.Lastname)</h5>
+                        <p class="card-text bio">@(applicant.Bio.Substring(0, 20) + "...")</p>
+                        <button class="btn btn-primary btn-sm show-more-details">See more</button>
+                    </div>
+                    <div id="@applicant.Id" class="applicant-details p-2" opened="false" style="display:none">
+                        <p>Age: <strong>@applicant.Age</strong> </p>
+                        <p>Biography: <strong>@applicant.Bio</strong> </p>
+                        <p>Phone number: <strong>@applicant.PhoneNumber</strong> </p>
+                        <p class="m-0">Applying for: <strong>@applicant.PositionName</strong> </p>
+                        <p class="m-0">Experience for role: <strong>@(applicant.ExperienceInSelling == true ? "YES" : "NO")</strong> </p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $().ready(function () {
+            $(".show-more-details").click(function () {
+
+                let btn = $(this);
+                let detailsDiv = btn.parent().next();
+                let bio = btn.prev();
+
+                if (detailsDiv.attr("opened") === "false") {
+                    detailsDiv.attr("opened", "true");
+                    btn.text("Hide details");
+                    btn.addClass("btn-danger");
+                    bio.hide("slow");
+                }
+                else {
+                    detailsDiv.attr("opened", "false");
+                    btn.text("See more");
+                    btn.removeClass("btn-danger");
+                    bio.show("slow");
+                }
+
+                detailsDiv.toggle("slow");
+            })
+        });
+    </script>
+}
