@@ -11,7 +11,6 @@
 
     public class JobApplicantController : BaseController
     {
-        private const int OneRow = 1;
         private const string ViewDataKeyPositions = "positions";
 
         private readonly IJobApplicantService applicantService;
@@ -44,9 +43,9 @@
                 return this.View(); 
             }
 
-            var rowsCreated = await this.applicantService.AddApplicantAsync(model);
+            var rowsCreated = await this.applicantService.AddApplicantAsync(model, model.Image);
 
-            if (rowsCreated != OneRow)
+            if (rowsCreated != WebConstants.OneRow)
             {
                 return this.BadRequest(); 
             }

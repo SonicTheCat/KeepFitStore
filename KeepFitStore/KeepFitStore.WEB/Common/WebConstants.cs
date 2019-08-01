@@ -4,6 +4,8 @@
     {
         public const string HomePagePath = "/";
 
+        public const string AdminHomePage = "/Administrator";
+
         public const string AdministrationAllProductsPath = "/Administrator/Products";
 
         public const string OrdersIndexPath = "/Orders/Index";
@@ -27,5 +29,7 @@
         public const int DefaultPageNumber = 1;
 
         public const string SucceededPayment = "succeeded"; 
+
+        public const int OneRow = 1;
     }
 }

@@ -9,6 +9,8 @@
 
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Data;
+    using KeepFitStore.Models.InputModels.JobPositions;
+    using KeepFitStore.Domain;
 
     public class JobPositionService : IJobPositionService
     {
@@ -21,12 +23,34 @@
             this.mapper = mapper;
         }
 
+        public async Task<int> CreateAsync(CreateJobPositionInputModel model)
+        {
+            var doesExist = await this.context
+                .Positions
+                .AnyAsync(x => x.Name == model.Name && x.Salary == model.Salary);
+
+            if (doesExist)
+            {
+                return default;
+            }
+
+            var position = this.mapper.Map<JobPosition>(model);
+            this.context.Positions.Add(position);
+            var rowsAdded = await this.context.SaveChangesAsync();
+
+            return rowsAdded; 
+        }
+
         public async Task<IEnumerable<TViewModel>> GetAllAsync<TViewModel>()
         {
-            var positions = await this.context.Positions.ToListAsync();
+            var positions = await this.context
+                .Positions
+                .AsNoTracking()
+                .ToListAsync();
+
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(positions);
 
-            return viewModel; 
+            return viewModel;
         }
     }
 }
