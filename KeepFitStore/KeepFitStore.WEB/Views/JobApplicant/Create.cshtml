@@ -13,12 +13,12 @@
         Join us – you won’t find anywhere quite like it.
     </p>
     <div class="text-center">
-        <button id="show-job-form-btn" class="btn btn-warning btn-sm"><i class="fas fa-caret-down"></i> Start now</button>
+        <button id="show-job-form-btn" class="btn btn-warning btn-sm"><i class="fas fa-caret-down"></i> Join now</button>
     </div>
 </div>
 
 <div>
-    <form asp-controller="JobApplicant" asp-action="Create" method="post" id="job-form" style="display:none">
+    <form asp-controller="JobApplicant" asp-action="Create" method="post" enctype="multipart/form-data" id="job-form" style="display:none">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label asp-for="Firstname"></label>
@@ -48,9 +48,9 @@
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Position" >Position</label>
+                <label asp-for="Position">Position</label>
                 <select asp-for="Position" class="form-control">
-                    <option selected>Choose...</option>
+                    <option selected disabled>Choose...</option>
                     @foreach (var item in (IEnumerable<JobPositionViewModel>)this.ViewData["positions"])
                     {
                         <option value="@item.Name">@item.Name -  &pound;@item.Salary</option>
@@ -71,7 +71,14 @@
                 Previous experience in similar job
             </label>
         </div>
-        <button type="submit" class="btn btn-primary">Apply</button>
+        <div class="form-group mt-4 mb-4">
+            <label asp-for="Image"></label>
+            <input class="btn btn-success btn-sm" type="file" asp-for="Image" />
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary text-center">Apply</button>
+        </div>
     </form>
 </div>
 

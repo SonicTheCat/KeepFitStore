@@ -21,6 +21,15 @@
             <a class="btn text-white bg-dark" asp-area="Administrator" asp-controller="Orders" asp-action="All" aria-haspopup="true" aria-expanded="false">
                 Orders
             </a>
+            <div class="dropdown">
+                <button class="btn text-white bg-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Careers
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" asp-area="Administrator" asp-controller="JobApplicant" asp-action="Index"><i class="fas fa-tasks mr-2"></i> Job Applications</a>
+                    <a class="dropdown-item" asp-area="Administrator" asp-controller="JobPosition" asp-action="Create"><i class="fas fa-briefcase mr-2"></i> Create Job Position</a>
+                </div>
+            </div>
         </div>
     </div>
 </nav>

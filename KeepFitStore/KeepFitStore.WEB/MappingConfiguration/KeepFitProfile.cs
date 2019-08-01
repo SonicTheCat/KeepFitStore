@@ -27,6 +27,8 @@
     using KeepFitStore.Models.ViewModels.Favorites;
     using KeepFitStore.Models.ViewModels.JobPositions;
     using KeepFitStore.Models.InputModels.Jobs;
+    using KeepFitStore.Models.ViewModels.JobApplicants;
+    using KeepFitStore.Models.InputModels.JobPositions;
 
     public class KeepFitProfile : Profile
     {
@@ -116,8 +118,10 @@
             //Favorites
             this.CreateMap<Product, IndexFavoritesViewModel>(); 
 
-            //Job
+            //Jobs
+            this.CreateMap<CreateJobPositionInputModel, JobPosition>(); 
             this.CreateMap<JobPosition, JobPositionViewModel>(); 
+            this.CreateMap<JobApplicant, IndexJobApplicantViewModel>(); 
             this.CreateMap<CreateJobApplicantInputModel, JobApplicant>()
                 .ForMember(x => x.Position, opt => opt.Ignore());
         }
