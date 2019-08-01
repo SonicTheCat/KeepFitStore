@@ -21,5 +21,7 @@
         public int PositionId { get; set; }
 
         public JobPosition Position { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }
