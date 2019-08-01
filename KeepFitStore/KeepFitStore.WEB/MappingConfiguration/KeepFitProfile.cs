@@ -25,6 +25,7 @@
     using KeepFitStore.Models.ViewModels.Orders;
     using KeepFitStore.Helpers;
     using KeepFitStore.Models.ViewModels.Favorites;
+    using KeepFitStore.Models.ViewModels.JobPositions;
 
     public class KeepFitProfile : Profile
     {
@@ -113,6 +114,9 @@
 
             //Favorites
             this.CreateMap<Product, IndexFavoritesViewModel>(); 
+
+            //Job
+            this.CreateMap<JobPosition, JobPositionViewModel>(); 
 
         }
     }

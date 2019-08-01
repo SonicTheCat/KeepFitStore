@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Reflection;
-
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -25,6 +25,7 @@
                     .Where(x => x.Name == actionName)
                     .FirstOrDefault(x => !x.GetCustomAttributes<HttpPostAttribute>().Any());
 
+                
                 if (action != null)
                 {
                     var actionResult = (IActionResult)action.Invoke(context.Controller, null);
