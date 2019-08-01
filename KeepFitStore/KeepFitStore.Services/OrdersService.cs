@@ -222,6 +222,7 @@
              .Include(x => x.Products)
              .ThenInclude(x => x.Product)
              .Include(x => x.KeepFitUser)
+             .Where(x => x.IsCompleted)
              .Where(x => filters.Length == 0 ? true : filters.Contains(x.Status.ToString()))
              .OrderBy(sortBy)
              .ToListAsync();
