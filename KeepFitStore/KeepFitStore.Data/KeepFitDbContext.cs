@@ -36,9 +36,13 @@
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<ProductOrder> ProductOrders{ get; set; }
+        public DbSet<ProductOrder> ProductOrders { get; set; }
 
-        public DbSet<Review> Reviews{ get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<JobApplicant> Applicants { get; set; }
+
+        public DbSet<JobPosition> Positions { get; set; }
 
         public DbSet<KeepFitUserFavoriteProducts> UserFavoriteProducts { get; set; }
 
