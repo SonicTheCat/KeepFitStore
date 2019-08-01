@@ -4,7 +4,7 @@
 
     using KeepFitStore.Models.Common;
 
-    public class CreateJobsInputModel
+    public class CreateJobApplicantInputModel
     {
         [Required]
         public string Firstname { get; set; }
