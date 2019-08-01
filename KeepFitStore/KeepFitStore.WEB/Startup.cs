@@ -28,6 +28,7 @@
     using KeepFitStore.WEB.Rules;
     using Microsoft.AspNetCore.Rewrite;
     using Stripe;
+    using KeepFitStore.Services.PhotoKeeper;
 
     public class Startup
     {
@@ -119,6 +120,7 @@
 
             //Cloudinary - storing photos
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            services.AddSingleton<IMyCloudinary, MyCloudinary>();
 
             //Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe")); 

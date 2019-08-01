@@ -5,43 +5,28 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Linq.Dynamic.Core;
-
-    using Microsoft.Extensions.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
     using AutoMapper;
 
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
-
     using KeepFitStore.Helpers;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
-    using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Services.PhotoKeeper;
 
     public class ProductsService : IProductsService
     {
-        private const string CloudinarySettingCrop = "fill";
-
-        private const string CloudinarySettingGravity = "face";
-
-        private const int CloudinarySettingWidth = 500;
-
-        private const int CloudinarySettingHeight = 500;
-
         private readonly KeepFitDbContext context;
         private readonly IMapper mapper;
-        private readonly IOptions<CloudinarySettings> cloudinaryConfig;
-        private Cloudinary cloudinary;
+        private readonly IMyCloudinary cloudinary;
 
-        public ProductsService(KeepFitDbContext context, IMapper mapper, IOptions<CloudinarySettings> cloudinaryConfig)
+        public ProductsService(KeepFitDbContext context, IMapper mapper, IMyCloudinary cloudinary)
         {
             this.context = context;
             this.mapper = mapper;
-            this.cloudinaryConfig = cloudinaryConfig;
-            SetCloudinary();
+            this.cloudinary = cloudinary;
         }
 
         public async Task CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
@@ -55,7 +40,7 @@
                 return;
             }
 
-            product.ImageUrl = UploadImage(image);
+            product.ImageUrl = this.cloudinary.UploadImage(image);
 
             this.context.Add(product);
             await this.context.SaveChangesAsync();
@@ -179,7 +164,7 @@
 
             if (newImage != null)
             {
-                imageUrl = UploadImage(newImage);
+                imageUrl = this.cloudinary.UploadImage(newImage);
             }
 
             var entity = this.mapper.Map<TDestination>(model);
@@ -199,39 +184,6 @@
             {
                 //TODO: throw service error: Invalid product type
             }
-        }
-
-        private void SetCloudinary()
-        {
-            Account account = new Account(
-           this.cloudinaryConfig.Value.CloudName,
-           this.cloudinaryConfig.Value.ApiKey,
-           this.cloudinaryConfig.Value.ApiSecret
-           );
-
-            this.cloudinary = new Cloudinary(account);
-        }
-
-        private string UploadImage(IFormFile image)
-        {
-            var uploadResult = new ImageUploadResult();
-            if (image.Length > 0)
-            {
-                using (var stream = image.OpenReadStream())
-                {
-                    var uploadParams = new ImageUploadParams()
-                    {
-                        File = new FileDescription(image.Name, stream),
-                        Transformation = new Transformation()
-                                        .Width(CloudinarySettingWidth)
-                                        .Height(CloudinarySettingHeight)
-                                        .Crop(CloudinarySettingCrop)
-                                        .Gravity(CloudinarySettingGravity)
-                    };
-                    uploadResult = cloudinary.Upload(uploadParams);
-                }
-            }
-            return uploadResult.Uri?.ToString();
         }
     }
 }
