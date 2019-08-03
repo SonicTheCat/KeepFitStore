@@ -14,11 +14,12 @@
     using KeepFitStore.Domain;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
+    using KeepFitStore.Services.Common;
 
     public class BasketSerivce : IBasketService
     {
-        private const int QuantityDefaultValue = 1;
-
         private readonly KeepFitDbContext context;
         private readonly IProductsService productsService;
         private readonly UserManager<KeepFitUser> userManager;
@@ -36,11 +37,16 @@
         {
             var product = await this.productsService.GetProductByIdAsync<ProductViewModel>(productId);
             var user = await this.userManager.GetUserAsync(principal);
-
-            if (product == null || user == null)
+           
+            if (user == null)
             {
-                //TODO: throw ServiceError 
-                return;
+                throw new UserNotFoundException(string.Format(
+                    ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
+            }
+
+            if (product == null)
+            {
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, productId));
             }
 
             var basketItem = GetBasketItemOrDefault(product.Id, user.BasketId);
@@ -53,7 +59,7 @@
                 basketItem = new BasketItem()
                 {
                     ProductId = product.Id,
-                    Quantity = quntity.HasValue ? quntity.Value : QuantityDefaultValue,
+                    Quantity = quntity.HasValue ? quntity.Value : ServicesConstants.QuantityDefaultValue,
                     BasketId = user.BasketId
                 };
 
@@ -70,9 +76,14 @@
                 .Include(x => x.Product)
                 .SingleOrDefault(x => x.BasketId == basketId && x.ProductId == productId);
 
-            if (basketItem == null || quantity <= 0)
+            if (basketItem == null)
             {
-                //TODO throw Service exception
+                throw new BasketItemNotFoundException(string.Format(ExceptionMessages.BasketItemNotFound, basketId, productId));
+            }
+
+            if (quantity <= ServicesConstants.InvalidQuantityNumber)
+            {
+                throw new InvalidQuantityProvidedException(string.Format(ExceptionMessages.NegativeQuantity));
             }
 
             basketItem.Quantity = quantity;
@@ -103,14 +114,13 @@
 
             if (basketItem == null)
             {
-                //TODO: throw service exception
-                return false;
+                throw new BasketItemNotFoundException(string.Format(ExceptionMessages.BasketItemNotFound, basketId, productId));
             }
 
             this.context.BasketItems.Remove(basketItem);
             var deletedCount = await this.context.SaveChangesAsync();
 
-            if (deletedCount != 1)
+            if (deletedCount != ServicesConstants.OneRow)
             {
                 return false;
             }
@@ -134,7 +144,7 @@
             var user = await this.userManager.GetUserAsync(principal);
             if (user == null)
             {
-                //TODO: throw service error
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
             }
 
             var basketId = user.BasketId;

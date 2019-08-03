@@ -13,6 +13,8 @@
     using KeepFitStore.Models.InputModels.Jobs;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Services.PhotoKeeper;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
 
     public class JobApplicantService : IJobApplicantService
     {
@@ -35,7 +37,8 @@
 
             if (jobPosition == null)
             {
-                //TODO: throw service error; 
+                throw new JobPositionNotFoundException(string.Format(
+                    ExceptionMessages.InvalidJobPosition, inputModel.Position));
             }
 
             var entity = this.mapper.Map<JobApplicant>(inputModel);

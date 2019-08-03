@@ -11,6 +11,8 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain;
     using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
 
     public class FavoriteService : IFavoriteService
     {
@@ -27,7 +29,12 @@
         {
             var user = await this.GetUserAsync(username);
 
-            if (user == null || user.FavoriteProducts.Any(x => x.ProductId == productId))
+            if (user == null)
+            {
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, username));
+            }
+
+            if (user.FavoriteProducts.Any(x => x.ProductId == productId))
             {
                 return false;
             }
@@ -38,7 +45,7 @@
 
             if (!doesProductExist)
             {
-                return false;
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, productId));
             }
 
             user.FavoriteProducts.Add(new KeepFitUserFavoriteProducts()
@@ -75,7 +82,7 @@
 
             if (product == null)
             {
-                return false;
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, productId));
             }
 
             this.context.UserFavoriteProducts.Remove(product);

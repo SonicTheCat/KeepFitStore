@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using System;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,8 @@
     using KeepFitStore.Domain;
     using KeepFitStore.Models.InputModels.Address;
     using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
 
     public class AddressService : IAddressService
     {
@@ -69,11 +72,20 @@
         {
             var userFromDb = await this.userManager.GetUserAsync(principal);
 
-            var user = await this.userManager
+            KeepFitUser user = null;
+
+            try
+            {
+                user = await this.userManager
                 .Users
                 .Include(x => x.Address)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == userFromDb.Id);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new ServiceException(string.Format(ExceptionMessages.UserLookupFailed, userFromDb.Id), ex); 
+            }
 
             var address = this.mapper.Map<TViewModel>(user.Address);
             return address; 

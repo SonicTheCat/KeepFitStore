@@ -16,20 +16,12 @@
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Domain.Enums;
     using KeepFitStore.Data;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
+    using KeepFitStore.Services.Common;
 
     public class OrdersService : IOrdersService
     {
-        private const int MinimumBasketValueForNextDayDelivery = 60;
-        private const int MinimumBasketValueForStandartDeliery = 20;
-        private const int ExpressDeliveryPrice = 15;
-        private const int NextDayDeliveryPrice = 10;
-        private const int StandartDeliveryPrice = 5;
-        private const int ExpressDeliveryHours = 5;
-        private const int NextDayDeliveryHours = 24;
-        private const int StandartDeliveryHours = 92;
-        private const string DescendingOldValue = "Desc";
-        private const string DescendingNewValue = " descending";
-
         private readonly KeepFitDbContext context;
         private readonly UserManager<KeepFitUser> userManager;
         private readonly IBasketService basketService;
@@ -53,10 +45,9 @@
                 Products = this.mapper.Map<ICollection<CreateOrderProductInputModel>>(user.Basket.BasketItems)
             };
 
-            if (order.Products.Count == 0)
+            if (order.Products.Count == ServicesConstants.InvalidProductsCountInOrder)
             {
-                //TODO throw service error, dont return null
-                return null;
+                throw new ServiceException(string.Format(ExceptionMessages.InvalidBasketContent, user.Id));
             }
 
             if (user.Address != null)
@@ -87,9 +78,9 @@
             order.DeliveryAddress = user.Address;
             order.Products = this.mapper.Map<ICollection<ProductOrder>>(user.Basket.BasketItems);
 
-            if (order.Products.Count == 0)
+            if (order.Products.Count == ServicesConstants.InvalidProductsCountInOrder)
             {
-                //TODO: throw service error
+                throw new ServiceException(string.Format(ExceptionMessages.InvalidBasketContent, user.Id));
             }
 
             var basketPriceWithoutDelivery = await this.basketService.GetBasketTotalPriceAsync(principal);
@@ -98,12 +89,7 @@
             this.CalculateDeliveryDate(order);
 
             this.context.Orders.Add(order);
-            var isAdded = await this.context.SaveChangesAsync();
-
-            if (isAdded != 1)
-            {
-                //TODO: throw service error
-            }
+            await this.context.SaveChangesAsync();
 
             return order.Id;
         }
@@ -114,17 +100,22 @@
                  .Orders
                  .SingleOrDefaultAsync(x => x.Id == orderId);
 
-            if (order == null || order.IsCompleted)
+            if (order == null)
             {
-                //TODO: throw service error
+                throw new OrderNotFoundException(string.Format(ExceptionMessages.OrderNotFound, orderId));
+            }
+
+            if (order.IsCompleted)
+            {
+                return;
             }
 
             var user = await this.GetUserWithAllPropertiesAsync(principal);
             await this.basketService.ClearBasketAsync(user.BasketId);
             order.IsCompleted = true;
-            order.Status = OrderStatus.Assembling; 
+            order.Status = OrderStatus.Assembling;
 
-            await this.context.SaveChangesAsync(); 
+            await this.context.SaveChangesAsync();
         }
 
         public async Task<TViewModel> GetOrderByIdAsync<TViewModel>(int orderId)
@@ -140,12 +131,12 @@
 
             if (order == null)
             {
-                //TODO: throw service error
+                throw new OrderNotFoundException(string.Format(ExceptionMessages.OrderNotFound, orderId));
             }
 
             var viewModel = this.mapper.Map<TViewModel>(order);
 
-            return viewModel; 
+            return viewModel;
         }
 
         public async Task<IEnumerable<TViewModel>> GetAllOrdersAsync<TViewModel>()
@@ -169,7 +160,7 @@
 
             if (userId == null)
             {
-                //TODO: throw service error
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
             }
 
             var orders = await this.context
@@ -190,12 +181,12 @@
         {
             var userId = this.userManager.GetUserId(principal);
 
-            if (userId == null || sortBy == null)
+            if (userId == null)
             {
-                //TODO: throw service error
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
             }
 
-            sortBy = sortBy.Replace(DescendingOldValue, DescendingNewValue);
+            sortBy = sortBy.Replace(ServicesConstants.DescendingOldValue, ServicesConstants.DescendingNewValue);
 
             var orders = await this.context
                .Orders
@@ -211,15 +202,10 @@
         }
 
         public async Task<IEnumerable<TViewModel>> AppendFiltersAndSortOrdersAsync<TViewModel>(
-            string[] filters, 
+            string[] filters,
             string sortBy)
         {
-            if (sortBy == null)
-            {
-                //TODO: throw service error
-            }
-
-            sortBy = sortBy.Replace(DescendingOldValue, DescendingNewValue);
+            sortBy = sortBy.Replace(ServicesConstants.DescendingOldValue, ServicesConstants.DescendingNewValue);
 
             var orders = await this.context
              .Orders
@@ -240,6 +226,11 @@
         {
             var userId = this.userManager.GetUserId(principal);
 
+            if (userId == null)
+            {
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
+            }
+
             var order = await this.context
                 .Orders
                 .Include(x => x.KeepFitUser)
@@ -250,14 +241,14 @@
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == orderId);
 
-            if (userId == null || order == null)
+            if (order == null)
             {
-                //TODO: throw service error
+                throw new OrderNotFoundException(string.Format(ExceptionMessages.OrderNotFound, orderId));
             }
 
             if (userId != order.KeepFitUserId)
             {
-                //TODO: throw service error 
+                throw new UserNotAuthorizedException(string.Format(ExceptionMessages.NotAuthorized, userId));
             }
 
             var orderViewModel = this.mapper.Map<TViewModel>(order);
@@ -278,7 +269,7 @@
 
             if (order == null)
             {
-                //TODO: throw service error
+                throw new OrderNotFoundException(string.Format(ExceptionMessages.OrderNotFound, orderId));
             }
 
             var orderViewModel = this.mapper.Map<TViewModel>(order);
@@ -296,7 +287,7 @@
 
             if (order == null || !isValidOrderStatus)
             {
-                //TODO: throw service error
+                throw new OrderNotFoundException(string.Format(ExceptionMessages.OrderNotFound, orderId));
             }
 
             if (OrderStatus.Assembling.ToString() == currentStatus)
@@ -314,13 +305,13 @@
         private void CalculateDeliveryDate(Order order)
         {
             var deliveryType = order.DeliveryType;
-            var hours = 0;
+            int hours = default;
             if (deliveryType == DeliveryType.Express)
-                hours = ExpressDeliveryHours;
+                hours = ServicesConstants.ExpressDeliveryHours;
             else if (deliveryType == DeliveryType.NextDay)
-                hours = NextDayDeliveryHours;
+                hours = ServicesConstants.NextDayDeliveryHours;
             else if (deliveryType == DeliveryType.Standart)
-                hours = StandartDeliveryHours;
+                hours = ServicesConstants.StandartDeliveryHours;
 
             order.DeliveryDate = order.OrderDate.Value.AddHours(hours);
         }
@@ -328,7 +319,7 @@
         private void CalculateDeliveryPrice(Order order, decimal basketPriceWithoutDelivery)
         {
             var deliveryType = order.DeliveryType;
-            var price = 0m;
+            decimal price = default;
 
             if (this.IsFreeDelivery(deliveryType, basketPriceWithoutDelivery))
             {
@@ -337,20 +328,20 @@
             }
 
             if (deliveryType == DeliveryType.Express)
-                price = ExpressDeliveryPrice;
+                price = ServicesConstants.ExpressDeliveryPrice;
             else if (deliveryType == DeliveryType.NextDay)
-                price = NextDayDeliveryPrice;
+                price = ServicesConstants.NextDayDeliveryPrice;
             else if (deliveryType == DeliveryType.Standart)
-                price = StandartDeliveryPrice;
+                price = ServicesConstants.StandartDeliveryPrice;
 
             order.DeliveryPrice = price;
         }
 
         private bool IsFreeDelivery(DeliveryType deliveryType, decimal basketPriceWithoutDelivery)
         {
-            if ((basketPriceWithoutDelivery >= MinimumBasketValueForNextDayDelivery &&
+            if ((basketPriceWithoutDelivery >= ServicesConstants.MinimumBasketValueForNextDayDelivery &&
               deliveryType != DeliveryType.Express) ||
-              (basketPriceWithoutDelivery >= MinimumBasketValueForStandartDeliery &&
+              (basketPriceWithoutDelivery >= ServicesConstants.MinimumBasketValueForStandartDeliery &&
               deliveryType == DeliveryType.Standart))
             {
                 return true;
@@ -365,7 +356,7 @@
 
             if (userId == null)
             {
-                //TODO: throw service error
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
             }
 
             var userWithProperties = await this.userManager

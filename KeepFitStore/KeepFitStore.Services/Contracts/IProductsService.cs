@@ -32,7 +32,5 @@
         Task<int> EditProductAsync<TDestination, TSourceType>(TSourceType model, IFormFile image, int productId)
             where TSourceType : class
             where TDestination : Product; 
-
-        void ValidateProductType(Type enumType, string type);
     }
 }

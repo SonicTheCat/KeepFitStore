@@ -6,14 +6,10 @@
 
     using KeepFitStore.Data;
     using KeepFitStore.Services.Contracts;
-    
+    using KeepFitStore.Services.Common;
+
     public class PaymentService : IPaymentService
     {
-        private const string DefaultCurrency = "gbp";
-        private const string PaymentDescription = "Paying for supliments in keep fit store";
-        private const string SucceededPayment = "succeeded";
-        private const int DefaultStripeCents = 100;
-
         private readonly KeepFitDbContext context;
 
         public PaymentService(KeepFitDbContext context)
@@ -34,16 +30,16 @@
 
             var charge = chargesService.Create(new ChargeCreateOptions()
             {
-                Amount = (long)(amount * DefaultStripeCents),
-                Description = PaymentDescription,
-                Currency = DefaultCurrency,
+                Amount = (long)(amount * ServicesConstants.PaymentDefaultStripeCents),
+                Description = ServicesConstants.PaymentDescription,
+                Currency = ServicesConstants.PaymentDefaultCurrency,
                 CustomerId = customer.Id,
                 ReceiptEmail = email
             });
 
-            if (charge.Status == SucceededPayment)
+            if (charge.Status == ServicesConstants.SucceededPayment)
             {
-                //TODO: do something with balanceTransactionId
+                //TODO: do something with balanceTransactionId - ex: keep it database
                 string balanceTransactionId = charge.BalanceTransactionId;
                 return true; 
             }

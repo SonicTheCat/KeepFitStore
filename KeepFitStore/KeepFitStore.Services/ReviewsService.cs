@@ -9,6 +9,8 @@
     using KeepFitStore.Models.InputModels.Reviews;
     using KeepFitStore.Models.ViewModels.Products;
     using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
 
     public class ReviewsService : IReviewsService
     {
@@ -29,7 +31,7 @@
 
             if (product == null)
             {
-                //TODO: throw service error
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, model.ProductId));
             }
 
             var review = this.mapper.Map<Review>(model);

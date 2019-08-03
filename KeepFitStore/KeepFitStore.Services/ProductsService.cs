@@ -1,6 +1,5 @@
 ﻿namespace KeepFitStore.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -15,6 +14,8 @@
     using KeepFitStore.Data;
     using KeepFitStore.Domain.Products;
     using KeepFitStore.Services.PhotoKeeper;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
 
     public class ProductsService : IProductsService
     {
@@ -34,11 +35,6 @@
             where TEntityType : Product
         {
             var product = this.mapper.Map<TEntityType>(sourceType);
-
-            if (product == null)
-            {
-                return;
-            }
 
             product.ImageUrl = this.cloudinary.UploadImage(image);
 
@@ -111,6 +107,11 @@
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
+            if (product == null)
+            {
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, id));
+            }
+
             var viewModel = this.mapper.Map<TViewModel>(product);
             return viewModel;
         }
@@ -121,7 +122,7 @@
 
             if (product == null)
             {
-                //TODO: throw service error 
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, id));
             }
 
             this.context.Remove(product);
@@ -139,7 +140,7 @@
 
             if (product == null)
             {
-                //TODO: throw service error
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, id));
             }
 
             var model = this.mapper.Map<TDestination>(product);
@@ -156,7 +157,7 @@
         {
             if (!this.context.Products.Any(e => e.Id == productId))
             {
-                //TODO: throw service error
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, productId));
             }
 
             string imageUrl = this.context
@@ -179,16 +180,6 @@
             var countOfEditedRows = await this.context.SaveChangesAsync();
 
             return countOfEditedRows;
-        }
-
-        public void ValidateProductType(Type enumType, string wantedType)
-        {
-            var isValidType = Enum.TryParse(enumType, wantedType, true, out _);
-
-            if (!isValidType)
-            {
-                //TODO: throw service error: Invalid product type
-            }
         }
     }
 }

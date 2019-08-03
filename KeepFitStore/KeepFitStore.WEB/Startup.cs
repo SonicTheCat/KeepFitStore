@@ -29,6 +29,7 @@
     using Microsoft.AspNetCore.Rewrite;
     using Stripe;
     using KeepFitStore.Services.PhotoKeeper;
+    using KeepFitStore.WEB.Filters;
 
     public class Startup
     {
@@ -130,6 +131,8 @@
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+              //  options.Filters.Add(new KeepFitExceptionFilter(true));
+
                 //Set default message for [Required] attribute
                 options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
                     (_) => "The field is required"); 

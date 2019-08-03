@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using System.Linq;
+    using System;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -11,23 +12,29 @@
     using KeepFitStore.Data;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Domain.Products;
+    using KeepFitStore.Services.CustomExceptions.Messsages; 
 
     public class AminosService : IAminosService
     {
         private readonly KeepFitDbContext context;
-        private readonly IProductsService productsService;
         private readonly IMapper mapper;
 
-        public AminosService(KeepFitDbContext context,IProductsService productsService, IMapper mapper)
+        public AminosService(KeepFitDbContext context, IMapper mapper)
         {
             this.context = context;
-            this.productsService = productsService;
             this.mapper = mapper;
         }
 
         public async Task<IEnumerable<TViewModel>> GetAllByTypeAsync<TViewModel>(string type)
         {
-            this.productsService.ValidateProductType(typeof(AminoAcidType), type);
+            var isValidType = Enum.TryParse(typeof(AminoAcidType), type, true, out _);
+
+            if (!isValidType)
+            {
+                throw new InvalidProductTypeException(string.Format(ExceptionMessages.InvalidProductType, type, nameof(AminoAcid)));
+            }
 
             var aminos = await this.context
               .Aminos
@@ -50,7 +57,7 @@
 
             if (amino == null)
             {
-               //TODO: throw service error 
+                throw new ProductNotFoundException(string.Format(ExceptionMessages.InvalidAminoId, id));
             }
 
             var viewModel = this.mapper.Map<TViewModel>(amino);
