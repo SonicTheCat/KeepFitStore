@@ -6,8 +6,8 @@
     using KeepFitStore.WEB.Controllers;
     using KeepFitStore.WEB.Common;
 
-    [Area(GlobalConstants.AdministratorRoleName)]
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Area(WebConstants.AdministratorRoleName)]
+    [Authorize(Roles = WebConstants.AdministratorRoleName)]
     public class AdministratorController : BaseController
     {
     }

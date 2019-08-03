@@ -5,7 +5,7 @@
     using KeepFitStore.WEB.Common;
     using KeepFitStore.WEB.Controllers;
 
-    [Area(GlobalConstants.ProductsArea)]
+    [Area(WebConstants.ProductsArea)]
     public class ProductsController : BaseController
     {
       

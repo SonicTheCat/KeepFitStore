@@ -27,7 +27,11 @@
 
         public async Task<bool> AddAsync(int productId, string username)
         {
-            var user = await this.GetUserAsync(username);
+            var user = await this.context
+                .Users
+                .Include(x => x.FavoriteProducts)
+                .ThenInclude(x => x.Product)
+                .SingleOrDefaultAsync(x => x.UserName == username);
 
             if (user == null)
             {
@@ -89,16 +93,6 @@
             await this.context.SaveChangesAsync();
 
             return true;
-        }
-
-        //TODO remove this method
-        private async Task<KeepFitUser> GetUserAsync(string username)
-        {
-            return await this.context
-                .Users
-                .Include(x => x.FavoriteProducts)
-                .ThenInclude(x => x.Product)
-                .SingleOrDefaultAsync(x => x.UserName == username);
         }
     }
 }

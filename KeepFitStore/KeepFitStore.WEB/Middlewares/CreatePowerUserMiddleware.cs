@@ -20,19 +20,19 @@
 
         public async Task InvokeAsync(HttpContext context, IConfiguration configuration, UserManager<KeepFitUser> userManager)
         {
-            var user = await userManager.FindByEmailAsync(configuration.GetSection(GlobalConstants.UserSettingsString)[GlobalConstants.UserEmailString]);
+            var user = await userManager.FindByEmailAsync(configuration.GetSection(WebConstants.UserSettingsString)[WebConstants.UserEmailString]);
 
             if (user == null)
             {
                 var powerUser = new KeepFitUser
                 {
-                    UserName = configuration.GetSection(GlobalConstants.UserSettingsString)[GlobalConstants.UsernameString],
-                    Email = configuration.GetSection(GlobalConstants.UserSettingsString)[GlobalConstants.UserEmailString],
-                    FullName = configuration.GetSection(GlobalConstants.UserSettingsString)[GlobalConstants.FullNameString],
+                    UserName = configuration.GetSection(WebConstants.UserSettingsString)[WebConstants.UsernameString],
+                    Email = configuration.GetSection(WebConstants.UserSettingsString)[WebConstants.UserEmailString],
+                    FullName = configuration.GetSection(WebConstants.UserSettingsString)[WebConstants.FullNameString],
                     Basket = new Basket()
                 };
 
-                string userPassword = configuration.GetSection(GlobalConstants.UserSettingsString)[GlobalConstants.UserPasswordString];
+                string userPassword = configuration.GetSection(WebConstants.UserSettingsString)[WebConstants.UserPasswordString];
 
                 powerUser.EmailConfirmed = true;
 
@@ -40,7 +40,7 @@
                 if (createPowerUser.Succeeded)
                 {
                     //here we tie the new user to the "Administrator" role 
-                    await userManager.AddToRoleAsync(powerUser, GlobalConstants.AdministratorRoleName);
+                    await userManager.AddToRoleAsync(powerUser, WebConstants.AdministratorRoleName);
                 }
             }
 

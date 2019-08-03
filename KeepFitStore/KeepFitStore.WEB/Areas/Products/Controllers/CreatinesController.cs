@@ -37,14 +37,14 @@
             return this.View(creatines);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         [ValidateModelStateFilter(nameof(Create))]
         public async Task<IActionResult> Create(CreateCreatineProductInputModel model)
         {
@@ -53,7 +53,7 @@
             return this.Redirect(WebConstants.HomePagePath);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             var protein = await this.productsService.FindProductForEditAsync<EditCreatineProductInputModel>(id);
@@ -61,7 +61,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(EditCreatineProductInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
@@ -81,12 +81,6 @@
         public async Task<IActionResult> Details(int id)
         {
             var creatine = await this.creatinesService.GetByIdAsync<DetailsCreatineViewModel>(id);
-
-            //TODO: Write CustomException in services, they do not have to return null!
-            if (creatine == null)
-            {
-                return this.NotFound();
-            }
 
             return this.View(creatine);
         }

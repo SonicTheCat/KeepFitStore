@@ -30,7 +30,7 @@
         <hr class="border-primary w-100" />
         <div class="row pr-3">
             <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-sm-10">
-                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                @if (this.User.IsInRole(WebConstants.AdministratorRoleName))
                 {
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a asp-area="Products" asp-controller="@(product.ProductType.ToString() + @plural)" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-secondary">Edit</a>

@@ -38,14 +38,14 @@
 
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         [ValidateModelStateFilter(nameof(Create))]
         //TODO:Refacotr ValidaModelStateFilter
         public async Task<IActionResult> Create(CreateProteinProductInputModel model)
@@ -55,7 +55,7 @@
             return this.Redirect(WebConstants.HomePagePath);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             var protein = await this.productsService.FindProductForEditAsync<EditProteinProductInputModel>(id);
@@ -63,7 +63,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(EditProteinProductInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
@@ -83,12 +83,6 @@
         public async Task<IActionResult> Details(int id)
         {
             var protein = await this.proteinsService.GetByIdAsync<DetailsProteinViewModel>(id);
-
-            //TODO: Write CustomException in services, they do not have to return null!
-            if (protein == null)
-            {
-                return this.NotFound();
-            }
 
             return this.View(protein);
         }

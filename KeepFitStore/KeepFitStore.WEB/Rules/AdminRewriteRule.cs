@@ -18,7 +18,7 @@
 
         public void ApplyRule(RewriteContext context)
         {
-            var isInRole = context.HttpContext.User.IsInRole(GlobalConstants.AdministratorRoleName);
+            var isInRole = context.HttpContext.User.IsInRole(WebConstants.AdministratorRoleName);
 
             if (isInRole)
             {

@@ -12,7 +12,6 @@
     using KeepFitStore.Models.InputModels.Products.Aminos;
     using KeepFitStore.Models.ViewModels.Products.Aminos;
     using KeepFitStore.Models.ViewModels.Products;
-    using KeepFitStore.Services.CustomExceptions;
 
     public class AminosController : ProductsController
     {
@@ -34,25 +33,18 @@
 
             this.ViewData[WebConstants.AminoType] = type;
 
-            try
-            {
-                var aminos = await this.aminosService.GetAllByTypeAsync<ProductViewModel>(type);
-                return this.View(aminos);
-            }
-            catch (ServiceException)
-            {
-                return this.NotFound(); 
-            }  
+            var aminos = await this.aminosService.GetAllByTypeAsync<ProductViewModel>(type);
+            return this.View(aminos);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         [ValidateModelStateFilter(nameof(Create))]
         public async Task<IActionResult> Create(CreateAminoAcidProducInputModel model)
         {
@@ -61,7 +53,7 @@
             return this.Redirect(WebConstants.HomePagePath);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             var protein = await this.productsService.FindProductForEditAsync<EditAminoProductInputModel>(id);
@@ -69,7 +61,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(EditAminoProductInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
@@ -89,6 +81,7 @@
         public async Task<IActionResult> Details(int id)
         {
             var amino = await this.aminosService.GetByIdAsync<DetailsAminoViewModel>(id);
+
             return this.View(amino);
         }
     }

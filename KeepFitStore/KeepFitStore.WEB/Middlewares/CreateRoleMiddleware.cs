@@ -18,8 +18,8 @@
 
         public async Task InvokeAsync(HttpContext context, RoleManager<IdentityRole> roleManager)
         {
-            SeedRoles(roleManager, GlobalConstants.AdministratorRoleName).Wait();
-            SeedRoles(roleManager, GlobalConstants.UserRoleName).Wait();
+            SeedRoles(roleManager, WebConstants.AdministratorRoleName).Wait();
+            SeedRoles(roleManager, WebConstants.UserRoleName).Wait();
 
             await this.next(context);
         }

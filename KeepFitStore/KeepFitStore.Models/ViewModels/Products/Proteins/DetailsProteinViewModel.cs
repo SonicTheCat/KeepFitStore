@@ -24,9 +24,6 @@
 
         public ProductType ProductType { get; set; }
 
-        //TODO: implement this line
-       // public ICollection<ProductOrder> Orders { get; set; }
-
         public bool IsSuatableForVegans { get; set; }
 
         public string Directions { get; set; }
