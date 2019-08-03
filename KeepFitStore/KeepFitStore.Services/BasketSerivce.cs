@@ -33,15 +33,14 @@
             this.mapper = mapper;
         }
 
-        public async Task AddProductToBasketAsync(int productId, ClaimsPrincipal principal, int? quntity = null)
+        public async Task AddProductToBasketAsync(int productId, string username, int? quntity = null)
         {
             var product = await this.productsService.GetProductByIdAsync<ProductViewModel>(productId);
-            var user = await this.userManager.GetUserAsync(principal);
+            var user = await this.context.Users.SingleOrDefaultAsync(x => x.UserName == username); 
            
             if (user == null)
             {
-                throw new UserNotFoundException(string.Format(
-                    ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, username));
             }
 
             if (product == null)
@@ -93,17 +92,17 @@
             return viewModel;
         }
 
-        public async Task<IEnumerable<TViewModel>> GetBasketContentAsync<TViewModel>(ClaimsPrincipal principal)
+        public async Task<IEnumerable<TViewModel>> GetBasketContentAsync<TViewModel>(string username)
         {
-            var basketItems = await this.GetItemsAsync(principal);
+            var basketItems = await this.GetItemsAsync(username);
 
             var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(basketItems);
             return viewModel;
         }
 
-        public async Task<decimal> GetBasketTotalPriceAsync(ClaimsPrincipal principal)
+        public async Task<decimal> GetBasketTotalPriceAsync(string username)
         {
-            var basketItems = await this.GetItemsAsync(principal);
+            var basketItems = await this.GetItemsAsync(username);
             var total = basketItems.Sum(x => x.Quantity * x.Product.Price);
             return total;
         }
@@ -139,12 +138,13 @@
             await this.context.SaveChangesAsync();
         }
 
-        private async Task<List<BasketItem>> GetItemsAsync(ClaimsPrincipal principal)
+        private async Task<List<BasketItem>> GetItemsAsync(string username)
         {
-            var user = await this.userManager.GetUserAsync(principal);
+            var user = await this.context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+
             if (user == null)
             {
-                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, username));
             }
 
             var basketId = user.BasketId;

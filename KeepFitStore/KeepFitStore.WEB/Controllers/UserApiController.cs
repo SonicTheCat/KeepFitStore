@@ -8,14 +8,18 @@
     using KeepFitStore.Models.InputModels.User;
     using KeepFitStore.Models.ViewModels.User;
     using KeepFitStore.Services.Contracts;
-    
+    using Microsoft.AspNetCore.Identity;
+    using KeepFitStore.Domain;
+
     public class UserApiController : ApiController
     {
         private readonly IUsersService usersService;
+        private readonly UserManager<KeepFitUser> userManger;
 
-        public UserApiController(IUsersService usersService)
+        public UserApiController(IUsersService usersService, UserManager<KeepFitUser> userManger)
         {
             this.usersService = usersService;
+            this.userManger = userManger;
         }
 
         [HttpPost]
@@ -23,7 +27,8 @@
         [Authorize]
         public async Task<ActionResult<UpdateUserViewModel>> Update(UpdateUserInputModel model)
         {
-            var obj = await this.usersService.UpdateUserOrderInfoAsync<UpdateUserViewModel>(this.User, model);
+            var userId = this.userManger.GetUserId(this.User);
+            var obj = await this.usersService.UpdateUserOrderInfoAsync<UpdateUserViewModel>(userId, model);
 
             return obj;
         }

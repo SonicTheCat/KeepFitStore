@@ -35,9 +35,9 @@
             this.mapper = mapper;
         }
 
-        public async Task<CreateOrderInputModel> AddBasketContentToOrderByUserAsync(ClaimsPrincipal principal)
+        public async Task<CreateOrderInputModel> AddBasketContentToOrderByUserAsync(string username)
         {
-            var user = await this.GetUserWithAllPropertiesAsync(principal);
+            var user = await this.GetUserWithAllPropertiesAsync(username);
 
             var order = new CreateOrderInputModel
             {
@@ -69,9 +69,9 @@
             return order;
         }
 
-        public async Task<int> StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model)
+        public async Task<int> StartCompletingUserOderAsync(string username, CreateOrderInputModel model)
         {
-            var user = await this.GetUserWithAllPropertiesAsync(principal);
+            var user = await this.GetUserWithAllPropertiesAsync(username);
             var order = this.mapper.Map<Order>(model);
 
             order.KeepFitUser = user;
@@ -83,7 +83,7 @@
                 throw new ServiceException(string.Format(ExceptionMessages.InvalidBasketContent, user.Id));
             }
 
-            var basketPriceWithoutDelivery = await this.basketService.GetBasketTotalPriceAsync(principal);
+            var basketPriceWithoutDelivery = await this.basketService.GetBasketTotalPriceAsync(username);
             this.CalculateDeliveryPrice(order, basketPriceWithoutDelivery);
             order.TotalPrice = basketPriceWithoutDelivery + order.DeliveryPrice;
             this.CalculateDeliveryDate(order);
@@ -94,7 +94,7 @@
             return order.Id;
         }
 
-        public async Task CompleteOrderAsync(ClaimsPrincipal principal, int orderId)
+        public async Task CompleteOrderAsync(string username, int orderId)
         {
             var order = await this.context
                  .Orders
@@ -110,7 +110,7 @@
                 return;
             }
 
-            var user = await this.GetUserWithAllPropertiesAsync(principal);
+            var user = await this.GetUserWithAllPropertiesAsync(username);
             await this.basketService.ClearBasketAsync(user.BasketId);
             order.IsCompleted = true;
             order.Status = OrderStatus.Assembling;
@@ -154,20 +154,15 @@
             return viewModel;
         }
 
-        public async Task<IEnumerable<TViewModel>> GetAllOrdersForUserAsync<TViewModel>(ClaimsPrincipal principal)
+        public async Task<IEnumerable<TViewModel>> GetAllOrdersForUserAsync<TViewModel>(string username)
         {
-            var userId = this.userManager.GetUserId(principal);
-
-            if (userId == null)
-            {
-                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
-            }
+            ThrowIfUserIsNull(username);
 
             var orders = await this.context
                 .Orders
                 .Include(x => x.Products)
                 .ThenInclude(x => x.Product)
-                .Where(x => x.KeepFitUserId == userId)
+                .Where(x => x.KeepFitUser.UserName == username)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -176,15 +171,10 @@
         }
 
         public async Task<IEnumerable<TViewModel>> GetAllOrdersForUserSortedAsync<TViewModel>(
-            ClaimsPrincipal principal,
+            string username,
             string sortBy)
         {
-            var userId = this.userManager.GetUserId(principal);
-
-            if (userId == null)
-            {
-                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
-            }
+            ThrowIfUserIsNull(username);
 
             sortBy = sortBy.Replace(ServicesConstants.DescendingOldValue, ServicesConstants.DescendingNewValue);
 
@@ -192,7 +182,7 @@
                .Orders
                .Include(x => x.Products)
                .ThenInclude(x => x.Product)
-               .Where(x => x.KeepFitUserId == userId)
+               .Where(x => x.KeepFitUser.UserName == username)
                .OrderBy(sortBy)
                .AsNoTracking()
                .ToListAsync();
@@ -222,14 +212,9 @@
             return ordersViewModel;
         }
 
-        public async Task<TViewModel> GetOrderDetailsForUserAsync<TViewModel>(ClaimsPrincipal principal, int orderId)
+        public async Task<TViewModel> GetOrderDetailsForUserAsync<TViewModel>(string username, int orderId)
         {
-            var userId = this.userManager.GetUserId(principal);
-
-            if (userId == null)
-            {
-                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
-            }
+            ThrowIfUserIsNull(username);
 
             var order = await this.context
                 .Orders
@@ -246,9 +231,9 @@
                 throw new OrderNotFoundException(string.Format(ExceptionMessages.OrderNotFound, orderId));
             }
 
-            if (userId != order.KeepFitUserId)
+            if (username != order.KeepFitUser.UserName)
             {
-                throw new UserNotAuthorizedException(string.Format(ExceptionMessages.NotAuthorized, userId));
+                throw new UserNotAuthorizedException(string.Format(ExceptionMessages.NotAuthorized, username));
             }
 
             var orderViewModel = this.mapper.Map<TViewModel>(order);
@@ -350,25 +335,31 @@
             return false;
         }
 
-        private async Task<KeepFitUser> GetUserWithAllPropertiesAsync(ClaimsPrincipal principal)
+        private async Task<KeepFitUser> GetUserWithAllPropertiesAsync(string username)
         {
-            var userId = this.userManager.GetUserId(principal);
-
-            if (userId == null)
-            {
-                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, principal.Identity.Name));
-            }
-
-            var userWithProperties = await this.userManager
+            var user = await this.userManager
                 .Users
                 .Include(x => x.Basket)
                 .ThenInclude(x => x.BasketItems)
                 .ThenInclude(x => x.Product)
                 .Include(x => x.Address)
                 .ThenInclude(x => x.City)
-                .SingleOrDefaultAsync(x => x.Id == userId);
+                .SingleOrDefaultAsync(x => x.UserName == username);
 
-            return userWithProperties;
+            if (user == null)
+            {
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, username));
+            }
+
+            return user;
+        }
+
+        private void ThrowIfUserIsNull(string username)
+        {
+            if (!this.context.Users.Any(x => x.UserName == username))
+            {
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserDoesNotExist, username));
+            }
         }
     }
 }

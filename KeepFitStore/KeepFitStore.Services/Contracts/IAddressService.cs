@@ -9,6 +9,6 @@
     {
         Task<TViewModel> AddAddressToUserAsync<TViewModel>(CreateAddressInputModel model, ClaimsPrincipal principal);
 
-        Task<TViewModel> GetAddressFromUser<TViewModel>(ClaimsPrincipal principal);
+        Task<TViewModel> GetAddressFromUser<TViewModel>(string id);
     }
 }

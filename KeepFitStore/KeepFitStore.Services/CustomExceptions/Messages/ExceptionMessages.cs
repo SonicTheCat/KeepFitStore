@@ -24,6 +24,6 @@
 
         internal const string InvalidBasketContent = "User with id = {0} has no products in basket";
 
-        internal const string NotAuthorized = "User with id = {0} is not authorized to see this content";
+        internal const string NotAuthorized = "User with username = {0} is not authorized to see this content";
     }
 }

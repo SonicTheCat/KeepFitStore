@@ -28,7 +28,9 @@
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var viewModel = await this.ordersService.GetAllOrdersForUserAsync<IndexOrdersViewModel>(this.User);
+            var viewModel = await this
+                .ordersService
+                .GetAllOrdersForUserAsync<IndexOrdersViewModel>(this.User.Identity.Name);
 
             return this.View(viewModel);
         }
@@ -36,13 +38,7 @@
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            var order = await this.ordersService.AddBasketContentToOrderByUserAsync(this.User);
-
-            //TODO: catch service error when implemented! dont compare order to null
-            if (order == null)
-            {
-                return this.Redirect(WebConstants.HomePagePath);
-            }
+            var order = await this.ordersService.AddBasketContentToOrderByUserAsync(this.User.Identity.Name);
 
             return this.View(order);
         }
@@ -52,7 +48,7 @@
         [ValidateModelStateFilter(nameof(Create))]
         public async Task<IActionResult> Create(CreateOrderInputModel inputModel)
         {
-            var orderId = await this.ordersService.StartCompletingUserOderAsync(this.User, inputModel);
+            var orderId = await this.ordersService.StartCompletingUserOderAsync(this.User.Identity.Name, inputModel);
 
             return this.RedirectToAction(nameof(Complete), new { orderId });
         }
@@ -75,7 +71,7 @@
 
             if (order.PaymentType != PaymentType.Card)
             {
-                await this.ordersService.CompleteOrderAsync(this.User, order.Id); 
+                await this.ordersService.CompleteOrderAsync(this.User.Identity.Name, order.Id); 
             }
 
             return this.View(order);
@@ -84,7 +80,9 @@
         [Authorize]
         public async Task<IActionResult> AllSorted(string sortBy = WebConstants.DefaultSorting)
         {
-            var viewModel = await this.ordersService.GetAllOrdersForUserSortedAsync<IndexOrdersViewModel>(this.User, sortBy);
+            var viewModel = await this
+                .ordersService
+                .GetAllOrdersForUserSortedAsync<IndexOrdersViewModel>(this.User.Identity.Name, sortBy);
 
             return this.PartialView("~/Views/Partials/_MyOrdersPartial.cshtml", viewModel);
         }
@@ -93,7 +91,7 @@
         public async Task<IActionResult> Details(int orderId)
         {
             var viewModel = await this.ordersService
-                .GetOrderDetailsForUserAsync<DetailsOrdersViewModel>(this.User, orderId);
+                .GetOrderDetailsForUserAsync<DetailsOrdersViewModel>(this.User.Identity.Name, orderId);
 
             return this.PartialView("~/Views/Partials/_OrderDetailsPartialView.cshtml", viewModel);
         }

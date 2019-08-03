@@ -68,10 +68,8 @@
             return this.mapper.Map<TViewModel>(address);
         }
 
-        public async Task<TViewModel> GetAddressFromUser<TViewModel>(ClaimsPrincipal principal)
+        public async Task<TViewModel> GetAddressFromUser<TViewModel>(string id)
         {
-            var userFromDb = await this.userManager.GetUserAsync(principal);
-
             KeepFitUser user = null;
 
             try
@@ -80,11 +78,11 @@
                 .Users
                 .Include(x => x.Address)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == userFromDb.Id);
+                .SingleOrDefaultAsync(x => x.Id == id);
             }
             catch (InvalidOperationException ex)
             {
-                throw new ServiceException(string.Format(ExceptionMessages.UserLookupFailed, userFromDb.Id), ex); 
+                throw new ServiceException(string.Format(ExceptionMessages.UserLookupFailed, id), ex); 
             }
 
             var address = this.mapper.Map<TViewModel>(user.Address);

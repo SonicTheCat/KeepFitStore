@@ -106,7 +106,7 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
                         foreach (var item in basketSession)
                         {
                             await this.basketService
-                                .AddProductToBasketAsync(item.Product.Id, principal, item.Quantity);
+                                .AddProductToBasketAsync(item.Product.Id, user.UserName, item.Quantity);
                         }
                     }
 

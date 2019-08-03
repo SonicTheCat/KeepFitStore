@@ -31,7 +31,7 @@
 
             if (isPaymentCompleted)
             {
-                await this.ordersService.CompleteOrderAsync(this.User, model.OrderId); 
+                await this.ordersService.CompleteOrderAsync(this.User.Identity.Name, model.OrderId); 
             }
 
             return this.Redirect(WebConstants.OrdersIndexPath); 

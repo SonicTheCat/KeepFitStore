@@ -34,7 +34,7 @@
             this.ViewData[WebConstants.ProteinType] = type;
             var proteins = await this.proteinsService.GetAllByTypeAsync<ProductViewModel>(type);
 
-            return this.View(proteins); 
+            return this.View(proteins);
 
         }
 
@@ -46,8 +46,7 @@
 
         [HttpPost]
         [Authorize(Roles = WebConstants.AdministratorRoleName)]
-        [ValidateModelStateFilter(nameof(Create))]
-        //TODO:Refacotr ValidaModelStateFilter
+        [ValidateModelStateFilter(nameof(Create))] //TODO:Refacotr ValidaModelStateFilter
         public async Task<IActionResult> Create(CreateProteinProductInputModel model)
         {
             await this.productsService.CreateProductAsync<Protein, CreateProteinProductInputModel>(model, model.Image);
@@ -71,11 +70,11 @@
                 return View(inputModel);
             }
 
-            var protein = await this.productsService
-                .EditProductAsync<Protein ,EditProteinProductInputModel>(
-                inputModel, 
-                inputModel.Image, 
-                inputModel.Id);
+            await this.productsService
+               .EditProductAsync<Protein, EditProteinProductInputModel>(
+               inputModel,
+               inputModel.Image,
+               inputModel.Id);
 
             return this.Redirect(WebConstants.AdministrationAllProductsPath);
         }

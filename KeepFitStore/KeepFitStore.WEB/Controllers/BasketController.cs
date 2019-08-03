@@ -33,7 +33,10 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                var basketContent = await this.basketService.GetBasketContentAsync<BasketViewModel>(this.User);
+                var basketContent = await this
+                    .basketService
+                    .GetBasketContentAsync<BasketViewModel>(this.User.Identity.Name);
+
                 return this.View(basketContent);
             }
 
@@ -46,7 +49,7 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                await this.basketService.AddProductToBasketAsync(id, this.User);
+                await this.basketService.AddProductToBasketAsync(id, this.User.Identity.Name);
             }
             else
             {
@@ -78,7 +81,6 @@
 
         public async Task<IActionResult> Edit(EditBasketInputModel model)
         {
-            //TODO: ask what value to return from this method! EditBasketItemViewModel is not very good
             if (this.User.Identity.IsAuthenticated)
             {
                 var obj = await this.basketService.EditBasketItemAsync<EditBasketItemViewModel>(
@@ -93,9 +95,9 @@
                     WebConstants.BasketKey);
 
                 var basketItem = basketSession.FirstOrDefault(x => x.Product.Id == model.ProductId);
-                if (basketItem == null || model.Quantity <= 0)
+                if (basketItem == null || model.Quantity <= BasketItemInSessionDefaultQuantityValue)
                 {
-                    //TODO: throw error 
+                    return this.BadRequest(); 
                 }
 
                 basketItem.Quantity = model.Quantity;
@@ -112,7 +114,7 @@
                 var isDeleted = await this.basketService.DeleteBasketItemAsync(model.BasketId, model.ProductId);
                 if (!isDeleted)
                 {
-                    //TODO: throw error
+                    return this.BadRequest(); 
                 }
             }
             else

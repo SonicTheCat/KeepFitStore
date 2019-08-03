@@ -29,12 +29,7 @@
         public async Task<IActionResult> Add(int productId)
         {
             var username = this.User.Identity.Name;
-            var isAdded = await this.favoriteService.AddAsync(productId, username);
-
-            if (!isAdded)
-            {
-                //TODO: do something
-            }
+            await this.favoriteService.AddAsync(productId, username);
 
             return this.RedirectToAction(nameof(Index)); 
         }
@@ -42,12 +37,7 @@
         public async Task<IActionResult> Remove(int productId)
         {
             var username = this.User.Identity.Name;
-            var isRemoved = await this.favoriteService.RemoveAsync(productId, username);
-
-            if (!isRemoved)
-            {
-                //TODO: do something
-            }
+            await this.favoriteService.RemoveAsync(productId, username);
 
             return this.RedirectToAction(nameof(Index));
         }

@@ -8,23 +8,23 @@
 
     public interface IOrdersService
     {
-        Task<CreateOrderInputModel> AddBasketContentToOrderByUserAsync(ClaimsPrincipal principal);
+        Task<CreateOrderInputModel> AddBasketContentToOrderByUserAsync(string username);
 
-        Task<int> StartCompletingUserOderAsync(ClaimsPrincipal principal, CreateOrderInputModel model);
+        Task<int> StartCompletingUserOderAsync(string username, CreateOrderInputModel model);
 
-        Task CompleteOrderAsync(ClaimsPrincipal principal, int orderId);
+        Task CompleteOrderAsync(string username, int orderId);
 
         Task<TViewModel> GetOrderByIdAsync<TViewModel>(int orderId); 
 
         Task<IEnumerable<TViewModel>> GetAllOrdersAsync<TViewModel>();
 
-        Task<IEnumerable<TViewModel>> GetAllOrdersForUserAsync<TViewModel>(ClaimsPrincipal principal);
+        Task<IEnumerable<TViewModel>> GetAllOrdersForUserAsync<TViewModel>(string username);
 
-        Task<IEnumerable<TViewModel>> GetAllOrdersForUserSortedAsync<TViewModel>(ClaimsPrincipal principal, string sortBy);
+        Task<IEnumerable<TViewModel>> GetAllOrdersForUserSortedAsync<TViewModel>(string username, string sortBy);
 
         Task<IEnumerable<TViewModel>> AppendFiltersAndSortOrdersAsync<TViewModel>(string[] filters, string sortBy);
 
-        Task<TViewModel> GetOrderDetailsForUserAsync<TViewModel>(ClaimsPrincipal principal, int orderId);
+        Task<TViewModel> GetOrderDetailsForUserAsync<TViewModel>(string username, int orderId);
 
         Task<TViewModel> GetOrderDetailsAsync<TViewModel>(int orderId);
 
