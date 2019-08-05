@@ -3,7 +3,7 @@ using KeepFitStore.Data;
 using KeepFitStore.Domain.Enums;
 using KeepFitStore.Domain.Products;
 using KeepFitStore.Models.ViewModels.Products;
-using KeepFitStore.Models.ViewModels.Products.Proteins;
+using KeepFitStore.Models.ViewModels.Products.Creatines;
 using KeepFitStore.Models.ViewModels.Reviews;
 using KeepFitStore.Services.Contracts;
 using KeepFitStore.Services.CustomExceptions;
@@ -18,7 +18,7 @@ using Xunit;
 
 namespace KeepFitStore.Services.Tests
 {
-    public class ProteinServiceTests
+    public class CreatineServiceTests
     {
         private const string Name = "proteinTest";
         private const decimal Price = 1.00m;
@@ -26,31 +26,24 @@ namespace KeepFitStore.Services.Tests
         private const string Directions = "Take One";
         private const string ImageUrl = "url";
 
-        private const double EnergyPerServing = 100;
-        private const double Carbohydrate = 2;
-        private const double Fat = 3;
-        private const double ProteinPerServing = 4;
-        private const double Salt = 5;
-        private const double Fibre = 6;
-
         private const int days = 100;
         private DateTime DateCreated = DateTime.UtcNow.AddDays(-days);
 
         private KeepFitDbContext context;
         private IMapper mapper;
-        private IProteinsService service;
+        private ICreatinesService service;
 
         [Fact]
-        public async Task GetProteinById_ShouldWorkCorrect()
+        public async Task GetCreatineById_ShouldWorkCorrect()
         {
             var startFrom = 1;
             var numberOfRowsToBeSeeded = 100;
-            var wantedId = 99;
+            var wantedId = 10;
 
             this.Initialize();
-            this.SeedProteins(startFrom, numberOfRowsToBeSeeded, ProteinType.Whey);
+            this.SeedCreatines(startFrom, numberOfRowsToBeSeeded, CreatineType.Capsules);
 
-            var expected = new DetailsProteinViewModel()
+            var expected = new DetailsCreatineViewModel()
             {
                 Id = wantedId,
                 Name = Name + wantedId,
@@ -59,24 +52,18 @@ namespace KeepFitStore.Services.Tests
                 Directions = Directions + wantedId,
                 ImageUrl = ImageUrl + wantedId,
                 IsSuatableForVegans = false,
-                ProductType = ProductType.Protein,
-                Type = ProteinType.Whey,
+                ProductType = ProductType.Creatine,
+                Type = CreatineType.Capsules,
                 CreatedOn = DateCreated.AddDays(wantedId),
-                EnergyPerServing = EnergyPerServing + wantedId,
-                Carbohydrate = Carbohydrate + wantedId,
-                Fat = Fat + wantedId,
-                ProteinPerServing = ProteinPerServing + wantedId,
-                Salt = Salt + wantedId,
-                Fibre = Fibre + wantedId,
                 Reviews = new HashSet<ReviewViewModel>()
             };
 
-            var protein = await this.service.GetByIdAsync<DetailsProteinViewModel>(wantedId);
+            var creatine = await this.service.GetByIdAsync<DetailsCreatineViewModel>(wantedId);
 
             var obj1Str = JsonConvert.SerializeObject(expected);
-            var obj2Str = JsonConvert.SerializeObject(protein);
+            var obj2Str = JsonConvert.SerializeObject(creatine);
 
-            Assert.NotNull(protein);
+            Assert.NotNull(creatine);
             Assert.Equal(obj1Str, obj2Str);
         }
 
@@ -85,13 +72,14 @@ namespace KeepFitStore.Services.Tests
         {
             var startFrom = 1;
             var numberOfRowsToBeSeeded = 10;
-            var wantedId = 0;
+            var wantedId = 21;
 
             this.Initialize();
-            this.SeedProteins(startFrom, numberOfRowsToBeSeeded, ProteinType.Whey);
+            this.SeedCreatines(startFrom, numberOfRowsToBeSeeded, CreatineType.Powder);
+            this.SeedCreatines(startFrom + numberOfRowsToBeSeeded, numberOfRowsToBeSeeded * 2, CreatineType.Capsules);
 
             await Assert.ThrowsAsync<ProductNotFoundException>(() => service
-           .GetByIdAsync<DetailsProteinViewModel>(wantedId));
+           .GetByIdAsync<DetailsCreatineViewModel>(wantedId));
         }
 
         [Fact]
@@ -99,22 +87,19 @@ namespace KeepFitStore.Services.Tests
         {
             var startFrom = 1;
             var numberOfRowsToBeSeeded = 3;
-            var wantedType = ProteinType.Diet.ToString();
+            var wantedType = CreatineType.Powder.ToString();
 
             this.Initialize();
-            this.SeedProteins(startFrom, numberOfRowsToBeSeeded, ProteinType.Vegan);
-            this.SeedProteins(startFrom + numberOfRowsToBeSeeded, numberOfRowsToBeSeeded * 3, ProteinType.Diet);
+            this.SeedCreatines(startFrom, numberOfRowsToBeSeeded, CreatineType.Powder);
+            this.SeedCreatines(startFrom + numberOfRowsToBeSeeded, numberOfRowsToBeSeeded * 3, CreatineType.Capsules);
 
-            var proteins = await this.service.GetAllByTypeAsync<ProductViewModel>(wantedType);
+            var creatine = await this.service.GetAllByTypeAsync<ProductViewModel>(wantedType);
 
-            var expectedCount = 6;
-            Assert.Equal(expectedCount, proteins.Count());
+            var expectedCount = 3;
+            Assert.Equal(expectedCount, creatine.Count());
 
-            var id = 4;
-            Assert.Collection(proteins,
-                            item => Assert.Contains(Name + id++, item.Name),
-                            item => Assert.Contains(Name + id++, item.Name),
-                            item => Assert.Contains(Name + id++, item.Name),
+            var id = 1;
+            Assert.Collection(creatine,
                             item => Assert.Contains(Name + id++, item.Name),
                             item => Assert.Contains(Name + id++, item.Name),
                             item => Assert.Contains(Name + id++, item.Name));
@@ -123,7 +108,7 @@ namespace KeepFitStore.Services.Tests
         [Fact]
         public async Task GetAllByValidType_WithNoData_ShouldReturnEmtpy()
         {
-            var wantedType = ProteinType.Vegan.ToString();
+            var wantedType = CreatineType.Capsules.ToString();
 
             this.Initialize();
 
@@ -140,18 +125,18 @@ namespace KeepFitStore.Services.Tests
             var wantedTypeInvalid = "InvalidType";
 
             this.Initialize();
-            this.SeedProteins(startFrom, numberOfRowsToBeSeeded, ProteinType.Casein);
+            this.SeedCreatines(startFrom, numberOfRowsToBeSeeded, CreatineType.Capsules);
 
             await Assert.ThrowsAsync<InvalidProductTypeException>(() => this.service.GetAllByTypeAsync<ProductViewModel>(wantedTypeInvalid));
         }
 
-        private void SeedProteins(int startFrom, int seedCount, ProteinType type)
+        private void SeedCreatines(int startFrom, int seedCount, CreatineType type)
         {
             var list = new List<Product>();
 
             for (int i = startFrom; i <= seedCount; i++)
             {
-                var protein = new Protein()
+                var creatine = new Creatine()
                 {
                     Id = i,
                     Name = Name + i,
@@ -159,19 +144,13 @@ namespace KeepFitStore.Services.Tests
                     Description = Description + i,
                     Directions = Directions + i,
                     ImageUrl = ImageUrl + i,
-                    ProductType = ProductType.Protein,
+                    ProductType = ProductType.Creatine,
                     IsSuatableForVegans = false,
                     Type = type,
                     CreatedOn = DateCreated.AddDays(i),
-                    EnergyPerServing = EnergyPerServing + i,
-                    Carbohydrate = Carbohydrate + i,
-                    Fat = Fat + i,
-                    ProteinPerServing = ProteinPerServing + i,
-                    Salt = Salt + i,
-                    Fibre = Fibre + i
                 };
 
-                list.Add(protein);
+                list.Add(creatine);
             }
 
             this.context.AddRange(list);
@@ -182,7 +161,7 @@ namespace KeepFitStore.Services.Tests
         {
             this.context = KeepFitDbContextInMemoryFactory.Initialize();
             this.mapper = AutoMapperFactory.Initialize();
-            this.service = new ProteinsService(context, mapper);
+            this.service = new CreatinesService(context, mapper);
         }
     }
 }
