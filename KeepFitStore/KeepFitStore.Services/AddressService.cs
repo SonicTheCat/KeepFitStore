@@ -21,22 +21,20 @@
     {
         private readonly KeepFitDbContext context;
         private readonly IMapper mapper;
-        private readonly UserManager<KeepFitUser> userManager;
 
-        public AddressService(KeepFitDbContext context, IMapper mapper, UserManager<KeepFitUser> userManager)
+        public AddressService(KeepFitDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
-            this.userManager = userManager;
         }
 
         public async Task<TViewModel> AddAddressToUserAsync<TViewModel>(
-            CreateAddressInputModel model, 
-            ClaimsPrincipal principal)
+            CreateAddressInputModel model,
+           string username)
         {
             var city = this.context
                 .Cities
-                .SingleOrDefault(x => x.Name == model.CityName && 
+                .SingleOrDefault(x => x.Name == model.CityName &&
                 x.PostCode == model.PostCode);
 
             if (city == null)
@@ -47,22 +45,34 @@
             var address = this.context
                 .Addresses
                 .Include(x => x.City)
+                .Include(x => x.KeepFitUsers)
                 .SingleOrDefault(x =>
                 x.StreetName == model.StreetName &&
                 x.StreetNumber == model.StreetNumber &&
                 x.City.Name == model.CityName &&
                 x.City.PostCode == model.PostCode);
 
-            if (address != null)
+            var thisUserLiveHere = address?
+                .KeepFitUsers
+                .Any(x => x.UserName == username);
+
+            if (address != null && thisUserLiveHere.HasValue)
             {
                 return this.mapper.Map<TViewModel>(address);
             }
 
-            address = this.mapper.Map<Address>(model);
-            address.City = city;
-            this.context.Addresses.Add(address);
-            var user = await this.userManager.GetUserAsync(principal);
-            user.Address = address; 
+            if (address == null)
+            {
+                address = this.mapper.Map<Address>(model);
+                address.City = city;
+                this.context.Addresses.Add(address);
+            }
+            
+            var user = await this.context
+                .Users
+                .SingleOrDefaultAsync(x => x.UserName == username);
+
+            user.Address = address;
             await this.context.SaveChangesAsync();
 
             return this.mapper.Map<TViewModel>(address);
@@ -74,19 +84,25 @@
 
             try
             {
-                user = await this.userManager
+                user = await this.context
                 .Users
                 .Include(x => x.Address)
+                .ThenInclude(x => x.City)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
             }
             catch (InvalidOperationException ex)
             {
-                throw new ServiceException(string.Format(ExceptionMessages.UserLookupFailed, id), ex); 
+                throw new ServiceException(string.Format(ExceptionMessages.UserLookupFailed, id), ex);
+            }
+
+            if (user == null)
+            {
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserLookupFailed, id));
             }
 
             var address = this.mapper.Map<TViewModel>(user.Address);
-            return address; 
+            return address;
         }
     }
 }

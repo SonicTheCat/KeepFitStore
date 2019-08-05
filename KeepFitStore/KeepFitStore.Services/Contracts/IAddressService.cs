@@ -7,7 +7,7 @@
 
     public interface IAddressService
     {
-        Task<TViewModel> AddAddressToUserAsync<TViewModel>(CreateAddressInputModel model, ClaimsPrincipal principal);
+        Task<TViewModel> AddAddressToUserAsync<TViewModel>(CreateAddressInputModel model, string username);
 
         Task<TViewModel> GetAddressFromUser<TViewModel>(string id);
     }

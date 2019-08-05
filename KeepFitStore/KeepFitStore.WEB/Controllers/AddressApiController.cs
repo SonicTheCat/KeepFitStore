@@ -37,7 +37,7 @@
         [Authorize]
         public async Task<ActionResult<CreateAddressViewModel>> Create(CreateAddressInputModel model)
         {
-            var createdObj = await this.addressService.AddAddressToUserAsync<CreateAddressViewModel>(model, this.User);
+            var createdObj = await this.addressService.AddAddressToUserAsync<CreateAddressViewModel>(model, this.User.Identity.Name);
 
             return createdObj;
         }
