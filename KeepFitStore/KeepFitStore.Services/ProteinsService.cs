@@ -33,7 +33,7 @@
 
             if (!isValidType)
             {
-                throw new ServiceException(string.Format(
+                throw new InvalidProductTypeException(string.Format(
                     ExceptionMessages.InvalidProductType, type, nameof(Protein)));
             }
 

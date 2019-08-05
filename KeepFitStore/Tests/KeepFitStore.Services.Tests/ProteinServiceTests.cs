@@ -1,29 +1,26 @@
-﻿namespace KeepFitStore.Services.Tests
+﻿using AutoMapper;
+using KeepFitStore.Data;
+using KeepFitStore.Domain.Enums;
+using KeepFitStore.Domain.Products;
+using KeepFitStore.Models.ViewModels.Products;
+using KeepFitStore.Models.ViewModels.Products.Proteins;
+using KeepFitStore.Models.ViewModels.Reviews;
+using KeepFitStore.Services.Contracts;
+using KeepFitStore.Services.CustomExceptions;
+using KeepFitStore.Services.Tests.Common;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace KeepFitStore.Services.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    using AutoMapper;
-
-    using Newtonsoft.Json;
-
-    using Xunit;
-
-    using KeepFitStore.Data;
-    using KeepFitStore.Domain.Enums;
-    using KeepFitStore.Domain.Products;
-    using KeepFitStore.Models.ViewModels.Products;
-    using KeepFitStore.Models.ViewModels.Products.Aminos;
-    using KeepFitStore.Models.ViewModels.Reviews;
-    using KeepFitStore.Services.Contracts;
-    using KeepFitStore.Services.CustomExceptions;
-    using KeepFitStore.Services.Tests.Common;
-
-    public class AminoServiceTests
+    public class ProteinServiceTests
     {
-        private const string Name = "aminoTest";
+        private const string Name = "proteinTest";
         private const decimal Price = 1.00m;
         private const string Description = "Very good";
         private const string Directions = "Take One";
@@ -34,25 +31,26 @@
         private const double Fat = 3;
         private const double ProteinPerServing = 4;
         private const double Salt = 5;
+        private const double Fibre = 6;
 
         private const int days = 100;
         private DateTime DateCreated = DateTime.UtcNow.AddDays(-days);
 
         private KeepFitDbContext context;
         private IMapper mapper;
-        private IAminosService service;
+        private IProteinsService service;
 
         [Fact]
-        public async Task GetAminoById_ShouldWorkCorrect()
+        public async Task GetProteinById_ShouldWorkCorrect()
         {
             var startFrom = 1;
-            var numberOfAminosToBeSeeded = 10;
-            var wantedId = 1;
+            var numberOfAminosToBeSeeded = 100;
+            var wantedId = 99;
 
             this.Initialize();
-            this.SeedAminos(startFrom, numberOfAminosToBeSeeded, AminoAcidType.BCAA);
+            this.SeedProteins(startFrom, numberOfAminosToBeSeeded, ProteinType.Whey);
 
-            var expected = new DetailsAminoViewModel()
+            var expected = new DetailsProteinViewModel()
             {
                 Id = wantedId,
                 Name = Name + wantedId,
@@ -61,23 +59,24 @@
                 Directions = Directions + wantedId,
                 ImageUrl = ImageUrl + wantedId,
                 IsSuatableForVegans = false,
-                ProductType = ProductType.Amino,
-                Type = AminoAcidType.BCAA,
+                ProductType = ProductType.Protein,
+                Type = ProteinType.Whey,
                 CreatedOn = DateCreated.AddDays(wantedId),
                 EnergyPerServing = EnergyPerServing + wantedId,
                 Carbohydrate = Carbohydrate + wantedId,
                 Fat = Fat + wantedId,
                 ProteinPerServing = ProteinPerServing + wantedId,
                 Salt = Salt + wantedId,
+                Fibre = Fibre + wantedId,
                 Reviews = new HashSet<ReviewViewModel>()
             };
 
-            var amino = await this.service.GetByIdAsync<DetailsAminoViewModel>(wantedId);
+            var protein = await this.service.GetByIdAsync<DetailsProteinViewModel>(wantedId);
 
             var obj1Str = JsonConvert.SerializeObject(expected);
-            var obj2Str = JsonConvert.SerializeObject(amino);
+            var obj2Str = JsonConvert.SerializeObject(protein);
 
-            Assert.NotNull(amino);
+            Assert.NotNull(protein);
             Assert.Equal(obj1Str, obj2Str);
         }
 
@@ -85,14 +84,14 @@
         public async Task GetAminoByInvalidId_ShouldThrow()
         {
             var startFrom = 1;
-            var numberOfAminosToBeSeeded = 1;
-            var wantedId = 10;
+            var numberOfAminosToBeSeeded = 10;
+            var wantedId = 0;
 
             this.Initialize();
-            this.SeedAminos(startFrom, numberOfAminosToBeSeeded, AminoAcidType.BCAA);
+            this.SeedProteins(startFrom, numberOfAminosToBeSeeded, ProteinType.Whey);
 
             await Assert.ThrowsAsync<ProductNotFoundException>(() => service
-           .GetByIdAsync<DetailsAminoViewModel>(wantedId));
+           .GetByIdAsync<DetailsProteinViewModel>(wantedId));
         }
 
         [Fact]
@@ -100,19 +99,22 @@
         {
             var startFrom = 1;
             var numberOfAminosToBeSeeded = 3;
-            var wantedType = AminoAcidType.Glutamine.ToString();
+            var wantedType = ProteinType.Diet.ToString();
 
             this.Initialize();
-            this.SeedAminos(startFrom, numberOfAminosToBeSeeded, AminoAcidType.BCAA);
-            this.SeedAminos(startFrom + numberOfAminosToBeSeeded, numberOfAminosToBeSeeded * 2, AminoAcidType.Glutamine);
+            this.SeedProteins(startFrom, numberOfAminosToBeSeeded, ProteinType.Vegan);
+            this.SeedProteins(startFrom + numberOfAminosToBeSeeded, numberOfAminosToBeSeeded * 3, ProteinType.Diet);
 
-            var aminos = await this.service.GetAllByTypeAsync<ProductViewModel>(wantedType);
+            var proteins = await this.service.GetAllByTypeAsync<ProductViewModel>(wantedType);
 
-            var expectedCount = 3;
-            Assert.Equal(expectedCount, aminos.Count());
+            var expectedCount = 6;
+            Assert.Equal(expectedCount, proteins.Count());
 
             var id = 4;
-            Assert.Collection(aminos,
+            Assert.Collection(proteins,
+                            item => Assert.Contains(Name + id++, item.Name),
+                            item => Assert.Contains(Name + id++, item.Name),
+                            item => Assert.Contains(Name + id++, item.Name),
                             item => Assert.Contains(Name + id++, item.Name),
                             item => Assert.Contains(Name + id++, item.Name),
                             item => Assert.Contains(Name + id++, item.Name));
@@ -121,13 +123,13 @@
         [Fact]
         public async Task GetAllByValidType_WithNoData_ShouldReturnEmtpy()
         {
-            var wantedType = AminoAcidType.Glutamine.ToString();
+            var wantedType = ProteinType.Vegan.ToString();
 
             this.Initialize();
 
-            var aminos = await this.service.GetAllByTypeAsync<ProductViewModel>(wantedType);
+            var proteins = await this.service.GetAllByTypeAsync<ProductViewModel>(wantedType);
 
-            Assert.Empty(aminos);
+            Assert.Empty(proteins);
         }
 
         [Fact]
@@ -138,18 +140,18 @@
             var wantedTypeInvalid = "InvalidType";
 
             this.Initialize();
-            this.SeedAminos(startFrom, numberOfAminosToBeSeeded, AminoAcidType.BCAA);
+            this.SeedProteins(startFrom, numberOfAminosToBeSeeded, ProteinType.Casein);
 
             await Assert.ThrowsAsync<InvalidProductTypeException>(() => this.service.GetAllByTypeAsync<ProductViewModel>(wantedTypeInvalid));
         }
 
-        private void SeedAminos(int startFrom, int seedCount, AminoAcidType aminoType)
+        private void SeedProteins(int startFrom, int seedCount, ProteinType type)
         {
             var list = new List<Product>();
 
             for (int i = startFrom; i <= seedCount; i++)
             {
-                var amino = new AminoAcid()
+                var protein = new Protein()
                 {
                     Id = i,
                     Name = Name + i,
@@ -157,18 +159,19 @@
                     Description = Description + i,
                     Directions = Directions + i,
                     ImageUrl = ImageUrl + i,
-                    ProductType = ProductType.Amino,
+                    ProductType = ProductType.Protein,
                     IsSuatableForVegans = false,
-                    Type = aminoType,
+                    Type = type,
                     CreatedOn = DateCreated.AddDays(i),
                     EnergyPerServing = EnergyPerServing + i,
                     Carbohydrate = Carbohydrate + i,
                     Fat = Fat + i,
                     ProteinPerServing = ProteinPerServing + i,
-                    Salt = Salt + i
+                    Salt = Salt + i,
+                    Fibre = Fibre + i
                 };
 
-                list.Add(amino);
+                list.Add(protein);
             }
 
             this.context.AddRange(list);
@@ -179,7 +182,7 @@
         {
             this.context = KeepFitDbContextInMemoryFactory.Initialize();
             this.mapper = AutoMapperFactory.Initialize();
-            this.service = new AminosService(context, mapper);
+            this.service = new ProteinsService(context, mapper);
         }
     }
 }
