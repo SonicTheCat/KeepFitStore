@@ -6,6 +6,8 @@
 
         public const int QuantityDefaultValue = 1;
 
+        public const string BasketNotFound = "Basket no found!";
+
         public const int InvalidProductsCountInOrder = 0;
 
         public const int OneRow = 1;

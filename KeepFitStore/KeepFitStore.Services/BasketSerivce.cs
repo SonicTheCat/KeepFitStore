@@ -22,14 +22,12 @@
     {
         private readonly KeepFitDbContext context;
         private readonly IProductsService productsService;
-        private readonly UserManager<KeepFitUser> userManager;
         private readonly IMapper mapper;
 
-        public BasketSerivce(KeepFitDbContext context, IProductsService productsService, UserManager<KeepFitUser> userManager, IMapper mapper)
+        public BasketSerivce(KeepFitDbContext context, IProductsService productsService, IMapper mapper)
         {
             this.context = context;
             this.productsService = productsService;
-            this.userManager = userManager;
             this.mapper = mapper;
         }
 
@@ -133,6 +131,11 @@
                 .Baskets
                 .Include(x => x.BasketItems)
                 .SingleOrDefaultAsync(x => x.Id == basketId);
+
+            if (basket == null)
+            {
+               throw new ServiceException(ServicesConstants.BasketNotFound); 
+            }
 
             this.context.BasketItems.RemoveRange(basket.BasketItems);
             await this.context.SaveChangesAsync();

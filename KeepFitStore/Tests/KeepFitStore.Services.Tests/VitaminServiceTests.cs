@@ -1,23 +1,26 @@
-﻿using AutoMapper;
-using KeepFitStore.Data;
-using KeepFitStore.Domain.Enums;
-using KeepFitStore.Domain.Products;
-using KeepFitStore.Models.ViewModels.Products;
-using KeepFitStore.Models.ViewModels.Products.Vitamins;
-using KeepFitStore.Models.ViewModels.Reviews;
-using KeepFitStore.Services.Contracts;
-using KeepFitStore.Services.CustomExceptions;
-using KeepFitStore.Services.Tests.Common;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace KeepFitStore.Services.Tests
+﻿namespace KeepFitStore.Services.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using AutoMapper;
+
+    using Newtonsoft.Json;
+
+    using Xunit;
+
+    using KeepFitStore.Data;
+    using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Domain.Products;
+    using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Models.ViewModels.Products.Vitamins;
+    using KeepFitStore.Models.ViewModels.Reviews;
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.Tests.Common;
+
     public class VitaminServiceTests
     {
         private const string Name = "proteinTest";
