@@ -12,16 +12,16 @@
     using KeepFitStore.Models.InputModels.User;
     using KeepFitStore.Services.Contracts;
     using Microsoft.EntityFrameworkCore;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.CustomExceptions.Messsages;
 
     public class UsersSerivce : IUsersService
     {
-        private readonly UserManager<KeepFitUser> userManager;
         private readonly KeepFitDbContext context;
         private readonly IMapper mapper;
 
-        public UsersSerivce(UserManager<KeepFitUser> userManager, KeepFitDbContext context, IMapper mapper)
+        public UsersSerivce(KeepFitDbContext context, IMapper mapper)
         {
-            this.userManager = userManager;
             this.context = context;
             this.mapper = mapper;
         }
@@ -32,9 +32,17 @@
                 .Users
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-            user.FullName = model.FullName;
-            user.PhoneNumber = model.PhoneNumber;
-            await this.context.SaveChangesAsync();
+            if (user == null)
+            {
+                throw new UserNotFoundException(string.Format(ExceptionMessages.UserLookupFailed, id));
+            }
+
+            if (user.FullName != model.FullName || user.PhoneNumber != model.PhoneNumber)
+            {
+                user.FullName = model.FullName;
+                user.PhoneNumber = model.PhoneNumber;
+                await this.context.SaveChangesAsync();
+            }
 
             var viewModel = this.mapper.Map<TViewModel>(user); 
             return viewModel;
