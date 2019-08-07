@@ -1,23 +1,25 @@
-﻿using AutoMapper;
-using KeepFitStore.Data;
-using KeepFitStore.Domain;
-using KeepFitStore.Domain.Enums;
-using KeepFitStore.Domain.Products;
-using KeepFitStore.Models.ViewModels.Favorites;
-using KeepFitStore.Services.Contracts;
-using KeepFitStore.Services.CustomExceptions;
-using KeepFitStore.Services.Tests.Common;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace KeepFitStore.Services.Tests
+﻿namespace KeepFitStore.Services.Tests
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+
+    using AutoMapper;
+
+    using Newtonsoft.Json;
+
+    using Xunit;
+
+    using KeepFitStore.Data;
+    using KeepFitStore.Domain;
+    using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Domain.Products;
+    using KeepFitStore.Models.ViewModels.Favorites;
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.Tests.Common;
+
     public class FavoriteServiceTests
     {
         private const string UserOneId = "123";
