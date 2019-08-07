@@ -27,7 +27,7 @@
         {
             var doesExist = await this.context
                 .Positions
-                .AnyAsync(x => x.Name == model.Name && x.Salary == model.Salary);
+                .AnyAsync(x => x.Name == model.Name);
 
             if (doesExist)
             {
