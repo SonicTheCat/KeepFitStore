@@ -25,7 +25,7 @@
             this.mapper = mapper;
         }
 
-        public async Task CreateAsync(CreateReviewInputModel model)
+        public async Task<int> CreateAsync(CreateReviewInputModel model)
         {
             var product = await this.productsService.GetProductByIdAsync<ProductViewModel>(model.ProductId);
 
@@ -37,7 +37,9 @@
             var review = this.mapper.Map<Review>(model);
 
             this.context.Reviews.Add(review);
-            await this.context.SaveChangesAsync(); 
+            var rowsAdded = await this.context.SaveChangesAsync();
+
+            return rowsAdded; 
         }
     }
 }

@@ -6,6 +6,6 @@
 
     public interface IReviewsService
     {
-        Task CreateAsync(CreateReviewInputModel model); 
+        Task<int> CreateAsync(CreateReviewInputModel model); 
     }
 }
