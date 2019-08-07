@@ -12,6 +12,7 @@
     using KeepFitStore.Models.InputModels.JobPositions;
     using KeepFitStore.Services.Contracts;
     using KeepFitStore.Services.Tests.Common;
+
     public class JobPositionServiceTests
     {
         private const string PositionName = "Cashier";
