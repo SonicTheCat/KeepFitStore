@@ -15,6 +15,7 @@
     public class JobPositionServiceTests
     {
         private const string PositionName = "Cashier";
+        private const string PositionTwoName = "Manager";
         private const decimal Salary = 1000;
 
         private const decimal LoopIterations = 10;
@@ -24,8 +25,8 @@
         private IJobPositionService service;
 
         [Theory]
-        [InlineData("Vodoprovodchik", 0.0)]
-        [InlineData("Cashier", 3500.0)]
+        [InlineData(PositionName, 3500.0)]
+        [InlineData(PositionTwoName, 0.0)]
         [InlineData("", 100.9)]
         public async Task CreateNewPosition_ShouldReturnOneRowAdded(string positionName, decimal salary)
         {
@@ -47,7 +48,7 @@
         public async Task CreatePostionThatAlreadyExist_ShouldReturnDefault()
         {
             this.Initialize();
-            this.SeedPositions(); 
+            this.SeedPositions();
 
             var input1 = new CreateJobPositionInputModel()
             {
@@ -79,7 +80,7 @@
 
         private void SeedPositions()
         {
-            var list = new List<JobPosition>(); 
+            var list = new List<JobPosition>();
 
             for (int i = 0; i < LoopIterations; i++)
             {
@@ -89,11 +90,11 @@
                     Salary = i == 0 ? Salary : Salary + i
                 };
 
-                list.Add(position); 
+                list.Add(position);
             }
 
             this.context.Positions.AddRange(list);
-            this.context.SaveChanges(); 
+            this.context.SaveChanges();
         }
 
         private void Initialize()
