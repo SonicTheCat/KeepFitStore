@@ -56,7 +56,7 @@
         [Authorize(Roles = WebConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
-            var protein = await this.productsService.FindProductForEditAsync<EditVitaminProductInputModel>(id);
+            var protein = await this.productsService.GetProductByIdAsync<EditVitaminProductInputModel>(id);
             return this.View(protein);
         }
 

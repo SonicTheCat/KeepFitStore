@@ -30,7 +30,7 @@
             this.cloudinary = cloudinary;
         }
 
-        public async Task CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
+        public async Task<int> CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
             where TSourceType : class
             where TEntityType : Product
         {
@@ -39,7 +39,9 @@
             product.ImageUrl = this.cloudinary.UploadImage(image);
 
             this.context.Add(product);
-            await this.context.SaveChangesAsync();
+            var rowsAdded = await this.context.SaveChangesAsync();
+
+            return rowsAdded; 
         }
 
         public async Task<IEnumerable<TViewModel>> GetTopRatedProducts<TViewModel>(int countOfProducts)
@@ -131,23 +133,6 @@
             return countOfDeletedItems;
         }
 
-        public async Task<TDestination> FindProductForEditAsync<TDestination>(int id)
-        {
-            var product = await this.context
-                .Products
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-
-            if (product == null)
-            {
-                throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, id));
-            }
-
-            var model = this.mapper.Map<TDestination>(product);
-
-            return model;
-        }
-
         public async Task<int> EditProductAsync<TDestination, TSourceType>(
             TSourceType model,
             IFormFile newImage,
@@ -181,5 +166,23 @@
 
             return countOfEditedRows;
         }
+
+        //public async Task<TDestination> FindProductForEditAsync<TDestination>(int id)
+        //{
+        //    var product = await this.context
+        //        .Products
+        //        .AsNoTracking()
+        //        .SingleOrDefaultAsync(x => x.Id == id);
+
+        //    if (product == null)
+        //    {
+        //        throw new ProductNotFoundException(string.Format(ExceptionMessages.ProductNotFound, id));
+        //    }
+
+        //    var model = this.mapper.Map<TDestination>(product);
+
+        //    return model;
+        //}
+
     }
 }

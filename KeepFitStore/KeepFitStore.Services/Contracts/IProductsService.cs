@@ -11,7 +11,7 @@
 
     public interface IProductsService
     {
-        Task CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
+        Task<int> CreateProductAsync<TEntityType, TSourceType>(TSourceType sourceType, IFormFile image)
             where TSourceType : class
             where TEntityType : Product;
 
@@ -27,10 +27,10 @@
 
         Task<int> DeleteProductByIdAsync(int id);
 
-        Task<TDestination> FindProductForEditAsync<TDestination>(int id);
-
         Task<int> EditProductAsync<TDestination, TSourceType>(TSourceType model, IFormFile image, int productId)
             where TSourceType : class
-            where TDestination : Product; 
+            where TDestination : Product;
+
+        // Task<TDestination> FindProductForEditAsync<TDestination>(int id);
     }
 }
