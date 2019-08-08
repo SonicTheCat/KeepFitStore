@@ -48,7 +48,13 @@
         private IMapper mapper;
         private IJobApplicantService service;
         private Mock<IMyCloudinary> myCloudinary;
+        private readonly IFormFile image;
         // private Mock<IFormFile> formFile;
+
+        public JobApplicantServiceTests()
+        {
+            this.image = this.GetFormFile();
+        }
 
         [Fact]
         public async Task CreateApplicant_ShouldReturnCorrect()
@@ -56,7 +62,6 @@
             this.Initialize();
             this.SeedPositions();
 
-            var image = this.GetFormFile();
             var input = new CreateJobApplicantInputModel()
             {
                 Firstname = FirstName,
@@ -98,7 +103,6 @@
             this.Initialize();
             this.SeedPositions();
 
-            var image = this.GetFormFile();
             var input = new CreateJobApplicantInputModel()
             {
                 Firstname = FirstName,
@@ -233,11 +237,14 @@
 
         private IFormFile GetFormFile()
         {
-            var str = "This is a dummy file";
-            var name = "data";
-            var fileName = "dummy.txt";
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(str));
-            IFormFile file = new FormFile(stream, 0, 0, name, fileName);
+            var content = "Hello from a DummyFake File";
+            var fileName = "dummy.pdf";
+            var ms = new MemoryStream();
+            var writer = new StreamWriter(ms);
+            writer.Write(content);
+            writer.Flush();
+            ms.Position = 0;
+            IFormFile file = new FormFile(ms, 0, 0, content, fileName);
 
             return file;
         }
@@ -249,7 +256,7 @@
             this.myCloudinary = new Mock<IMyCloudinary>();
             //this.formFile = new Mock<IFormFile>();
 
-            this.myCloudinary.Setup(x => x.UploadImage(this.GetFormFile()))
+            this.myCloudinary.Setup(x => x.UploadImage(this.image))
                              .Returns(Url);
 
             this.service = new JobApplicantService(context, mapper, myCloudinary.Object);

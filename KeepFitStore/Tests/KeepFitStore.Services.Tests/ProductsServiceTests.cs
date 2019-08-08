@@ -1,31 +1,38 @@
-﻿using AutoMapper;
-using KeepFitStore.Data;
-using KeepFitStore.Domain;
-using KeepFitStore.Domain.Enums;
-using KeepFitStore.Domain.Products;
-using KeepFitStore.Models.InputModels.Products.Aminos;
-using KeepFitStore.Models.InputModels.Products.Creatines;
-using KeepFitStore.Models.InputModels.Products.Proteins;
-using KeepFitStore.Models.InputModels.Products.Vitamins;
-using KeepFitStore.Models.ViewModels.Products;
-using KeepFitStore.Services.Contracts;
-using KeepFitStore.Services.CustomExceptions;
-using KeepFitStore.Services.PhotoKeeper;
-using KeepFitStore.Services.Tests.Common;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
-using Moq;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace KeepFitStore.Services.Tests
+﻿namespace KeepFitStore.Services.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
+
+    using AutoMapper;
+
+    using Moq;
+
+    using Newtonsoft.Json;
+
+    using Xunit;
+
+    using KeepFitStore.Data;
+    using KeepFitStore.Domain;
+    using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Domain.Products;
+    using KeepFitStore.Models.InputModels.Products.Aminos;
+    using KeepFitStore.Models.InputModels.Products.Creatines;
+    using KeepFitStore.Models.InputModels.Products.Proteins;
+    using KeepFitStore.Models.InputModels.Products.Vitamins;
+    using KeepFitStore.Models.ViewModels.Products;
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.PhotoKeeper;
+    using KeepFitStore.Services.Tests.Common;
+    using Microsoft.EntityFrameworkCore;
+
     public class ProductsServiceTests
     {
         private const string CreatineName = "CreaPure";
@@ -68,13 +75,18 @@ namespace KeepFitStore.Services.Tests
         private IMapper mapper;
         private IProductsService service;
         private Mock<IMyCloudinary> myCloudinary;
+        private readonly IFormFile image;
+
+        public ProductsServiceTests()
+        {
+            this.image = this.GetFormFile();
+        }
 
         [Fact]
         public async Task CreateProducts_ShouldCreate()
         {
             this.Initialize();
-            var image = this.GetFormFile();
-
+            
             var protModel = new CreateProteinProductInputModel()
             {
                 Name = Proteinname,
@@ -319,10 +331,18 @@ namespace KeepFitStore.Services.Tests
             this.Initialize();
             this.SeedProducts();
 
-            var image = this.GetFormFile();
+            this.context
+                .ChangeTracker
+                .Entries()
+                .Where((e => e.State == EntityState.Added ||
+                    e.State == EntityState.Modified ||
+                    e.State == EntityState.Deleted))
+                .ToList()
+                .ForEach(e => e.State = EntityState.Detached);
 
             var protModel = new EditProteinProductInputModel()
             {
+                Id = ProductId,
                 Name = Proteinname + "edited",
                 Price = Price2,
                 Description = ProteinDesciption,
@@ -337,19 +357,20 @@ namespace KeepFitStore.Services.Tests
                 Fat = 0
             };
 
-            var product = this.context.Products.First(x => x.Id == ProductId);
-            Assert.Equal(Proteinname, product.Name);
-            Assert.Equal("url", product.ImageUrl);
-            Assert.Equal(Price1, product.Price);
+            //var product = GetProduct(ProductId); 
+
+            //Assert.Equal(Proteinname, product.Name);
+            //Assert.Equal("url", product.ImageUrl);
+            //Assert.Equal(Price1, product.Price);
 
             var expectedCount = 1;
             var entitieChanged = await this.service.EditProductAsync<Protein, EditProteinProductInputModel>(protModel, image, ProductId);
             Assert.Equal(expectedCount, entitieChanged);
-            //var products = this.context.Products.ToList();
-            //var newEntity = this.context.Products.First(x => x.Id == ProductId);
-            //Assert.Equal(Proteinname + "edited", newEntity.Name);
-            //Assert.Equal(Url, newEntity.ImageUrl);
-            //Assert.Equal(Price2, newEntity.Price);
+
+            //var product = GetProduct(ProductId); 
+            //Assert.Equal(Proteinname + "edited", product.Name);
+            //Assert.Equal(Url, product.ImageUrl);
+            //Assert.Equal(Price2, product.Price);
         }
 
         [Fact]
@@ -358,8 +379,6 @@ namespace KeepFitStore.Services.Tests
             this.Initialize();
             this.SeedProducts();
 
-            var image = this.GetFormFile();
-
             var protModel = new EditProteinProductInputModel()
             {
                 Name = Proteinname + "edited",
@@ -376,8 +395,16 @@ namespace KeepFitStore.Services.Tests
                 Fat = 0
             };
 
-            await Assert.ThrowsAsync<ProductNotFoundException>(() => 
+            await Assert.ThrowsAsync<ProductNotFoundException>(() =>
             this.service.EditProductAsync<Protein, EditProteinProductInputModel>(protModel, image, ProductId - 1));
+        }
+
+        private Product GetProduct(int id)
+        {
+            return this.context
+                .Products
+                .AsNoTracking()
+                .First(x => x.Id == id);
         }
 
         private void SeedReviewsToProducts()
@@ -434,11 +461,14 @@ namespace KeepFitStore.Services.Tests
 
         private IFormFile GetFormFile()
         {
-            var str = "This is a dummy file";
-            var name = "data";
-            var fileName = "dummy.txt";
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(str));
-            IFormFile file = new FormFile(stream, 0, 0, name, fileName);
+            var content = "Hello from a DummyFake File";
+            var fileName = "dummy.pdf";
+            var ms = new MemoryStream();
+            var writer = new StreamWriter(ms);
+            writer.Write(content);
+            writer.Flush();
+            ms.Position = 0;
+            IFormFile file = new FormFile(ms, 0, 0, content, fileName);
 
             return file;
         }
@@ -449,8 +479,8 @@ namespace KeepFitStore.Services.Tests
             this.mapper = AutoMapperFactory.Initialize();
             this.myCloudinary = new Mock<IMyCloudinary>();
 
-            this.myCloudinary.Setup(x => x.UploadImage(this.GetFormFile()))
-                             .Returns(Url);
+            this.myCloudinary.Setup(x => x.UploadImage(this.image))
+                             .Returns("url");
 
             this.service = new ProductsService(context, mapper, myCloudinary.Object);
         }
