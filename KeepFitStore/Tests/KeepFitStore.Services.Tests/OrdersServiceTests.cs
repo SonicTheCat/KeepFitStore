@@ -1,23 +1,25 @@
-﻿using AutoMapper;
-using KeepFitStore.Data;
-using KeepFitStore.Domain;
-using KeepFitStore.Domain.Enums;
-using KeepFitStore.Domain.Products;
-using KeepFitStore.Models.InputModels.Orders;
-using KeepFitStore.Models.ViewModels.Orders;
-using KeepFitStore.Services.Contracts;
-using KeepFitStore.Services.CustomExceptions;
-using KeepFitStore.Services.Tests.Common;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace KeepFitStore.Services.Tests
+﻿namespace KeepFitStore.Services.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using AutoMapper;
+
+    using Moq;
+
+    using Xunit;
+
+    using KeepFitStore.Data;
+    using KeepFitStore.Domain;
+    using KeepFitStore.Domain.Enums;
+    using KeepFitStore.Domain.Products;
+    using KeepFitStore.Models.InputModels.Orders;
+    using KeepFitStore.Models.ViewModels.Orders;
+    using KeepFitStore.Services.Contracts;
+    using KeepFitStore.Services.CustomExceptions;
+    using KeepFitStore.Services.Tests.Common;
+
     public class OrdersServiceTests
     {
         private const int LoopIterations = 5;
@@ -39,7 +41,6 @@ namespace KeepFitStore.Services.Tests
         private const int StreetNumber = 777;
         private const string Postcode = "Sq1 4wq";
         private const string CityName = "Sofia";
-        private const string DeliveryTypeStandart = "Express";
         private const decimal OrderTotalPrice = 363.0m;
         private const int OrderId = 1;
 
@@ -408,7 +409,6 @@ namespace KeepFitStore.Services.Tests
             this.SeedOrders();
 
             await Assert.ThrowsAsync<UserNotAuthorizedException>(() => this.service.GetOrderDetailsForUserAsync<DetailsOrdersViewModel>(UserOneName + 1, OrderId));
-
         }
 
         private void SeedOrder()
