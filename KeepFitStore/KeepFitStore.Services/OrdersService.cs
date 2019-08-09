@@ -22,15 +22,13 @@
 
     public class OrdersService : IOrdersService
     {
-        private readonly KeepFitDbContext context;
-        private readonly UserManager<KeepFitUser> userManager;
+        private readonly KeepFitDbContext context;  
         private readonly IBasketService basketService;
         private readonly IMapper mapper;
 
-        public OrdersService(KeepFitDbContext context, UserManager<KeepFitUser> userManager, IBasketService basketService, IMapper mapper)
+        public OrdersService(KeepFitDbContext context, IBasketService basketService, IMapper mapper)
         {
             this.context = context;
-            this.userManager = userManager;
             this.basketService = basketService;
             this.mapper = mapper;
         }
@@ -156,7 +154,7 @@
 
         public async Task<IEnumerable<TViewModel>> GetAllOrdersForUserAsync<TViewModel>(string username)
         {
-            ThrowIfUserIsNull(username);
+            ThrowIfUserIsNotExist(username);
 
             var orders = await this.context
                 .Orders
@@ -174,7 +172,7 @@
             string username,
             string sortBy)
         {
-            ThrowIfUserIsNull(username);
+            ThrowIfUserIsNotExist(username);
 
             sortBy = sortBy.Replace(ServicesConstants.DescendingOldValue, ServicesConstants.DescendingNewValue);
 
@@ -214,7 +212,7 @@
 
         public async Task<TViewModel> GetOrderDetailsForUserAsync<TViewModel>(string username, int orderId)
         {
-            ThrowIfUserIsNull(username);
+            ThrowIfUserIsNotExist(username);
 
             var order = await this.context
                 .Orders
@@ -337,7 +335,7 @@
 
         private async Task<KeepFitUser> GetUserWithAllPropertiesAsync(string username)
         {
-            var user = await this.userManager
+            var user = await this.context
                 .Users
                 .Include(x => x.Basket)
                 .ThenInclude(x => x.BasketItems)
@@ -354,7 +352,7 @@
             return user;
         }
 
-        private void ThrowIfUserIsNull(string username)
+        private void ThrowIfUserIsNotExist(string username)
         {
             if (!this.context.Users.Any(x => x.UserName == username))
             {

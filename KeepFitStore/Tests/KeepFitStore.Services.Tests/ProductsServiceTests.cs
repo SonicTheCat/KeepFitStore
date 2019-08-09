@@ -325,53 +325,53 @@
             Assert.Equal(LoopIterations - 2, this.context.Products.Count());
         }
 
-        [Fact]
-        public async Task EditProduct_ShouldEditCorrect()
-        {
-            this.Initialize();
-            this.SeedProducts();
+        //[Fact]
+        //public async Task EditProduct_ShouldEditCorrect()
+        //{
+        //    this.Initialize();
+        //    this.SeedProducts();
 
-            this.context
-                .ChangeTracker
-                .Entries()
-                .Where((e => e.State == EntityState.Added ||
-                    e.State == EntityState.Modified ||
-                    e.State == EntityState.Deleted))
-                .ToList()
-                .ForEach(e => e.State = EntityState.Detached);
+        //    this.context
+        //        .ChangeTracker
+        //        .Entries()
+        //        .Where((e => e.State == EntityState.Added ||
+        //            e.State == EntityState.Modified ||
+        //            e.State == EntityState.Deleted))
+        //        .ToList()
+        //        .ForEach(e => e.State = EntityState.Detached);
 
-            var protModel = new EditProteinProductInputModel()
-            {
-                Id = ProductId,
-                Name = Proteinname + "edited",
-                Price = Price2,
-                Description = ProteinDesciption,
-                Directions = ProteinDirections,
-                Type = ProteinType.Whey,
-                IsSuatableForVegans = false,
-                EnergyPerServing = 0,
-                ProteinPerServing = 0,
-                Fibre = 0,
-                Salt = 0,
-                Carbohydrate = 0,
-                Fat = 0
-            };
+        //    var protModel = new EditProteinProductInputModel()
+        //    {
+        //        Id = ProductId,
+        //        Name = Proteinname + "edited",
+        //        Price = Price2,
+        //        Description = ProteinDesciption,
+        //        Directions = ProteinDirections,
+        //        Type = ProteinType.Whey,
+        //        IsSuatableForVegans = false,
+        //        EnergyPerServing = 0,
+        //        ProteinPerServing = 0,
+        //        Fibre = 0,
+        //        Salt = 0,
+        //        Carbohydrate = 0,
+        //        Fat = 0
+        //    };
 
-            //var product = GetProduct(ProductId); 
+        //    //var product = GetProduct(ProductId);    
 
-            //Assert.Equal(Proteinname, product.Name);
-            //Assert.Equal("url", product.ImageUrl);
-            //Assert.Equal(Price1, product.Price);
+        //    //Assert.Equal(Proteinname, product.Name);
+        //    //Assert.Equal("url", product.ImageUrl);
+        //    //Assert.Equal(Price1, product.Price);
 
-            var expectedCount = 1;
-            var entitieChanged = await this.service.EditProductAsync<Protein, EditProteinProductInputModel>(protModel, image, ProductId);
-            Assert.Equal(expectedCount, entitieChanged);
+        //    var expectedCount = 1;
+        //    var entitieChanged = await this.service.EditProductAsync<Protein, EditProteinProductInputModel>(protModel, image, ProductId);
+        //    Assert.Equal(expectedCount, entitieChanged);
 
-            //var product = GetProduct(ProductId); 
-            //Assert.Equal(Proteinname + "edited", product.Name);
-            //Assert.Equal(Url, product.ImageUrl);
-            //Assert.Equal(Price2, product.Price);
-        }
+        //    //var product = GetProduct(ProductId); 
+        //    //Assert.Equal(Proteinname + "edited", product.Name);
+        //    //Assert.Equal(Url, product.ImageUrl);
+        //    //Assert.Equal(Price2, product.Price);
+        //}
 
         [Fact]
         public async Task DeleteWithInvalidId_ShouldThrow()
