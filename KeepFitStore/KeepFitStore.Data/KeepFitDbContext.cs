@@ -9,6 +9,8 @@
 
     public class KeepFitDbContext : IdentityDbContext<KeepFitUser>
     {
+        public KeepFitDbContext() {}
+
         public KeepFitDbContext(DbContextOptions<KeepFitDbContext> options)
             : base(options)
         {

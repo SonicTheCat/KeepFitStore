@@ -19,6 +19,10 @@
 
         public string PaymentType { get; set; }
 
+        public string ReceiverFullName { get; set; }
+
+        public string ReceiverPhoneNumber { get; set; }
+
         public string Status { get; set; }
 
         public DetailsOrderUserViewModel KeepFitUser { get; set; }

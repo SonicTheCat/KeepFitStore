@@ -33,6 +33,10 @@
 
         public bool IsCompleted { get; set; }
 
+        public string ReceiverFullName { get; set; }
+
+        public string ReceiverPhoneNumber { get; set; }
+
         public string KeepFitUserId { get; set; }
         public KeepFitUser KeepFitUser { get; set; }
 

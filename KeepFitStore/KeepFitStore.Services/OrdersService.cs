@@ -73,6 +73,8 @@
             var order = this.mapper.Map<Order>(model);
 
             order.KeepFitUser = user;
+            order.ReceiverFullName = user.FullName;
+            order.ReceiverPhoneNumber = user.PhoneNumber; 
             order.DeliveryAddress = user.Address;
             order.Products = this.mapper.Map<ICollection<ProductOrder>>(user.Basket.BasketItems);
 
