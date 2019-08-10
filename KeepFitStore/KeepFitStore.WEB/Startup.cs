@@ -63,7 +63,7 @@
                 identityOptions.Password.RequireLowercase = false;
 
                 identityOptions.User.RequireUniqueEmail = true;
-                identityOptions.SignIn.RequireConfirmedEmail = true;
+              //  identityOptions.SignIn.RequireConfirmedEmail = true;
 
                 identityOptions.Lockout.MaxFailedAccessAttempts = 5;
                 identityOptions.Lockout.DefaultLockoutTimeSpan = new TimeSpan(1, 0, 0); 
@@ -143,6 +143,18 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<KeepFitDbContext>();
+
+            //    if (env.IsDevelopment())
+            //    {
+            //        dbContext.Database.Migrate();
+            //    }
+
+            //    //ApplicationDbContextSeeder.Seed(dbContext, serviceScope.ServiceProvider);
+            //}
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

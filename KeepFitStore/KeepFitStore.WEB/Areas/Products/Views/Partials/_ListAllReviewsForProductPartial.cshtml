@@ -19,7 +19,7 @@ else
                 <span class="mr-3">@(item.UserFullName== null ? "anonymous" : item.UserFullName)</span>
                 <span>@item.PublishedOn.ToString("HH:mm - dd/MM/yyyy")</span>
                 </footer>
-                <p class="mt-3" style="display:inline-block"><em><span class="contentSpan">@item.Content</span></em></p>
+                <p class="mt-3" style="display:block; word-wrap: break-word;"><em><span>@item.Content</span></em></p>
             </div>
         </div>
         <hr />

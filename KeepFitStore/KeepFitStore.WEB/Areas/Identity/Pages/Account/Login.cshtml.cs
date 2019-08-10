@@ -123,19 +123,9 @@ namespace KeepFitStore.WEB.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
 
                     ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-                    // User can not login before confirm email!
-                    if (user != null && user.EmailConfirmed == false)
-                    {
-                        ModelState.AddModelError(InputEmailPropAsString, ConfirmEmailMessage);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    }
 
                     return Page();
                 }

@@ -18,16 +18,16 @@
 <ul class="list-group mb-3">
     @foreach (var item in Model.Products)
     {
-        <li class="list-group-item mt-4 shadow flex-lg-row flex-md-row flex-sm-row flex-column d-flex justify-content-between align-items-center">
+        <li class="list-group-item mt-4 shadow flex-lg-row flex-md-row flex-sm-row flex-column d-flex justify-content-around align-items-center">
 
             <img src="@item.ProductImageUrl" width="100" height="100" alt="Alternate Text" />
-            <div class="col-xl-2 col-md-4 col-lg-3 col-sm-6 mb-4 pt-4">
+            <div class="">
                 @item.ProductName
             </div>
-            <div class="col-xl-2 col-md-4 col-lg-3 col-sm-6 mb-4 pt-4">
+            <div class="">
                 &pound;@item.ProductPrice
             </div>
-            <div class="col-xl-2 col-md-4 col-lg-3 col-sm-6 mb-4 pt-4">
+            <div class="">
                 Qty: @item.Quantity
             </div>
         </li>
