@@ -167,6 +167,20 @@
             return countOfEditedRows;
         }
 
+        public async Task<IEnumerable<TViewModel>> GetMostOrderedProducts<TViewModel>(int countOfProducts)
+        {
+            var products = await this.context
+               .Products
+               .Include(x => x.Reviews)
+               .OrderByDescending(x => x.Orders.Count)
+               .Take(countOfProducts)
+               .AsNoTracking()
+               .ToListAsync();
+
+            var viewModel = this.mapper.Map<IEnumerable<TViewModel>>(products);
+            return viewModel;
+        }
+
         //public async Task<TDestination> FindProductForEditAsync<TDestination>(int id)
         //{
         //    var product = await this.context

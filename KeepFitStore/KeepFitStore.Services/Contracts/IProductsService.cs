@@ -19,6 +19,8 @@
 
         Task<IEnumerable<TViewModel>> GetNewestProductsAsync<TViewModel>(int countOfProducts);
 
+        Task<IEnumerable<TViewModel>> GetMostOrderedProducts<TViewModel>(int countOfProducts);
+
         Task<PaginatedList<TViewModel>> SearchProductsAsync<TViewModel>(int pageNumber, int pageSize, string sortBy);
 
         Task<IEnumerable<TViewModel>> GetAll<TViewModel>();
