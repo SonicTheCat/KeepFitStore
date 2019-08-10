@@ -23,6 +23,11 @@
             return this.View(); 
         }
 
+        public IActionResult Info()
+        {
+            return this.View();
+        }
+
         //public IActionResult Privacy()
         //{
         //    return View();
