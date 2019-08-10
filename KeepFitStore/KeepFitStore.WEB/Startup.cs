@@ -13,6 +13,10 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Identity.UI.Services;
 
+    using AutoMapper;
+
+    using Stripe;
+
     using KeepFitStore.Services;
     using KeepFitStore.Services.MessageSender;
     using KeepFitStore.Data;
@@ -21,13 +25,6 @@
     using KeepFitStore.WEB.Middlewares;
     using KeepFitStore.Helpers;
     using KeepFitStore.Domain;
-
-    using Microsoft.AspNetCore.Authentication.Cookies;
-
-    using AutoMapper;
-    using KeepFitStore.WEB.Rules;
-    using Microsoft.AspNetCore.Rewrite;
-    using Stripe;
     using KeepFitStore.Services.PhotoKeeper;
     using KeepFitStore.WEB.Filters;
 
