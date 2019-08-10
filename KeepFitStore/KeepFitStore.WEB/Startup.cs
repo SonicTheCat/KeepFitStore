@@ -33,12 +33,15 @@
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
+            this.Env = env;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IHostingEnvironment Env { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -131,7 +134,7 @@
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-              //  options.Filters.Add(new KeepFitExceptionFilter(true));
+                options.Filters.Add(new KeepFitExceptionFilter(this.Env.IsDevelopment()));
 
                 //Set default message for [Required] attribute
                 options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
@@ -141,21 +144,10 @@
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            //using (var serviceScope = app.ApplicationServices.CreateScope())
-            //{
-            //    var dbContext = serviceScope.ServiceProvider.GetRequiredService<KeepFitDbContext>();
 
-            //    if (env.IsDevelopment())
-            //    {
-            //        dbContext.Database.Migrate();
-            //    }
-
-            //    //ApplicationDbContextSeeder.Seed(dbContext, serviceScope.ServiceProvider);
-            //}
-
-            if (env.IsDevelopment())
+            if (this.Env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
